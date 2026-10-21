@@ -1,0 +1,24 @@
+# Haskell build artifacts
+dist/
+dist-newstyle/
+.stack-work/
+*.hi
+*.o
+*.dyn_hi
+*.dyn_o
+*.hie
+*.exe
+
+# Generated project output and documentation
+/output/
+/docs/html/
+/docs/latex/
+
+# Local editor and operating system files
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
