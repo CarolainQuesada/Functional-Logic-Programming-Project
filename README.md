@@ -31,9 +31,9 @@ doxygen --version
 
 If a command is unavailable, install the corresponding tool and ensure its executable directory is in `PATH`. Open a new terminal after changing `PATH` and repeat the checks. No application build or run command is available yet.
 
-## Proposed directory structure
+## Directory structure
 
-Directories will be added when their first files are needed:
+Each directory includes a README describing its responsibility. Application modules will be added in later stages:
 
 ```text
 app/       Haskell application entry point
@@ -44,7 +44,7 @@ docs/      Architecture, assignment notes, and Doxygen configuration
 output/    Generated Prolog, queries, HTML, and validation reports
 ```
 
-Generated output and local build artifacts are excluded from version control.
+Generated output and local build artifacts are excluded from version control. Only the README in `output/` is tracked.
 
 ## Git workflow
 

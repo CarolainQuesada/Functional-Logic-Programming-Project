@@ -10,7 +10,8 @@ dist-newstyle/
 *.exe
 
 # Generated project output and documentation
-/output/
+/output/*
+!/output/README.md
 /docs/html/
 /docs/latex/
 
