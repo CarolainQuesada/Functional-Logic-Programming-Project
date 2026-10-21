@@ -56,4 +56,6 @@ Generated output and local build artifacts are excluded from version control. On
 
 ## Setup status
 
-The initial check on Windows found Git 2.44.0. GHC, GHCi, SWI-Prolog, and Doxygen were not available in `PATH`. Their installation or executable locations still need to be verified before this stage can be considered complete.
+Stage 1 is complete on this Windows workstation. Verified on October 21, 2026: Git 2.44.0, GHC and GHCi 9.10.3, Cabal 3.16.1.0, SWI-Prolog 10.1.17, and Doxygen 1.18.0.
+
+GHCi evaluation, Haskell compilation and executable execution, and a Prolog arithmetic query passed. See [development environment](docs/development-environment.md) for setup and verification details. Restart existing terminals and editors to pick up the updated user PATH.
