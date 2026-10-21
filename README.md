@@ -3,13 +3,13 @@ An integrated project using Haskell, Prolog, and a web interface to automaticall
 
 ## Current stage
 
-Stage 1: initial repository and development environment setup. No application logic has been implemented.
+Stage 2: the academic input format and example fixtures are defined. No application logic has been implemented.
 
 ## Planned pipeline
 
 `problema.txt -> Haskell -> intermediate model -> Prolog + queries + HTML + validation report`
 
-The input format and academic domain must be checked against the official assignment before implementation. Assignment-required filenames and section names will be preserved; source code, documentation, UI text, and commit messages will be written in English.
+The official assignment permits the academic domain. See the [input specification](docs/input-format-analysis.md) for the English record vocabulary, parsing conventions, validation policy, and source-line handling. Assignment-required filenames and section names are preserved; source code, documentation, UI text, and commit messages are written in English.
 
 ## Development requirements
 

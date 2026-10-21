@@ -1,0 +1,6 @@
+[ENTIDADES]
+person: Alice
+course: Logic
+
+[RELACIONES]
+enrolled: Alice, Logic
