@@ -29,3 +29,13 @@ runghc -Wall -Werror -isrc test/ValidationTest.hs
 ```
 
 On October 22, 2026, the validation suite compiled with `ghc -Wall -Werror -isrc`; all 29 checks passed. All 45 existing model and parser checks passed again. The validation command also generated a successful report from the primary input, wrote an invalid duplicate-entity report with exit code 1, and rejected a report path alias pointing to the input file.
+
+`PrologTest.hs` checks the pure generator and executes generated files with SWI-Prolog. Ensure `swipl` is in PATH:
+
+```powershell
+runghc -Wall -Werror -isrc test/PrologTest.hs
+```
+
+On October 22, 2026, the suite compiled with `ghc -Wall -Werror -isrc`; all 16 generation checks and 13 SWI-Prolog checks passed. All 74 existing Haskell checks passed again. Coverage includes invalid-input rejection, traceability, case-sensitive atoms and escaping, duplicate warnings, absent rules, empty data, multiple shared courses and teachers, and loading/calling suggested queries. SWI-Prolog checks require successful exit and empty standard error, so loading warnings fail the suite.
+
+Generated scenarios are written under `output/prolog-checks/` and are ignored by Git. The suite uses GHC's bundled `process`, `directory`, and `filepath` libraries; it requires no third-party Haskell packages. Command checks also verified primary output and report-only behavior for an invalid input in a fresh directory.

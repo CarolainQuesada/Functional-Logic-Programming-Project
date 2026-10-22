@@ -3,7 +3,7 @@ An integrated project using Haskell, Prolog, and a web interface to automaticall
 
 ## Current stage
 
-Stage 5: input parsing, semantic validation, and the UTF-8 validation report are implemented. All 29 validation checks, 33 parser checks, and 12 model checks pass. Prolog generation, HTML generation, and complete pipeline orchestration are not implemented yet.
+Stage 6: input parsing, validation, reports, Prolog knowledge generation, and suggested queries are implemented. All 90 Haskell checks and 13 SWI-Prolog checks pass. HTML generation and complete pipeline orchestration are not implemented yet.
 
 See the [model design](docs/intermediate-model.md) and [team handoff](docs/team-handoff.md) for the current API, verification commands, and suggested collaboration boundaries.
 
@@ -13,6 +13,7 @@ Run the current checks from the repository root:
 runghc -Wall -Werror -isrc test/ModelTest.hs
 runghc -Wall -Werror -isrc test/ParserTest.hs
 runghc -Wall -Werror -isrc test/ValidationTest.hs
+runghc -Wall -Werror -isrc test/PrologTest.hs
 ```
 
 For interactive input inspection, run `ghci -isrc src/Input.hs`, then `readProblem "input/problema.txt"`. This returns the parsed model, not generated outputs or a semantic validation result.
@@ -30,6 +31,17 @@ runghc -Wall -Werror -isrc app/Validate.hs test/fixtures/duplicate-entity.txt ou
 ```
 
 The command exits with code 0 for valid input, including warnings, and code 1 for validation errors or IO failures. See [validation behavior](docs/validation.md).
+
+Generate `output/conocimiento.pl`, `output/consultas.pl`, and the validation report:
+
+```powershell
+runghc -Wall -Werror -isrc app/GenerateProlog.hs
+swipl -q -s output/consultas.pl
+```
+
+In SWI-Prolog, try `classmate(First, Second).`, `course_with_teacher(Course).`, or `suggested_query(Query), call(Query).`. Names preserve input case and are quoted atoms, for example `'Alice'`.
+
+For another input, pass `INPUT OUTPUT_DIRECTORY`; the directory must already exist. Errors block Prolog generation and produce a report. Existing Prolog files are left unchanged on invalid input and may be stale. See [Prolog generation](docs/prolog-generation.md) for behavior and current limits.
 
 ## Planned pipeline
 
