@@ -1,6 +1,7 @@
 module Pipeline (runPipeline) where
 
-import Control.Exception (IOException, bracketOnError, displayException, evaluate, try)
+import Control.Concurrent (threadDelay)
+import Control.Exception (IOException, bracketOnError, catch, displayException, evaluate, try)
 import Control.Monad (forM_, when)
 import Diagnostic
 import Html (renderHtml)
@@ -10,6 +11,7 @@ import Prolog
 import System.Directory (canonicalizePath, createDirectoryIfMissing, renameFile)
 import System.FilePath ((</>), equalFilePath)
 import System.IO (hClose, hPutStr, hSetEncoding, openTempFile, utf8)
+import System.IO.Error (isPermissionError)
 import Validation (validateProblem)
 import ValidationReport (renderValidationReport)
 
@@ -62,4 +64,13 @@ writeAtomic directory name contents =
     hSetEncoding handle utf8
     hPutStr handle contents
     hClose handle
-    renameFile temporary (directory </> name)
+    renameWithRetry 8 temporary (directory </> name)
+
+-- | Windows can temporarily lock a newly written file; never hide persistent errors.
+renameWithRetry :: Int -> FilePath -> FilePath -> IO ()
+renameWithRetry attempts temporary destination = renameFile temporary destination `catch` retry
+  where
+    retry failure
+      | attempts > 0 && isPermissionError failure =
+          threadDelay 100000 >> renameWithRetry (attempts - 1) temporary destination
+      | otherwise = ioError failure
