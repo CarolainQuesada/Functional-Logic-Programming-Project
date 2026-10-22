@@ -3,9 +3,18 @@ An integrated project using Haskell, Prolog, and a web interface to automaticall
 
 ## Current stage
 
-Stage 3: the Haskell intermediate model is implemented and its 12 checks pass. Input parsing, domain validation, output generation, and application orchestration are not implemented yet.
+Stage 4: the functional parser and UTF-8 input reader are implemented. All 33 parser checks and 12 model checks pass. Domain validation, output generation, and application orchestration are not implemented yet.
 
 See the [model design](docs/intermediate-model.md) and [team handoff](docs/team-handoff.md) for the current API, verification commands, and suggested collaboration boundaries.
+
+Run the current checks from the repository root:
+
+```powershell
+runghc -Wall -Werror -isrc test/ModelTest.hs
+runghc -Wall -Werror -isrc test/ParserTest.hs
+```
+
+For interactive input inspection, run `ghci -isrc src/Input.hs`, then `readProblem "input/problema.txt"`. This returns the parsed model, not generated outputs or a semantic validation result.
 
 ## Planned pipeline
 
