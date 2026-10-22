@@ -3,7 +3,9 @@ An integrated project using Haskell, Prolog, and a web interface to automaticall
 
 ## Current stage
 
-Stage 2: the academic input format and example fixtures are defined. No application logic has been implemented.
+Stage 3: the Haskell intermediate model is implemented and its 12 checks pass. Input parsing, domain validation, output generation, and application orchestration are not implemented yet.
+
+See the [model design](docs/intermediate-model.md) and [team handoff](docs/team-handoff.md) for the current API, verification commands, and suggested collaboration boundaries.
 
 ## Planned pipeline
 
