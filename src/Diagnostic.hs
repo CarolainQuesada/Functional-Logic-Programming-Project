@@ -12,7 +12,8 @@ data Severity = Error | Warning
   deriving (Eq, Show)
 
 data DiagnosticCode
-  = MalformedRecord
+  = InputFailure
+  | MalformedRecord
   | UnknownVocabulary
   | UnknownSection
   | MissingSection

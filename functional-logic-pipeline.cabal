@@ -1,0 +1,62 @@
+cabal-version: 3.0
+name: functional-logic-pipeline
+version: 0.1.0.0
+synopsis: Structured academic input to validated Prolog and generated HTML
+description: A functional Haskell pipeline with source traceability and SWI-Prolog knowledge generation.
+build-type: Simple
+license: NONE
+extra-source-files: README.md, input/*.txt, test/fixtures/*.txt, docs/*.md
+
+common settings
+  default-language: Haskell2010
+  ghc-options: -Wall -Werror
+
+library
+  import: settings
+  hs-source-dirs: src
+  exposed-modules: Source, Diagnostic, Model, Parser, Input, Validation, ValidationReport,
+                   Prolog, PrologFiles, Html, HtmlStyle, Pipeline
+  build-depends: base >=4.18 && <5, directory >=1.3 && <1.4, filepath >=1.4 && <1.6
+
+executable knowledge-pipeline
+  import: settings
+  hs-source-dirs: app
+  main-is: Main.hs
+  build-depends: base, functional-logic-pipeline
+
+common test-settings
+  import: settings
+  hs-source-dirs: test
+  build-depends: base, functional-logic-pipeline
+
+test-suite model-tests
+  import: test-settings
+  type: exitcode-stdio-1.0
+  main-is: ModelTest.hs
+
+test-suite parser-tests
+  import: test-settings
+  type: exitcode-stdio-1.0
+  main-is: ParserTest.hs
+
+test-suite validation-tests
+  import: test-settings
+  type: exitcode-stdio-1.0
+  main-is: ValidationTest.hs
+
+test-suite prolog-tests
+  import: test-settings
+  type: exitcode-stdio-1.0
+  main-is: PrologTest.hs
+  build-depends: directory, filepath, process
+
+test-suite html-tests
+  import: test-settings
+  type: exitcode-stdio-1.0
+  main-is: HtmlTest.hs
+
+test-suite pipeline-tests
+  import: test-settings
+  type: exitcode-stdio-1.0
+  main-is: PipelineTest.hs
+  build-depends: bytestring, directory, filepath

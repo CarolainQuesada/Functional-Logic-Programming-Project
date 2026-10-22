@@ -7,8 +7,9 @@ import Source
 
 -- | Retain parsed records and syntax diagnostics while adding semantic findings.
 validateProblem :: Problem -> Problem
-validateProblem problem = problem
-  { problemDiagnostics = nub (problemDiagnostics problem ++ findings) }
+validateProblem problem
+  | any ((== InputFailure) . diagnosticCode) (problemDiagnostics problem) = problem
+  | otherwise = problem { problemDiagnostics = nub (problemDiagnostics problem ++ findings) }
   where
     findings = missingSections ++ repeatedSections ++ duplicateEntities
       ++ referenceErrors ++ unsupportedRules ++ repeatedRelations ++ repeatedRules
