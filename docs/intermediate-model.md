@@ -40,4 +40,4 @@ Constructors are intentionally available for the parser to build partially valid
 
 The suite compiled with `ghc -Wall -Werror -isrc` and all 12 checks passed when the compiled executable ran. Build products were written to a temporary directory outside the repository. The same suite can be interpreted with `runghc -Wall -Werror -isrc test/ModelTest.hs`.
 
-The next approved stage is the functional parser. Generators should consume the intermediate model instead of reparsing input strings.
+The implemented parser, validator, and generators consume this model. Generators do not reparse original input strings. See [complete architecture](architecture.md).

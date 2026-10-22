@@ -6,7 +6,7 @@ Stage 2 defines the academic input contract. The official assignment supplied in
 
 The academic domain is explicitly listed in the assignment. English record vocabulary is a project choice, consistent with the requirement to write code in English. The Spanish vocabulary in the professor's example is illustrative, not a second supported dialect. If a defense input uses a different vocabulary, its compatibility must be agreed before the defense.
 
-The conventions below fill gaps in the assignment; they are project decisions, not additional requirements attributed to the professor. No parser or model is implemented in this stage.
+The conventions below fill gaps in the assignment; they are project decisions, not additional requirements attributed to the professor. They are implemented by the parser, validator, generators, and complete pipeline.
 
 ## Required sections
 
@@ -27,7 +27,7 @@ Each section must occur exactly once. Sections may appear in any order and may b
 - Match section markers, types, relations, rules, and entity names case-sensitively.
 - Names use ASCII identifiers: `[A-Za-z][A-Za-z0-9_]*`. There are no quoted names, embedded spaces, accents, delimiters inside names, or comment syntax in the initial format.
 - Entity records contain exactly one colon and one nonempty name. Relation records contain exactly one colon and exactly two nonempty comma-separated arguments. Rule records contain one supported rule identifier without a colon or arguments.
-- Preserve entity name case in the model. Later Prolog generation must encode names as quoted atoms and escape them where needed, rather than lowercasing distinct names into the same atom.
+- Preserve entity name case in the model. Prolog generation encodes names as quoted atoms and escapes them where needed, rather than lowercasing distinct names into the same atom.
 
 ## Academic vocabulary
 
@@ -62,12 +62,12 @@ The professor's illustrative Prolog comment line numbers differ from the physica
 
 Errors include malformed records, unknown vocabulary or headers, missing/repeated sections, records outside a section, duplicate entity names, undeclared references, and relation argument type mismatches. Unsupported rules are errors even when syntactically well formed.
 
-Collect independent errors where possible. A malformed record must not produce cascading semantic errors based on invented values. The validation report and generated UI should show diagnostics. With errors, do not publish executable knowledge or suggested queries; the integration stage must prevent stale successful outputs from appearing current. Warnings alone permit generation. Implement this behavior in the relevant later stages, not in stage 2.
+Collect independent errors where possible. A malformed record must not produce cascading semantic errors based on invented values. The validation report and generated UI show diagnostics. With errors, the complete pipeline replaces executable knowledge and suggested queries with blocked markers so stale successful results are not presented as current. Warnings alone permit generation.
 
 ## Examples and review status
 
 `input/problema.txt` is the primary valid academic example. `test/fixtures/alternate-valid.txt` uses different names to support the defense requirement. Other fixtures isolate required invalid cases; `test/fixtures/README.md` records expected source locations and outcomes.
 
-The fixtures have been reviewed as examples of this contract. No automated parser, validation, Prolog generation, or browser test has run because those implementations do not exist yet. Future tests must also cover BOM/CRLF, whitespace, section order, repeated and unknown headers, empty sections, case sensitivity, argument types, and duplicate warnings.
+The fixtures are exercised by parser, validation, generation, and integration tests. Coverage includes BOM/CRLF, whitespace, section order, repeated and unknown headers, empty sections, case sensitivity, argument types, duplicate warnings, and stale-output invalidation. Primary, alternate, and invalid generated pages were also loaded in Chrome at desktop and mobile sizes.
 
-Stage 2 is complete as a specification and fixture preparation task. Stage 3 will introduce the Haskell intermediate model after user approval.
+See [verification evidence](verification.md) for executed results and [pipeline behavior](pipeline.md) for the complete command.

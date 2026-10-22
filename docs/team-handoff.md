@@ -1,41 +1,35 @@
-# Team handoff
+﻿# Team handoff
 
-## Completed
+## Completed implementation
 
-1. Initial repository structure, ignore rules, and English documentation.
-2. Local Windows tools verified: GHC/GHCi 9.10.3, Cabal 3.16.1.0, SWI-Prolog 10.1.17, Doxygen 1.18.0, and Git 2.44.0.
-3. Academic domain confirmed against the supplied assignment; input conventions and valid/invalid fixtures documented.
-4. Intermediate Haskell model implemented in `Source.hs`, `Diagnostic.hs`, and `Model.hs`.
-5. All 12 model checks passed after compilation with `-Wall -Werror`.
-6. Functional parser and separate UTF-8 reader implemented in `Parser.hs` and `Input.hs`; all 33 parser checks passed and all 12 model checks passed again.
-7. Semantic validator, UTF-8 report generator, and validation command implemented; all 29 validation checks and all 45 existing checks passed. Valid and invalid report command executions were also verified.
-8. Prolog facts, requested rules, source comments, suggested queries, and generation command implemented. All 16 generator checks and 13 SWI-Prolog checks passed, along with the existing 74 checks.
+All eleven software stages are complete: environment setup, input specification, typed Haskell model, pure parser, semantic validation, Prolog generation, generated responsive HTML, integrated regeneration, automated and browser tests, Doxygen documentation, and the final assignment checklist.
 
-## Feedback on the current work
+The supported entry point is `app/Main.hs`, built by Cabal as `knowledge-pipeline`. It produces all four required artifacts in one run. Run from the repository root:
 
-The project now has a clear input contract and a model that separates domain data, source traceability, and diagnostics. It has no extra dependencies and no hardcoded sample names in production modules. Keeping source order and duplicate records supports the assignment's validation and traceability requirements.
+```powershell
+runghc -Wall -Werror -isrc app/Main.hs
+```
 
-The current result reads and validates input, then generates `reporte_validacion.txt`, `conocimiento.pl`, and `consultas.pl`. Generated knowledge and queries were loaded and checked in SWI-Prolog. HTML and complete pipeline orchestration remain pending. The English vocabulary and stricter lexical conventions are team decisions: both partners should review them, and confirm the expected input vocabulary before the professor supplies a second file.
+The final tests cover 127 Haskell checks and 13 real SWI-Prolog checks. Chrome verified primary, alternate, and invalid inputs at desktop and mobile sizes. See `verification.md` for execution evidence and `architecture.md` for design.
 
-## Remaining work, in stage order
+## Feedback on the work
 
-| Stage | Deliverable |
-| --- | --- |
-| 7 | HTML generated from the model or generated knowledge |
-| 8 | Output IO and orchestration, including safe regeneration after changed or invalid input |
-| 9 | End-to-end checks, second input, and browser execution evidence |
-| 10 | Doxygen configuration, generated documentation, and complete run instructions |
-| 11 | Assignment checklist and oral defense preparation |
+The project has separate modules for source traceability, domain types, parsing, validation, Prolog, HTML, and publication. The functional core is pure; IO is explicit. Sample names exist only in inputs/tests, not production logic. It uses GHC-bundled libraries without third-party runtime dependencies.
 
-## Suggested collaboration boundaries
+Invalid input now replaces stale knowledge with nonexecutable markers and shows current errors in the generated UI. Per-file output replacement has a bounded retry for transient Windows locks. A complete run is not a multi-file disk transaction; one process should write each output directory.
 
-This is a proposal to agree together, not an assignment of ownership or permission to skip stages:
+## Remaining team actions
 
-- Partner A can lead the Haskell parser, validation, and orchestration.
-- Partner B can review the model and fixtures now, then lead Prolog generation and the generated UI when those stages are approved.
-- Both partners should review each other's changes, contribute tests for their modules, and prepare the documentation and defense together.
-- Agree on module APIs before implementation. Coordinate any changes to the shared model, input contract, fixtures, or root README instead of editing them concurrently.
+- Review the implementation together and run it independently on the teammate's computer.
+- Confirm that the professor's second input will use the documented academic vocabulary and grammar. The group adapted records to English; Spanish section markers and assignment filenames are retained.
+- Practice the demonstration and questions in `defense-guide.md`.
+- Review `requirements-checklist.md` and the generated delivery archive before uploading.
+- Authorize publishing/merging the remaining local work when ready. No course-platform submission has been performed.
 
-Work uses one task branch and English commits. Stages 1-3 were pushed to `feat/intermediate-model`. Stages 4-6 are on successive local branches: `feat/input-parser`, `feat/input-validation`, and `feat/prolog-generation`. No merge has been performed. Publishing additional work and merging require explicit authorization.
+These are review and delivery activities; no planned software stage remains unfinished.
 
-Do not start the next stage until the user approves it.
+## Git state and task history
+
+Stages 1-3 were previously pushed to `feat/intermediate-model`. Later work is preserved by successive task branches: `feat/input-parser`, `feat/input-validation`, `feat/prolog-generation`, `feat/generated-interface`, `feat/complete-pipeline`, `test/final-verification`, and `docs/final-delivery`. The final branch includes all earlier commits by ancestry. Commits and code are in English.
+
+The final implementation request authorized completion of the remaining stages. It did not request another push or merge, so later work remains local. Before both partners modify shared contracts or model modules, agree on boundaries and review the proposed API changes together.

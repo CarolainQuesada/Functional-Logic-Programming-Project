@@ -26,4 +26,4 @@ Run from the repository root:
 runghc -Wall -Werror -isrc test/ParserTest.hs
 ```
 
-No Prolog files, HTML, or validation report are generated in this stage. See the input specification for the semantics to implement next.
+The parser itself does not generate files. The complete pipeline consumes its model, runs semantic validation, and generates all required outputs. File-reading exceptions are converted to `InputFailure` diagnostics by the pipeline coordinator.

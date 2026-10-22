@@ -5,7 +5,8 @@ synopsis: Structured academic input to validated Prolog and generated HTML
 description: A functional Haskell pipeline with source traceability and SWI-Prolog knowledge generation.
 build-type: Simple
 license: NONE
-extra-source-files: README.md, input/*.txt, test/fixtures/*.txt, docs/*.md
+extra-source-files: README.md, input/*.txt, test/fixtures/*.txt, docs/*.md,
+                    docs/Doxyfile, tools/*.py, tools/*.mjs, tools/*.ps1
 
 common settings
   default-language: Haskell2010

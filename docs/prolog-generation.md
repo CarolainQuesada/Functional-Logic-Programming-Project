@@ -36,7 +36,7 @@ swipl -q -s output/consultas.pl
 
 Default input is `input/problema.txt`; default output directory is `output`. Optional arguments are `INPUT OUTPUT_DIRECTORY`, supplied together. The directory must exist. The command compares canonical input/output paths before writing, writes the validation report, then writes Prolog only when validation permits it. Exit code 0 indicates success; validation and IO errors return 1.
 
-Invalid input does not update Prolog files. Previous files can therefore be stale; the command reports this explicitly. Output writes are sequential rather than transactional, and an IO error can leave partial output. Stale-output handling and complete publication coordination remain stage 8 work. This stage does not create HTML, invoke SWI-Prolog automatically during generation, or delete files.
+This focused earlier-stage command does not update Prolog on invalid input and can leave previous results stale. For routine use, run `app/Main.hs`: it regenerates HTML and the report, and replaces old knowledge with blocked markers on invalid input. See [pipeline behavior](pipeline.md). Neither command invokes SWI-Prolog automatically; the test suite executes its logical checks separately.
 
 ## Executed verification
 

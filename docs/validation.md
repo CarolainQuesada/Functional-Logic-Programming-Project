@@ -26,4 +26,4 @@ On October 22, 2026, the compiled validation suite passed all 29 checks with `-W
 
 The primary report was generated at `output/reporte_validacion.txt` with status `VALID`, zero errors, and zero warnings. Generated reports are ignored by Git and can be recreated with the command above.
 
-This stage does not generate Prolog, queries, or HTML. Stage 6 must honor error severity before generating executable knowledge and deduplicate warning-only relation/rule requests. Safe management of stale output belongs to stage 8 integration.
+The validator itself does not generate output. The Prolog generator honors error severity and deduplicates warning-only relation/rule requests. The complete pipeline manages stale output and generates HTML diagnostics. An `InputFailure` bypasses domain checks because no input model was read, avoiding invented missing-section findings.

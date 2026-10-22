@@ -3,9 +3,35 @@ An integrated project using Haskell, Prolog, and a web interface to automaticall
 
 ## Current stage
 
-Stage 6: input parsing, validation, reports, Prolog knowledge generation, and suggested queries are implemented. All 90 Haskell checks and 13 SWI-Prolog checks pass. HTML generation and complete pipeline orchestration are not implemented yet.
+The complete academic pipeline is implemented: UTF-8 input, typed intermediate model, validation, Prolog knowledge, suggested queries, generated HTML, and a validation report. All 127 Haskell checks and 13 SWI-Prolog checks pass. Chrome desktop/mobile verification and Doxygen documentation generation are also complete. See [verification evidence](docs/verification.md) and the [requirements checklist](docs/requirements-checklist.md).
 
 See the [model design](docs/intermediate-model.md) and [team handoff](docs/team-handoff.md) for the current API, verification commands, and suggested collaboration boundaries.
+
+## Quick start
+
+Run from the repository root with GHC/GHCi and SWI-Prolog in PATH:
+
+```powershell
+runghc -Wall -Werror -isrc app/Main.hs
+```
+
+Open `output/index.html` in a browser. The command regenerates `conocimiento.pl`, `consultas.pl`, `index.html`, and `reporte_validacion.txt`. Nothing in the HTML must be edited manually. To use the second example or the professor's replacement input:
+
+```powershell
+runghc -Wall -Werror -isrc app/Main.hs test/fixtures/alternate-valid.txt output/alternate
+```
+
+The output directory is created automatically. The input must follow the documented academic vocabulary and grammar. Invalid input returns exit code 1, shows errors in HTML and the report, and replaces previous Prolog with nonexecutable comment markers. Warning-only input returns 0. See [pipeline behavior and limits](docs/pipeline.md).
+
+Alternatively, build and run the executable:
+
+```powershell
+cabal build all
+cabal run knowledge-pipeline
+cabal run knowledge-pipeline -- test/fixtures/alternate-valid.txt output/alternate
+```
+
+## Checks
 
 Run the current checks from the repository root:
 
@@ -14,7 +40,15 @@ runghc -Wall -Werror -isrc test/ModelTest.hs
 runghc -Wall -Werror -isrc test/ParserTest.hs
 runghc -Wall -Werror -isrc test/ValidationTest.hs
 runghc -Wall -Werror -isrc test/PrologTest.hs
+runghc -Wall -Werror -isrc test/HtmlTest.hs
+runghc -Wall -Werror -isrc test/PipelineTest.hs
 ```
+
+Or use `cabal test all --test-show-details=direct`. On Windows, `powershell -ExecutionPolicy Bypass -File tools/test.ps1` runs the suites and regenerates the primary output. Cabal resolves only GHC-bundled libraries (`base`, `directory`, `filepath`, `bytestring`, and `process`); there are no third-party runtime packages.
+
+## Focused inspection commands
+
+The following earlier-stage tools are retained for focused checks. Use `app/Main.hs` for complete, synchronized regeneration.
 
 For interactive input inspection, run `ghci -isrc src/Input.hs`, then `readProblem "input/problema.txt"`. This returns the parsed model, not generated outputs or a semantic validation result.
 
@@ -41,7 +75,33 @@ swipl -q -s output/consultas.pl
 
 In SWI-Prolog, try `classmate(First, Second).`, `course_with_teacher(Course).`, or `suggested_query(Query), call(Query).`. Names preserve input case and are quoted atoms, for example `'Alice'`.
 
-For another input, pass `INPUT OUTPUT_DIRECTORY`; the directory must already exist. Errors block Prolog generation and produce a report. Existing Prolog files are left unchanged on invalid input and may be stale. See [Prolog generation](docs/prolog-generation.md) for behavior and current limits.
+For this focused Prolog-only command, pass `INPUT OUTPUT_DIRECTORY`; the directory must already exist. Errors block generation but leave existing Prolog untouched. Use the complete pipeline above for stale-output invalidation and synchronized HTML. See [Prolog generation](docs/prolog-generation.md).
+
+## Documentation, browser checks, and submission
+
+With Python 3.10+ and Doxygen installed, generate the technical documentation:
+
+```powershell
+python tools/build_docs.py
+```
+
+Open `docs/html/index.html`. The script extracts real Haskell type declarations and function signatures into Doxygen pages because Doxygen has no native Haskell parser. No synthetic C++ implementation is used. See [documentation generation](docs/documentation.md).
+
+Optional real-browser verification requires Node 22+ and Chrome/Chromium (set `CHROME_BIN` for a custom executable):
+
+```powershell
+node tools/browser_check.mjs
+```
+
+Screenshots and machine-readable evidence are saved under `output/browser-checks/`. Python, Node, and Doxygen are development/documentation tools; the pipeline itself requires none of them.
+
+After regenerating output and documentation, create the deliverable archive:
+
+```powershell
+python tools/package_submission.py
+```
+
+The archive includes repository source, inputs, generated results, technical documentation, and available browser evidence. See the [defense guide](docs/defense-guide.md) before presenting.
 
 ## Planned pipeline
 
@@ -67,11 +127,11 @@ swipl --version
 doxygen --version
 ```
 
-If a command is unavailable, install the corresponding tool and ensure its executable directory is in `PATH`. Open a new terminal after changing `PATH` and repeat the checks. The validation command is available above; the complete pipeline is not implemented yet.
+If a command is unavailable, install the corresponding tool and ensure its executable directory is in `PATH`. Open a new terminal after changing `PATH` and repeat the checks. The tested workstation versions are recorded in [development environment](docs/development-environment.md). GHCup, SWI-Prolog, and Doxygen should be obtained from their official distributions.
 
 ## Directory structure
 
-Each directory includes a README describing its responsibility. Application modules will be added in later stages:
+The project separates pure transformations from executable entry points and tooling:
 
 ```text
 app/       Haskell application entry point
@@ -80,9 +140,12 @@ input/     Assignment input files
 test/      Test cases and fixtures
 docs/      Architecture, assignment notes, and Doxygen configuration
 output/    Generated Prolog, queries, HTML, and validation reports
+tools/     Test runner, browser checks, documentation, and packaging
 ```
 
 Generated output and local build artifacts are excluded from version control. Only the README in `output/` is tracked.
+
+The build definition is `functional-logic-pipeline.cabal`. Generated Doxygen HTML and extracted API pages are also ignored; the submission archive includes them.
 
 ## Git workflow
 
