@@ -3,7 +3,7 @@ An integrated project using Haskell, Prolog, and a web interface to automaticall
 
 ## Current stage
 
-Stage 4: the functional parser and UTF-8 input reader are implemented. All 33 parser checks and 12 model checks pass. Domain validation, output generation, and application orchestration are not implemented yet.
+Stage 5: input parsing, semantic validation, and the UTF-8 validation report are implemented. All 29 validation checks, 33 parser checks, and 12 model checks pass. Prolog generation, HTML generation, and complete pipeline orchestration are not implemented yet.
 
 See the [model design](docs/intermediate-model.md) and [team handoff](docs/team-handoff.md) for the current API, verification commands, and suggested collaboration boundaries.
 
@@ -12,9 +12,24 @@ Run the current checks from the repository root:
 ```powershell
 runghc -Wall -Werror -isrc test/ModelTest.hs
 runghc -Wall -Werror -isrc test/ParserTest.hs
+runghc -Wall -Werror -isrc test/ValidationTest.hs
 ```
 
 For interactive input inspection, run `ghci -isrc src/Input.hs`, then `readProblem "input/problema.txt"`. This returns the parsed model, not generated outputs or a semantic validation result.
+
+Validate the primary input and generate `output/reporte_validacion.txt`:
+
+```powershell
+runghc -Wall -Werror -isrc app/Validate.hs
+```
+
+To use different paths, pass both the input and report paths. The report directory must already exist:
+
+```powershell
+runghc -Wall -Werror -isrc app/Validate.hs test/fixtures/duplicate-entity.txt output/duplicate-report.txt
+```
+
+The command exits with code 0 for valid input, including warnings, and code 1 for validation errors or IO failures. See [validation behavior](docs/validation.md).
 
 ## Planned pipeline
 
@@ -40,7 +55,7 @@ swipl --version
 doxygen --version
 ```
 
-If a command is unavailable, install the corresponding tool and ensure its executable directory is in `PATH`. Open a new terminal after changing `PATH` and repeat the checks. No application build or run command is available yet.
+If a command is unavailable, install the corresponding tool and ensure its executable directory is in `PATH`. Open a new terminal after changing `PATH` and repeat the checks. The validation command is available above; the complete pipeline is not implemented yet.
 
 ## Directory structure
 

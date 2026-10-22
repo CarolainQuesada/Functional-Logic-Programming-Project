@@ -1,6 +1,6 @@
 # Input fixture expectations
 
-These are full-pipeline expectations. Stage 4 parser tests now load all these fixtures and verify syntax outcomes or preservation for later semantic validation. Duplicate, undeclared-reference, missing-section, and unsupported-rule diagnostics remain stage 5 work. Physical source lines include blank lines.
+These are validation expectations. Parser and validation tests load all these fixtures and verify the outcomes below. Physical source lines include blank lines.
 
 | File | Expected outcome |
 | --- | --- |
