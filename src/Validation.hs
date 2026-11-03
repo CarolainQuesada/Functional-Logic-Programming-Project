@@ -5,7 +5,9 @@ import Diagnostic
 import Model
 import Source
 
--- | Retain parsed records and syntax diagnostics while adding semantic findings.
+-- | Check required sections, uniqueness, typed references, and requested rules.
+-- Return the model with accumulated diagnostics; repeated validation is idempotent.
+-- Input failures bypass semantic checks to avoid cascading missing-section errors.
 validateProblem :: Problem -> Problem
 validateProblem problem
   | any ((== InputFailure) . diagnosticCode) (problemDiagnostics problem) = problem

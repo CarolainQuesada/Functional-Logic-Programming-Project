@@ -51,14 +51,17 @@ data Problem = Problem
   , problemDiagnostics :: [Diagnostic]
   } deriving (Eq, Show)
 
+-- | Construct an empty intermediate model before parsing; required sections are not implied.
 emptyProblem :: Problem
 emptyProblem = Problem [] [] [] [] []
 
+-- | Extract the case-sensitive identifier shared by every entity constructor.
 entityName :: Entity -> EntityName
 entityName (Person name) = name
 entityName (Course name) = name
 entityName (Teacher name) = name
 
+-- | Return the domain type used to validate relation arguments.
 entityKind :: Entity -> EntityKind
 entityKind (Person _) = PersonKind
 entityKind (Course _) = CourseKind

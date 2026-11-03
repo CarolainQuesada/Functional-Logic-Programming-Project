@@ -12,13 +12,25 @@ main :: IO ()
 main = do
   primary <- readProblem "input/problema.txt"
   alternate <- readProblem "test/fixtures/alternate-valid.txt"
+  assignment <- readProblem "test/fixtures/assignment-valid.txt"
   malformed <- readProblem "test/fixtures/malformed-records.txt"
   duplicate <- readProblem "test/fixtures/duplicate-entity.txt"
   undeclared <- readProblem "test/fixtures/undeclared-reference.txt"
   missing <- readProblem "test/fixtures/missing-section.txt"
   unsupported <- readProblem "test/fixtures/unsupported-rule.txt"
   let checks =
-        [ ("Primary input counts and section order", counts primary == (3, 4, 3, 2)
+        [ ("Assignment vocabulary preserves values and original source", counts assignment == (3,4,3,2)
+            && null (problemDiagnostics assignment)
+            && values (problemEntities assignment) == [Person (name "Ana"), Person (name "Luis"),
+                 Course (name "Paradigmas"), Teacher (name "Maria")]
+            && values (problemRelations assignment) == [Enrolled (name "Ana") (name "Paradigmas"),
+                 Enrolled (name "Luis") (name "Paradigmas"), Teaches (name "Maria") (name "Paradigmas")]
+            && values (problemRules assignment) == [Classmates,CourseWithTeacher]
+            && take 1 (map sourceLine (problemRelations assignment)) == [SourceLine 8 "lleva: Ana, Paradigmas"])
+        , ("Mixed vocabulary normalizes rule aliases", values (problemRules
+            (rules "classmates\ncompaneros\ncourse_with_teacher\ncurso_con_docente")) ==
+              [Classmates,Classmates,CourseWithTeacher,CourseWithTeacher])
+        , ("Primary input counts and section order", counts primary == (3, 4, 3, 2)
             && null (problemDiagnostics primary)
             && values (problemSections primary) == [EntitiesSection, RelationsSection, RulesSection])
         , ("Primary entity values", values (problemEntities primary) ==

@@ -13,3 +13,5 @@ These are validation expectations. Parser and validation tests load all these fi
 | `unsupported-rule.txt` | Unsupported academic rule on line 9 |
 
 The primary valid input also checks that blank lines do not shift source locations. Later automated tests must check the additional lexical and section policies listed in the input specification.
+
+- `assignment-valid.txt`: exact Spanish assignment example; produces Ana/Luis classmates and Paradigmas as a course with a teacher.

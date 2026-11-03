@@ -8,15 +8,17 @@ import Html (renderHtml)
 import Input (readProblem)
 import Model
 import Prolog
-import System.Directory (canonicalizePath, createDirectoryIfMissing, renameFile)
+import System.Directory (canonicalizePath, createDirectoryIfMissing, removeFile, renameFile)
 import System.FilePath ((</>), equalFilePath)
 import System.IO (hClose, hPutStr, hSetEncoding, openTempFile, utf8)
 import System.IO.Error (isPermissionError)
 import Validation (validateProblem)
 import ValidationReport (renderValidationReport)
 
--- | Regenerate all outputs; invalid input replaces old executable knowledge.
--- Output-directory failures propagate to the command rather than claiming success.
+-- | Read an input path and regenerate the four artifacts in an output directory.
+-- Return False for input errors, replacing stale executable knowledge with blocked markers.
+-- Reject input/output aliases; propagate publication IO failures to the command.
+-- Publish each file atomically and the final interface last; use one writer per directory.
 runPipeline :: FilePath -> FilePath -> IO Bool
 runPipeline inputPath directory = do
   resolvedInput <- canonicalizePath inputPath
@@ -58,13 +60,21 @@ artifacts inputPath problem =
       Left _ -> (blocked, blocked)
     blocked = "% Generation blocked. This input has errors; see reporte_validacion.txt.\n"
 
+-- | Publish UTF-8 text through a sibling temporary file and atomic rename.
+-- On failure, attempt to close and remove the temporary without masking the original error.
 writeAtomic :: FilePath -> FilePath -> String -> IO ()
 writeAtomic directory name contents =
-  bracketOnError (openTempFile directory ".pipeline.tmp") (hClose . snd) $ \(temporary, handle) -> do
+  bracketOnError (openTempFile directory ".pipeline.tmp") cleanup $ \(temporary, handle) -> do
     hSetEncoding handle utf8
     hPutStr handle contents
     hClose handle
     renameWithRetry 8 temporary (directory </> name)
+  where
+    cleanup (temporary, handle) = do
+      hClose handle `catch` ignoreCleanupError
+      removeFile temporary `catch` ignoreCleanupError
+    ignoreCleanupError :: IOException -> IO ()
+    ignoreCleanupError _ = pure ()
 
 -- | Windows can temporarily lock a newly written file; never hide persistent errors.
 renameWithRetry :: Int -> FilePath -> FilePath -> IO ()

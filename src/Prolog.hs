@@ -11,7 +11,9 @@ data PrologOutput = PrologOutput
   , queriesText :: String
   } deriving (Eq, Show)
 
--- | Revalidate before generation; invalid models never yield executable output.
+-- | Validate a model and return either diagnostics or executable knowledge and queries.
+-- Preserve entity case, retain source comments, and deduplicate repeated requests.
+-- Rule definitions use the canonical English predicates for either input vocabulary.
 generateProlog :: Problem -> Either [Diagnostic] PrologOutput
 generateProlog input
   | hasErrors (problemDiagnostics problem) = Left (problemDiagnostics problem)

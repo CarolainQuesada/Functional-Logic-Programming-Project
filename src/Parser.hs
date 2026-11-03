@@ -7,7 +7,8 @@ import Diagnostic
 import Model
 import Source
 
--- | Parse physical lines without resolving references or validating the domain.
+-- | Parse sectioned text into typed records and syntax diagnostics without IO.
+-- Physical source lines survive parsing; semantic checks belong to Validation.
 parseProblem :: String -> Problem
 parseProblem input = restoreOrder problem
   where
@@ -61,34 +62,44 @@ addDiagnostic origin code message problem = problem
       : problemDiagnostics problem
   }
 
+-- | Parse one English or Spanish entity declaration into the shared model.
 parseEntity :: String -> Either (DiagnosticCode, String) Entity
 parseEntity text = case fields ':' text of
   [kind, name] | identifier kind && identifier name ->
     case kind of
       "person" -> Right (Person (EntityName name))
+      "persona" -> Right (Person (EntityName name))
       "course" -> Right (Course (EntityName name))
+      "curso" -> Right (Course (EntityName name))
       "teacher" -> Right (Teacher (EntityName name))
+      "docente" -> Right (Teacher (EntityName name))
       _ -> Left (UnknownVocabulary, "Unknown entity type: " ++ kind)
   _ -> Left (MalformedRecord, "Expected an entity record: type: Name.")
 
+-- | Parse two named references; normalize vocabulary without changing names.
 parseRelation :: String -> Either (DiagnosticCode, String) Relation
 parseRelation text = case fields ':' text of
   [kind, arguments] | identifier kind -> case fields ',' arguments of
     [source, target] | identifier source && identifier target ->
       case kind of
         "enrolled" -> Right (Enrolled (EntityName source) (EntityName target))
+        "lleva" -> Right (Enrolled (EntityName source) (EntityName target))
         "teaches" -> Right (Teaches (EntityName source) (EntityName target))
+        "imparte" -> Right (Teaches (EntityName source) (EntityName target))
         _ -> Left (UnknownVocabulary, "Unknown relation type: " ++ kind)
     _ -> malformed
   _ -> malformed
   where
     malformed = Left (MalformedRecord, "Expected a relation record: relation: Source, Target.")
 
+-- | Normalize supported rule aliases and retain unknown names for validation.
 parseRule :: String -> Either (DiagnosticCode, String) RequestedRule
 parseRule text
   | not (identifier text) = Left (MalformedRecord, "Expected a single rule identifier.")
   | text == "classmates" = Right Classmates
+  | text == "companeros" = Right Classmates
   | text == "course_with_teacher" = Right CourseWithTeacher
+  | text == "curso_con_docente" = Right CourseWithTeacher
   | otherwise = Right (UnknownRule text)
 
 identifier :: String -> Bool

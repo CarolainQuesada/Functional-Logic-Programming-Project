@@ -39,5 +39,6 @@ data Diagnostic = Diagnostic
   , diagnosticRelatedLines :: [SourceLine]
   } deriving (Eq, Show)
 
+-- | Return whether any diagnostic blocks executable output; warnings alone do not.
 hasErrors :: [Diagnostic] -> Bool
 hasErrors = any ((== Error) . diagnosticSeverity)

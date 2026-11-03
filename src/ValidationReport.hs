@@ -5,6 +5,8 @@ import Model (Problem (problemDiagnostics))
 import Source
 import System.IO (IOMode (WriteMode), hPutStr, hSetEncoding, utf8, withFile)
 
+-- | Render accumulated diagnostics, status, counts, and physical source locations.
+-- The caller must validate the model first; this function performs no IO.
 renderValidationReport :: Problem -> String
 renderValidationReport problem = unlines
   ([ "Validation report"

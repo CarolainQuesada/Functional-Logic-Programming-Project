@@ -5,7 +5,8 @@ import Model (Problem)
 import Parser (parseProblem)
 import System.IO (IOMode (ReadMode), hGetContents, hSetEncoding, utf8, withFile)
 
--- | Decode UTF-8 fully before closing the handle; IO failures remain IO errors.
+-- | Read a path as UTF-8 and return its parsed intermediate model.
+-- Force decoding inside the open handle; propagate file and encoding IO errors.
 readProblem :: FilePath -> IO Problem
 readProblem path = withFile path ReadMode $ \handle -> do
   hSetEncoding handle utf8

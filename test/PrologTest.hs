@@ -20,6 +20,7 @@ main = do
   alternateProblem <- readProblem "test/fixtures/alternate-valid.txt"
   primary <- generated primaryProblem
   alternate <- generated alternateProblem
+  assignment <- readProblem "test/fixtures/assignment-valid.txt" >>= generated
   empty <- generated (academic "" "" "classmates\ncourse_with_teacher")
   noRules <- generated (academic "person: Alice" "" "")
   warnings <- generated sharedCourses
@@ -58,6 +59,9 @@ main = do
         [ ("primary", primary,
             "findall(X-Y,classmate(X,Y),Pairs),Pairs=['Alice'-'Bob','Bob'-'Alice'],"
             ++ "\\+classmate('Alice','Alice'),findall(C,course_with_teacher(C),Cs),Cs=['ProgrammingParadigms']")
+        , ("assignment", assignment,
+            "findall(X-Y,classmate(X,Y),Pairs),Pairs=['Ana'-'Luis','Luis'-'Ana'],"
+            ++ "findall(C,course_with_teacher(C),Cs),Cs=['Paradigmas']")
         , ("alternate", alternate,
             "classmate('Casey','Jordan'),\\+classmate('Casey','Casey'),"
             ++ "findall(C,course_with_teacher(C),Cs),Cs=['Logic'],\\+course_with_teacher('Algebra')")
@@ -82,7 +86,8 @@ main = do
   let escapedName = "O'Brien\\Path\n\t"
   prologCheck "quoted atom round trip" ("output" </> "prolog-checks" </> "primary" </> "conocimiento.pl")
     ("atom_codes(" ++ quoteAtom escapedName ++ "," ++ show (map ord escapedName) ++ ")")
-  putStrLn ("All " ++ show (length pureChecks) ++ " generation checks and 13 SWI-Prolog checks passed.")
+  putStrLn ("All " ++ show (length pureChecks) ++ " generation checks and "
+    ++ show (2 * length scenarios + 1) ++ " SWI-Prolog checks passed.")
 
 generated :: Problem -> IO PrologOutput
 generated problem = case generateProlog problem of
