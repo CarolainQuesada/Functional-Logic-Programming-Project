@@ -1,41 +1,68 @@
-"""Package tracked source plus regenerated deliverables without Git metadata."""
-
+﻿"""Verify current artifacts and package tracked and nonignored new source files."""
 from pathlib import Path
+import hashlib
+import json
 import subprocess
+import sys
+import tempfile
 import zipfile
 
-
 ROOT = Path(__file__).resolve().parents[1]
+ARTIFACTS = ("conocimiento.pl", "consultas.pl", "index.html", "reporte_validacion.txt")
+
+
+def verify_outputs():
+    """Compare published artifacts with a fresh run of the current primary input."""
+    with tempfile.TemporaryDirectory(prefix="knowledge-package-") as temporary:
+        subprocess.run(["runghc", "-Wall", "-Werror", "-isrc", "app/Main.hs",
+                        "input/problema.txt", temporary], cwd=ROOT, check=True)
+        for name in ARTIFACTS:
+            published = ROOT / "output" / name
+            if not published.is_file() or published.read_bytes() != (Path(temporary) / name).read_bytes():
+                raise RuntimeError(f"Missing or stale output/{name}; run tools/prepare_submission.py first.")
+
+
+def collect_files():
+    """Include nonignored source, current documentation, and named evidence folders."""
+    listing = subprocess.check_output(
+        ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"], cwd=ROOT)
+    files = {ROOT / name for name in listing.decode("utf-8").split("\0") if name}
+    missing = [path for path in files if not path.is_file()]
+    if missing:
+        raise RuntimeError(f"Tracked file is missing; review the working tree: {missing[0]}")
+    files.update(ROOT / "output" / name for name in ARTIFACTS)
+    files.add(ROOT / "docs" / "api" / "haskell-api.dox")
+    files.update(path for path in (ROOT / "docs" / "html").rglob("*") if path.is_file())
+    for directory in ("browser-checks", "browser-alternate", "browser-invalid", "browser-assignment",
+                      "defense-alternate", "assignment-example", "invalid-example"):
+        files.update(path for path in (ROOT / "output" / directory).rglob("*")
+                     if path.is_file() and path.suffix in {".png", ".json", ".html", ".pl", ".txt"})
+    return sorted(files)
 
 
 def main():
-    required = [ROOT / "output" / name for name in
-                ("conocimiento.pl", "consultas.pl", "index.html", "reporte_validacion.txt")]
-    required += [ROOT / "docs" / "html" / "index.html", ROOT / "docs" / "api" / "haskell-api.dox"]
-    for path in required:
-        if not path.is_file():
-            raise RuntimeError(f"Missing deliverable; regenerate first: {path.relative_to(ROOT)}")
-    report = (ROOT / "output" / "reporte_validacion.txt").read_text(encoding="utf-8")
-    if "Status: VALID" not in report:
-        raise RuntimeError("Generate a valid primary input before packaging the final submission.")
-    tracked = subprocess.check_output(["git", "ls-files", "-z"], cwd=ROOT)
-    files = {ROOT / name for name in tracked.decode("utf-8").split("\0") if name}
-    files.update(required)
-    files.update(path for path in (ROOT / "docs" / "html").rglob("*") if path.is_file())
-    for directory in ("browser-checks", "browser-alternate", "browser-invalid", "defense-alternate", "invalid-example"):
-        files.update(path for path in (ROOT / "output" / directory).rglob("*")
-                     if path.is_file() and path.suffix in {".png", ".json", ".html", ".pl", ".txt"})
+    verify_outputs()
+    subprocess.run([sys.executable, "tools/build_docs.py"], cwd=ROOT, check=True)
+    files = collect_files()
+    manifest = {path.relative_to(ROOT).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+                for path in files}
     destination = ROOT / "output" / "submission.zip"
-    with zipfile.ZipFile(destination, "w", zipfile.ZIP_DEFLATED) as archive:
-        for path in sorted(files):
-            if path.is_file():
+    temporary = destination.with_suffix(".zip.tmp")
+    try:
+        with zipfile.ZipFile(temporary, "w", zipfile.ZIP_DEFLATED) as archive:
+            for path in files:
                 archive.write(path, path.relative_to(ROOT).as_posix())
-    with zipfile.ZipFile(destination) as archive:
-        assert archive.testzip() is None, "Archive integrity check failed."
-        assert "app/Main.hs" in archive.namelist()
-        assert "output/index.html" in archive.namelist()
-        count = len(archive.namelist())
-    print(f"Submission archive verified: output/submission.zip ({count} files).")
+            archive.writestr("submission-manifest.json", json.dumps(manifest, indent=2) + "\n")
+        with zipfile.ZipFile(temporary) as archive:
+            if archive.testzip() is not None:
+                raise RuntimeError("Archive integrity check failed.")
+            for name, digest in manifest.items():
+                if hashlib.sha256(archive.read(name)).hexdigest() != digest:
+                    raise RuntimeError(f"Archive content mismatch: {name}")
+        temporary.replace(destination)
+    finally:
+        temporary.unlink(missing_ok=True)
+    print(f"Submission archive verified: output/submission.zip ({len(files)} files plus SHA-256 manifest).")
 
 
 if __name__ == "__main__":

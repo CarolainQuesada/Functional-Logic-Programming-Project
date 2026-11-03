@@ -3,7 +3,7 @@ An integrated project using Haskell, Prolog, and a web interface to automaticall
 
 ## Current stage
 
-The complete academic pipeline is implemented: UTF-8 input, typed intermediate model, validation, Prolog knowledge, suggested queries, generated HTML, and a validation report. All 127 Haskell checks and 13 SWI-Prolog checks pass. Chrome desktop/mobile verification and Doxygen documentation generation are also complete. See [verification evidence](docs/verification.md) and the [requirements checklist](docs/requirements-checklist.md).
+The complete academic pipeline is implemented: UTF-8 input, typed intermediate model, validation, Prolog knowledge, suggested queries, generated HTML, and a validation report. All 131 Haskell checks and 15 SWI-Prolog checks pass. Chrome desktop/mobile verification and Doxygen documentation generation are also complete. See [verification evidence](docs/verification.md) and the [requirements checklist](docs/requirements-checklist.md).
 
 See the [model design](docs/intermediate-model.md) and [team handoff](docs/team-handoff.md) for the current API, verification commands, and suggested collaboration boundaries.
 
@@ -95,19 +95,27 @@ node tools/browser_check.mjs
 
 Screenshots and machine-readable evidence are saved under `output/browser-checks/`. Python, Node, and Doxygen are development/documentation tools; the pipeline itself requires none of them.
 
-After regenerating output and documentation, create the deliverable archive:
+Run the complete verification and delivery workflow (GHC, SWI-Prolog, Node, Chrome/Chromium, Python, and Doxygen must be installed):
+
+```powershell
+python tools/prepare_submission.py
+```
+
+This runs all suites, verifies primary, alternate, assignment, and invalid pages in desktop/mobile Chrome, rebuilds Doxygen, and creates the ZIP with a SHA-256 manifest. Any unexpected failure stops preparation.
+
+To package already generated output:
 
 ```powershell
 python tools/package_submission.py
 ```
 
-The archive includes repository source, inputs, generated results, technical documentation, and available browser evidence. See the [defense guide](docs/defense-guide.md) before presenting.
+The packager compares all four primary outputs with a fresh pipeline run and rejects stale results. It rebuilds documentation and includes tracked and nonignored new files, inputs, generated results, technical documentation, and available browser evidence. Review nonignored files before sharing the archive. See the [defense guide](docs/defense-guide.md) before presenting.
 
 ## Planned pipeline
 
 `problema.txt -> Haskell -> intermediate model -> Prolog + queries + HTML + validation report`
 
-The official assignment permits the academic domain. See the [input specification](docs/input-format-analysis.md) for the English record vocabulary, parsing conventions, validation policy, and source-line handling. Assignment-required filenames and section names are preserved; source code, documentation, UI text, and commit messages are written in English.
+The official assignment permits the academic domain. See the [input specification](docs/input-format-analysis.md) for the English and Spanish input vocabulary, parsing conventions, validation policy, and source-line handling. Assignment-required filenames and section names are preserved; source code, technical documentation, and commit messages are written in English; the generated user interface is in Spanish.
 
 ## Development requirements
 

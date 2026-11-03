@@ -2,7 +2,7 @@
 
 ## Demonstration sequence
 
-1. Show `input/problema.txt` and explain its three section markers and English academic vocabulary.
+1. Show `input/problema.txt` and explain its three section markers and English academic vocabulary and the supported Spanish assignment aliases.
 2. Run `runghc -Wall -Werror -isrc app/Main.hs` and open `output/index.html`.
 3. Show entity and relation tables, source-line comments, generated rules, suggested queries, and the validation report.
 4. Load `swipl -q -s output/consultas.pl` and query `classmate(First, Second).` and `course_with_teacher(Course).` Use `;` to request further solutions and `halt.` to exit.
@@ -28,3 +28,7 @@ For the primary example, classmates are Alice/Bob and Bob/Alice; the course with
 ## Pair preparation
 
 Both partners should be able to trace one record through `Parser`, `Model`, `Validation`, `Prolog`, and `Html`, then run the complete command independently. Review the agreed vocabulary before the professor provides a second file. Decide who introduces each part, but avoid preparing only the code one partner wrote.
+
+## Exact assignment example
+
+Run `runghc -Wall -Werror -isrc app/Main.hs test/fixtures/assignment-valid.txt output/assignment-example`. The original Spanish records remain in provenance comments while generated Prolog uses canonical English predicates: `classmate('Ana', 'Luis').` and `course_with_teacher('Paradigmas').` succeed. `python tools/prepare_submission.py` checks and packages all demonstration scenarios.

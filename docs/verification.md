@@ -1,19 +1,19 @@
 # Verification evidence
 
-Executed locally on Windows on October 22, 2026. This is execution evidence, not a list of unrun test plans.
+Updated verification on Windows on November 2, 2026. This is execution evidence, not a list of unrun test plans.
 
 ## Automated results
 
 | Suite | Passing checks |
 | --- | ---: |
 | Intermediate model | 12 |
-| Functional parser | 33 |
+| Functional parser | 35 |
 | Semantic validation and reports | 29 |
 | Pure Prolog generation | 16 |
 | Generated HTML | 18 |
-| Complete pipeline | 19 |
-| SWI-Prolog loading and query results | 13 |
-| Total | 140 |
+| Complete pipeline | 21 |
+| SWI-Prolog loading and query results | 15 |
+| Total | 146 |
 
 All six Cabal test suites passed with `-Wall -Werror`. `cabal build all --offline` also completed. The pipeline test suite uses actual files for BOM/CRLF, invalid UTF-8, missing input, and output replacement, not just in-memory examples. It proves that each existing invalid fixture replaces prior valid executable knowledge with blocked markers, and that valid input recovers afterward.
 
@@ -47,3 +47,9 @@ python tools/build_docs.py
 ```
 
 Browser verification uses Node 22+ and a local Chrome/Chromium executable, with no npm packages. Python is used only for tooling. `CHROME_BIN` can select the browser explicitly. Runtime pipeline execution does not require Python, Node, Doxygen, or a browser automation library.
+
+## Assignment compatibility and delivery improvements
+
+English and Spanish aliases normalize to the same model. The exact assignment fixture is exercised through parsing, the full pipeline, real SWI-Prolog queries, and desktop/mobile Chrome. Integration checks also force publication failure and verify temporary-file cleanup. Main functions document their inputs, output contracts, and error handling.
+
+Use `python tools/prepare_submission.py` for the complete workflow. Packaging rejects stale primary artifacts, rebuilds Doxygen, includes nonignored new source files, and verifies archive contents with SHA-256 hashes in `submission-manifest.json`.

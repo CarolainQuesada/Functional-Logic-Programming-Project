@@ -1,10 +1,10 @@
-﻿# Input format specification
+Ã¯Â»Â¿# Input format specification
 
 ## Scope and evidence
 
 Stage 2 defines the academic input contract. The official assignment supplied in chat permits adapting the domain and demonstrates `type: name`, `relation: source, target`, and bare requested-rule names. It requires the three section markers below, validation, source-line traceability, and automatic regeneration of all outputs.
 
-The academic domain is explicitly listed in the assignment. English record vocabulary is a project choice, consistent with the requirement to write code in English. The Spanish vocabulary in the professor's example is illustrative, not a second supported dialect. If a defense input uses a different vocabulary, its compatibility must be agreed before the defense.
+The academic domain is explicitly listed in the assignment. English record vocabulary is a project choice; the assignment does not require that language. The Spanish vocabulary in the assignment is also accepted: `persona`, `curso`, `docente`, `lleva`, `imparte`, `companeros`, and `curso_con_docente`. Both vocabularies may be mixed and normalize to the same typed model and canonical English Prolog predicates. Original source text is preserved.
 
 The conventions below fill gaps in the assignment; they are project decisions, not additional requirements attributed to the professor. They are implemented by the parser, validator, generators, and complete pipeline.
 
@@ -16,7 +16,7 @@ The conventions below fill gaps in the assignment; they are project decisions, n
 | `[RELACIONES]` | `relation: source, target` |
 | `[REGLAS_SOLICITADAS]` | `rule_name` |
 
-Preserve these markers and the required filenames `problema.txt`, `conocimiento.pl`, `consultas.pl`, `index.html`, and `reporte_validacion.txt`. All other project vocabulary is English.
+Preserve these markers and the required filenames `problema.txt`, `conocimiento.pl`, `consultas.pl`, `index.html`, and `reporte_validacion.txt`. Source code and generated predicates use English; input also accepts the documented Spanish aliases.
 
 Each section must occur exactly once. Sections may appear in any order and may be empty. Blank lines are ignored for parsing but count toward source line numbers. Nonblank content before a section, unknown headers, and repeated headers are errors. An unknown header ends the previous section context so following records cannot silently enter the wrong section.
 
@@ -71,3 +71,7 @@ Collect independent errors where possible. A malformed record must not produce c
 The fixtures are exercised by parser, validation, generation, and integration tests. Coverage includes BOM/CRLF, whitespace, section order, repeated and unknown headers, empty sections, case sensitivity, argument types, duplicate warnings, and stale-output invalidation. Primary, alternate, and invalid generated pages were also loaded in Chrome at desktop and mobile sizes.
 
 See [verification evidence](verification.md) for executed results and [pipeline behavior](pipeline.md) for the complete command.
+
+## Assignment compatibility
+
+`test/fixtures/assignment-valid.txt` reproduces the assignment example. The generated predicates remain `person/1`, `course/1`, `teacher/1`, `enrolled/2`, `teaches/2`, `classmate/2`, and `course_with_teacher/1`; input aliases do not create additional predicates. Names remain case-sensitive ASCII identifiers.

@@ -1,4 +1,4 @@
-﻿# Team handoff
+ï»¿# Team handoff
 
 ## Completed implementation
 
@@ -10,7 +10,7 @@ The supported entry point is `app/Main.hs`, built by Cabal as `knowledge-pipelin
 runghc -Wall -Werror -isrc app/Main.hs
 ```
 
-The final tests cover 127 Haskell checks and 13 real SWI-Prolog checks. Chrome verified primary, alternate, and invalid inputs at desktop and mobile sizes. See `verification.md` for execution evidence and `architecture.md` for design.
+The final tests cover 131 Haskell checks and 15 real SWI-Prolog checks. Chrome verified primary, alternate, and invalid inputs at desktop and mobile sizes. See `verification.md` for execution evidence and `architecture.md` for design.
 
 ## Feedback on the work
 
@@ -21,7 +21,7 @@ Invalid input now replaces stale knowledge with nonexecutable markers and shows 
 ## Remaining team actions
 
 - Review the implementation together and run it independently on the teammate's computer.
-- Confirm that the professor's second input will use the documented academic vocabulary and grammar. The group adapted records to English; Spanish section markers and assignment filenames are retained.
+- Confirm that the professor's second input will use the documented academic vocabulary and grammar. English records and the Spanish assignment aliases are accepted; section markers and assignment filenames are retained.
 - Practice the demonstration and questions in `defense-guide.md`.
 - Review `requirements-checklist.md` and the generated delivery archive before uploading.
 - Authorize publishing/merging the remaining local work when ready. No course-platform submission has been performed.
