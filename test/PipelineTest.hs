@@ -3,9 +3,9 @@ module Main (main) where
 import Control.Exception (IOException, try)
 import Control.Monad (forM_, unless)
 import qualified Data.ByteString as Bytes
-import Data.List (isInfixOf)
+import Data.List (isInfixOf, isPrefixOf)
 import Pipeline (runPipeline)
-import System.Directory (doesFileExist)
+import System.Directory (createDirectoryIfMissing, doesFileExist, listDirectory)
 import System.Exit (exitFailure)
 import System.FilePath ((</>))
 import System.IO (IOMode (ReadMode, WriteMode), hGetContents, hPutStr, hSetEncoding, utf8, withFile)
@@ -24,6 +24,14 @@ main = do
   changedHtml <- readUtf8 (directory </> "index.html")
   check "Second input regenerates knowledge and HTML" (alternate && "'Casey'" `isInfixOf` changed
     && not ("'Alice'" `isInfixOf` changed) && "Casey" `isInfixOf` changedHtml && not ("Alice" `isInfixOf` changedHtml))
+  assignment <- runPipeline "test/fixtures/assignment-valid.txt" directory
+  assignmentKnowledge <- readUtf8 (directory </> "conocimiento.pl")
+  assignmentHtml <- readUtf8 (directory </> "index.html")
+  check "Assignment example regenerates canonical knowledge and source-aware UI"
+    (assignment && "person('Ana')." `isInfixOf` assignmentKnowledge
+      && "% Source line 8: lleva: Ana, Paradigmas" `isInfixOf` assignmentKnowledge
+      && "classmate(First, Second)" `isInfixOf` assignmentKnowledge
+      && "Ana" `isInfixOf` assignmentHtml && not ("Casey" `isInfixOf` assignmentHtml))
   forM_ ["duplicate-entity.txt","undeclared-reference.txt","malformed-records.txt","missing-section.txt","unsupported-rule.txt"] $ \file -> do
     _ <- runPipeline "input/problema.txt" directory
     status <- runPipeline ("test/fixtures" </> file) directory
@@ -32,7 +40,7 @@ main = do
     html <- readUtf8 (directory </> "index.html")
     report <- readUtf8 (directory </> "reporte_validacion.txt")
     check ("Invalid input replaces all old results: " ++ file)
-      (not status && knowledge == blocked && queries == blocked && "Validation failed" `isInfixOf` html
+      (not status && knowledge == blocked && queries == blocked && "Validación fallida" `isInfixOf` html
         && not ("href=\"conocimiento.pl\"" `isInfixOf` html) && "Status: INVALID" `isInfixOf` report)
   missing <- runPipeline (directory </> "does-not-exist.txt") directory
   missingReport <- readUtf8 (directory </> "reporte_validacion.txt")
@@ -65,8 +73,16 @@ main = do
   check "Input/output path alias is rejected without writes" (case aliasResult of Left _ -> before == after; Right _ -> False)
   recovered <- runPipeline "input/problema.txt" directory
   recoveryHtml <- readUtf8 (directory </> "index.html")
-  check "Valid input recovers after invalid generations" (recovered && "Validation passed" `isInfixOf` recoveryHtml)
-  putStrLn "All 19 pipeline checks passed."
+  check "Valid input recovers after invalid generations" (recovered && "Validación correcta" `isInfixOf` recoveryHtml)
+  let failureDirectory = "output" </> "pipeline-failure-checks"
+  createDirectoryIfMissing True (failureDirectory </> "index.html")
+  publication <- try (runPipeline "input/problema.txt" failureDirectory) :: IO (Either IOException Bool)
+  remaining <- listDirectory failureDirectory
+  check "Failed publication removes temporary files and propagates the error"
+    (case publication of
+      Left _ -> not (any (".pipeline" `isPrefixOf`) remaining)
+      Right _ -> False)
+  putStrLn "All 21 pipeline checks passed."
   where
     blocked = "% Generation blocked. This input has errors; see reporte_validacion.txt.\n"
 
