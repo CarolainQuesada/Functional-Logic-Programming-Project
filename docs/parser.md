@@ -8,7 +8,7 @@
 
 ## Parsing process
 
-Physical lines receive one-based numbers before blank lines are ignored. CRLF terminators and a leading BOM are accepted. The original line text is retained, excluding line terminators; a BOM is ignored only for recognition on the first physical line.
+Physical lines receive one-based numbers before blank lines and trimmed lines beginning with # or % are ignored. CRLF terminators and a leading BOM are accepted. The original line text is retained, excluding line terminators; a BOM is ignored only for recognition on the first physical line.
 
 The parser folds over lines with a current section and accumulated problem. Records are prepended and reversed once at the end to preserve input order without repeated list appends. An unknown or malformed header resets the current section. Later valid headers allow parsing to resume.
 
@@ -27,3 +27,5 @@ runghc -Wall -Werror -isrc test/ParserTest.hs
 ```
 
 The parser itself does not generate files. The complete pipeline consumes its model, runs semantic validation, and generates all required outputs. File-reading exceptions are converted to `InputFailure` diagnostics by the pipeline coordinator.
+
+Entity names accept Unicode letters, digits, underscores and internal spaces. Type and rule names retain the ASCII grammar. See `test/fixtures/unicode-valid.txt`.

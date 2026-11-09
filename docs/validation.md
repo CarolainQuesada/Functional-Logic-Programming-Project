@@ -14,9 +14,9 @@ Malformed lines and unknown vocabulary remain the parser's responsibility. Missi
 
 `ValidationReport.renderValidationReport :: Problem -> String` renders a validated model as an English report with status, error/warning counts, diagnostic codes, source lines, and related declaration locations. Call it after validation; rendering alone does not discover errors.
 
-`writeValidationReport :: FilePath -> Problem -> IO ()` writes UTF-8 to the supplied file in an existing directory. Reports are deterministic: parser diagnostics are followed by missing sections, repeated sections, duplicate entities, reference errors, unsupported rules, repeated relations, and repeated rules. Findings within a category retain record order.
+Use `runghc -Wall -Werror -isrc app/Main.hs [INPUT OUTPUT_DIRECTORY]` to regenerate all four synchronized artifacts.
 
-Run `runghc -Wall -Werror -isrc app/Validate.hs` from the repository root. The default output is `output/reporte_validacion.txt`. Optional arguments are `INPUT REPORT`. The command returns 0 for valid input or warnings, and 1 for errors, bad arguments, or IO failures. Validation errors still produce a report; IO failures are printed to standard error. Canonical input/report paths are compared before writing to prevent ordinary aliases from overwriting the input.
+Use `runghc -Wall -Werror -isrc app/Main.hs [INPUT OUTPUT_DIRECTORY]` to regenerate all four synchronized artifacts.
 
 The domain modules use `base`; the command also uses GHC's bundled `directory` and `filepath` libraries for path checking. No third-party packages or installation are required.
 
@@ -27,3 +27,11 @@ On October 22, 2026, the compiled validation suite passed all 29 checks with `-W
 The primary report was generated at `output/reporte_validacion.txt` with status `VALID`, zero errors, and zero warnings. Generated reports are ignored by Git and can be recreated with the command above.
 
 The validator itself does not generate output. The Prolog generator honors error severity and deduplicates warning-only relation/rule requests. The complete pipeline manages stale output and generates HTML diagnostics. An `InputFailure` bypasses domain checks because no input model was read, avoiding invented missing-section findings.
+
+## Nonblocking coverage warnings
+
+`CourseWithoutTeacherWarning`, `CourseWithoutStudents`, `PersonWithoutCourses`,
+`TeacherWithoutCourses`, and `CaseSimilarEntity` identify incomplete relationships
+or declarations differing only in case. Their location is the entity declaration;
+case warnings also link the earlier declaration. Names remain case-sensitive.
+Spanish messages appear in both the report and HTML. Revalidation is idempotent.

@@ -3,13 +3,13 @@ An integrated project using Haskell, Prolog, and a web interface to automaticall
 
 ## Current stage
 
-The complete academic pipeline is implemented: UTF-8 input, typed intermediate model, validation, Prolog knowledge, suggested queries, generated HTML, and a validation report. All 131 Haskell checks and 15 SWI-Prolog checks pass. Chrome desktop/mobile verification and Doxygen documentation generation are also complete. See [verification evidence](docs/verification.md) and the [requirements checklist](docs/requirements-checklist.md).
+The complete academic pipeline is implemented: UTF-8 input, typed intermediate model, validation, Prolog knowledge, suggested queries, generated HTML, and a validation report. The Haskell suites include executable SWI-Prolog checks. Chrome desktop/mobile verification and Doxygen documentation generation are also complete. See [verification evidence](docs/verification.md) and the [requirements checklist](docs/requirements-checklist.md).
 
 See the [model design](docs/intermediate-model.md) and [team handoff](docs/team-handoff.md) for the current API, verification commands, and suggested collaboration boundaries.
 
-## Quick start
+## Inicio rápido
 
-Run from the repository root with GHC/GHCi and SWI-Prolog in PATH:
+Desde la raíz del repositorio, con GHC y SWI-Prolog en PATH:
 
 ```powershell
 runghc -Wall -Werror -isrc app/Main.hs
@@ -31,9 +31,9 @@ cabal run knowledge-pipeline
 cabal run knowledge-pipeline -- test/fixtures/alternate-valid.txt output/alternate
 ```
 
-## Checks
+## Pruebas
 
-Run the current checks from the repository root:
+Ejecuta las seis suites desde la raíz; PrologTest también ejecuta las comprobaciones de SWI-Prolog:
 
 ```powershell
 runghc -Wall -Werror -isrc test/ModelTest.hs
@@ -46,36 +46,11 @@ runghc -Wall -Werror -isrc test/PipelineTest.hs
 
 Or use `cabal test all --test-show-details=direct`. On Windows, `powershell -ExecutionPolicy Bypass -File tools/test.ps1` runs the suites and regenerates the primary output. Cabal resolves only GHC-bundled libraries (`base`, `directory`, `filepath`, `bytestring`, and `process`); there are no third-party runtime packages.
 
-## Focused inspection commands
+## Interactive inspection
 
-The following earlier-stage tools are retained for focused checks. Use `app/Main.hs` for complete, synchronized regeneration.
-
-For interactive input inspection, run `ghci -isrc src/Input.hs`, then `readProblem "input/problema.txt"`. This returns the parsed model, not generated outputs or a semantic validation result.
-
-Validate the primary input and generate `output/reporte_validacion.txt`:
-
-```powershell
-runghc -Wall -Werror -isrc app/Validate.hs
-```
-
-To use different paths, pass both the input and report paths. The report directory must already exist:
-
-```powershell
-runghc -Wall -Werror -isrc app/Validate.hs test/fixtures/duplicate-entity.txt output/duplicate-report.txt
-```
-
-The command exits with code 0 for valid input, including warnings, and code 1 for validation errors or IO failures. See [validation behavior](docs/validation.md).
-
-Generate `output/conocimiento.pl`, `output/consultas.pl`, and the validation report:
-
-```powershell
-runghc -Wall -Werror -isrc app/GenerateProlog.hs
-swipl -q -s output/consultas.pl
-```
-
-In SWI-Prolog, try `classmate(First, Second).`, `course_with_teacher(Course).`, or `suggested_query(Query), call(Query).`. Names preserve input case and are quoted atoms, for example `'Alice'`.
-
-For this focused Prolog-only command, pass `INPUT OUTPUT_DIRECTORY`; the directory must already exist. Errors block generation but leave existing Prolog untouched. Use the complete pipeline above for stale-output invalidation and synchronized HTML. See [Prolog generation](docs/prolog-generation.md).
+Run `ghci -isrc src/Input.hs`, then `readProblem "input/problema.txt"` to inspect the model.
+Load `swipl -q -s output/consultas.pl` and try `lleva('Ana', C).`,
+`companero(X, Y).`, or `suggested_query(Query), call(Query).`.
 
 ## Documentation, browser checks, and submission
 
@@ -157,14 +132,28 @@ The build definition is `functional-logic-pipeline.cabal`. Generated Doxygen HTM
 
 ## Git workflow
 
-- Use one descriptive branch per task, such as `chore/initial-setup` or `feat/input-parser`.
-- Keep each commit focused and write its message in English.
-- Review existing files before editing and coordinate changes to a teammate's work.
-- Validate each stage and wait for approval before starting the next stage.
-- Pushes, merges, destructive resets, and file deletions require explicit authorization.
+- Trabajamos en una rama descriptiva por tarea y coordinamos los archivos compartidos.
+- Guardamos cambios enfocados en commits con mensajes en inglés.
+- Ejecutamos las pruebas antes de compartir la rama y describimos los resultados en el PR.
+- Revisamos los cambios en equipo antes de fusionarlos.
 
 ## Setup status
 
 Stage 1 is complete on this Windows workstation. Verified on October 21, 2026: Git 2.44.0, GHC and GHCi 9.10.3, Cabal 3.16.1.0, SWI-Prolog 10.1.17, and Doxygen 1.18.0.
 
 GHCi evaluation, Haskell compilation and executable execution, and a Prolog arithmetic query passed. See [development environment](docs/development-environment.md) for setup and verification details. Restart existing terminals and editors to pick up the updated user PATH.
+
+
+```text
+problema.txt (UTF-8)
+    -> Parser -> Problem + SourceLine
+    -> Validation -> diagnostics (errors block; warnings continue)
+    -> Prolog / Html / ValidationReport
+    -> Pipeline -> conocimiento.pl + consultas.pl + index.html + reporte_validacion.txt
+```
+
+Names accept Unicode letters, digits, underscores and internal spaces. Types and rule
+identifiers remain ASCII. Blank lines and lines beginning with # or % are ignored;
+physical source line numbers are preserved. Both English and Spanish input aliases
+produce Spanish Prolog predicates. Only requested rules are generated, including
+companeros_en_curso, estudiante_de and curso_sin_docente.

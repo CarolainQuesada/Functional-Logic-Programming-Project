@@ -25,7 +25,7 @@ Each section must occur exactly once. Sections may appear in any order and may b
 - Read UTF-8, accepting an optional BOM at the start of the file and both LF and CRLF line endings.
 - Trim surrounding whitespace on headers, records, field names, and values. Preserve the original text separately.
 - Match section markers, types, relations, rules, and entity names case-sensitively.
-- Names use ASCII identifiers: `[A-Za-z][A-Za-z0-9_]*`. There are no quoted names, embedded spaces, accents, delimiters inside names, or comment syntax in the initial format.
+- Entity names accept Unicode letters, digits, underscores and internal spaces. Type and rule identifiers use `[A-Za-z][A-Za-z0-9_]*`. Lines starting with # or % are comments; source line numbers remain physical.
 - Entity records contain exactly one colon and one nonempty name. Relation records contain exactly one colon and exactly two nonempty comma-separated arguments. Rule records contain one supported rule identifier without a colon or arguments.
 - Preserve entity name case in the model. Prolog generation encodes names as quoted atoms and escapes them where needed, rather than lowercasing distinct names into the same atom.
 
@@ -38,8 +38,8 @@ Each section must occur exactly once. Sections may appear in any order and may b
 | `teacher: Name` | A teacher |
 | `enrolled: Person, Course` | A person is enrolled in a course |
 | `teaches: Teacher, Course` | A teacher teaches a course |
-| `classmates` | Request `classmate/2`: distinct people enrolled in a shared course |
-| `course_with_teacher` | Request `course_with_teacher/1`: courses taught by at least one teacher |
+| `classmates` | Request `companero/2`: distinct people enrolled in a shared course |
+| `course_with_teacher` | Request `curso_con_docente/1`: courses taught by at least one teacher |
 
 Entity names are globally unique across all types. References are resolved after collecting all entity declarations, so forward references and section reordering are supported. Relation arguments must reference the appropriate declared types. Never embed sample names in implementation logic.
 
@@ -74,4 +74,4 @@ See [verification evidence](verification.md) for executed results and [pipeline 
 
 ## Assignment compatibility
 
-`test/fixtures/assignment-valid.txt` reproduces the assignment example. The generated predicates remain `person/1`, `course/1`, `teacher/1`, `enrolled/2`, `teaches/2`, `classmate/2`, and `course_with_teacher/1`; input aliases do not create additional predicates. Names remain case-sensitive ASCII identifiers.
+`test/fixtures/assignment-valid.txt` reproduces the assignment example. The generated predicates remain `persona/1`, `curso/1`, `docente/1`, `lleva/2`, `imparte/2`, `companero/2`, and `curso_con_docente/1`; input aliases do not create additional predicates. Names retain their case and accept Unicode letters, digits, underscores and internal spaces.

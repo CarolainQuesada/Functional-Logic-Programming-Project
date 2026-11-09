@@ -5,12 +5,12 @@
 1. Show `input/problema.txt` and explain its three section markers and English academic vocabulary and the supported Spanish assignment aliases.
 2. Run `runghc -Wall -Werror -isrc app/Main.hs` and open `output/index.html`.
 3. Show entity and relation tables, source-line comments, generated rules, suggested queries, and the validation report.
-4. Load `swipl -q -s output/consultas.pl` and query `classmate(First, Second).` and `course_with_teacher(Course).` Use `;` to request further solutions and `halt.` to exit.
+4. Load `swipl -q -s output/consultas.pl` and query `companero(First, Second).` and `curso_con_docente(Course).` Use `;` to request further solutions and `halt.` to exit.
 5. Run `runghc -Wall -Werror -isrc app/Main.hs test/fixtures/alternate-valid.txt output/alternate`. Show changed names and courses without editing any generated file.
 6. Run the duplicate-entity fixture into a separate directory. Explain exit code 1, related source lines, blocked Prolog, and the current error UI.
 7. Show `docs/html/index.html`, the test evidence, and the requirement checklist.
 
-For the primary example, classmates are Alice/Bob and Bob/Alice; the course with a teacher is ProgrammingParadigms. For the alternate example, Casey/Jordan are classmates and Logic has a teacher; Algebra does not. Input names are case-sensitive Prolog atoms such as `'Alice'`.
+For the primary example, classmates are Ana/Luis and Luis/Ana; the course with a teacher is Paradigmas. For the alternate example, Casey/Jordan are classmates and Logic has a teacher; Algebra does not. Input names are case-sensitive Prolog atoms such as `'Alice'`.
 
 ## Design questions to prepare together
 
@@ -23,7 +23,7 @@ For the primary example, classmates are Alice/Bob and Bob/Alice; the course with
 - **How are logical rules defined?** Classmates are distinct declared people with a shared enrollment course. `dif/2` excludes self-pairs; `once/1` avoids repeated proofs for a fixed pair. Courses with a teacher enumerate each course once even with several teachers.
 - **Does the browser run Prolog?** No. It visualizes the generated model/knowledge. SWI-Prolog executes the rules and queries.
 - **Why Doxygen extraction?** Doxygen has no native Haskell parser. A tracked tool extracts real source declarations into Doxygen pages, which are regenerated with the technical Markdown documentation.
-- **What are the limits?** The academic grammar uses case-sensitive ASCII identifiers and no comments or quoted input names. One writer should use each output directory. Per-file rename is atomic, but a whole multi-file run is not a disk transaction.
+- **What are the limits?** The academic grammar uses case-sensitive Unicode entity names with internal spaces; # and % line comments are supported. One writer should use each output directory. Per-file rename is atomic, but a whole multi-file run is not a disk transaction.
 
 ## Pair preparation
 
@@ -31,4 +31,4 @@ Both partners should be able to trace one record through `Parser`, `Model`, `Val
 
 ## Exact assignment example
 
-Run `runghc -Wall -Werror -isrc app/Main.hs test/fixtures/assignment-valid.txt output/assignment-example`. The original Spanish records remain in provenance comments while generated Prolog uses canonical English predicates: `classmate('Ana', 'Luis').` and `course_with_teacher('Paradigmas').` succeed. `python tools/prepare_submission.py` checks and packages all demonstration scenarios.
+Run `runghc -Wall -Werror -isrc app/Main.hs test/fixtures/assignment-valid.txt output/assignment-example`. The original Spanish records remain in provenance comments while generated Prolog uses canonical Spanish predicates: `companero('Ana', 'Luis').` and `curso_con_docente('Paradigmas').` succeed. `python tools/prepare_submission.py` checks and packages all demonstration scenarios.

@@ -13,3 +13,18 @@ Publication is atomic per file, not a filesystem-wide transaction. Run one pipel
 The 21 integration checks exercise output creation, primary, alternate, and assignment inputs, regeneration in the same directory, every invalid fixture after valid output, missing input, actual invalid UTF-8, warning-only input, BOM/CRLF, HTML escaping, input/output alias rejection, and recovery after errors.
 
 Publication failures remove temporary files on a best-effort basis and propagate the original error. The failure test uses a directory in place of the destination HTML file.
+
+
+```text
+problema.txt (UTF-8)
+    -> Parser -> Problem + SourceLine
+    -> Validation -> diagnostics (errors block; warnings continue)
+    -> Prolog / Html / ValidationReport
+    -> Pipeline -> conocimiento.pl + consultas.pl + index.html + reporte_validacion.txt
+```
+
+Names accept Unicode letters, digits, underscores and internal spaces. Types and rule
+identifiers remain ASCII. Blank lines and lines beginning with # or % are ignored;
+physical source line numbers are preserved. Both English and Spanish input aliases
+produce Spanish Prolog predicates. Only requested rules are generated, including
+companeros_en_curso, estudiante_de and curso_sin_docente.

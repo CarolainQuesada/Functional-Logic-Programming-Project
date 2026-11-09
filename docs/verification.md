@@ -53,3 +53,28 @@ Browser verification uses Node 22+ and a local Chrome/Chromium executable, with 
 English and Spanish aliases normalize to the same model. The exact assignment fixture is exercised through parsing, the full pipeline, real SWI-Prolog queries, and desktop/mobile Chrome. Integration checks also force publication failure and verify temporary-file cleanup. Main functions document their inputs, output contracts, and error handling.
 
 Use `python tools/prepare_submission.py` for the complete workflow. Packaging rejects stale primary artifacts, rebuilds Doxygen, includes nonignored new source files, and verifies archive contents with SHA-256 hashes in `submission-manifest.json`.
+
+## Defense readiness verification (2026-11-09)
+
+All commands ran from the repository root with `-Wall -Werror` unchanged:
+
+| Command | Result |
+| --- | --- |
+| `runghc -Wall -Werror -isrc test/ModelTest.hs` | 13 passed |
+| `runghc -Wall -Werror -isrc test/ParserTest.hs` | 38 passed |
+| `runghc -Wall -Werror -isrc test/ValidationTest.hs` | 30 passed |
+| `runghc -Wall -Werror -isrc test/PrologTest.hs` | 16 generation and 17 SWI-Prolog checks passed |
+| `runghc -Wall -Werror -isrc test/HtmlTest.hs` | 19 passed |
+| `runghc -Wall -Werror -isrc test/PipelineTest.hs` | 22 passed |
+| `python test/PackageTest.py` | Cache and Git exclusion regression passed |
+| `runghc -Wall -Werror -isrc app/Main.hs` | Four Spanish-input artifacts regenerated |
+| `python tools/build_docs.py` | 13 modules; zero Doxygen warnings |
+| `python tools/package_submission.py` | ZIP integrity and SHA-256 manifest verified |
+| `node tools/browser_check.mjs output/index.html output/browser-checks` | Desktop and mobile passed |
+| `node tools/browser_check.mjs output/unicode-example/index.html output/browser-unicode` | Unicode desktop and mobile passed |
+
+Direct SWI-Prolog queries return `[Paradigmas]` for Ana's courses and
+`[Ana-Luis,Luis-Ana]` for ordered classmate pairs. The Unicode example includes a
+course without a teacher; its warning appears in the report and HTML and does not
+block Prolog generation. Browser startup required execution outside the sandbox
+because the initial attempt returned EPERM.
