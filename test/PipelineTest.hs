@@ -18,7 +18,7 @@ main = do
   forM_ ["conocimiento.pl","consultas.pl","index.html","reporte_validacion.txt"] $ \file ->
     doesFileExist (directory </> file) >>= check ("Output exists: " ++ file)
   primary <- readUtf8 (directory </> "conocimiento.pl")
-  check "Primary knowledge reflects the input" ("person('Alice')." `isInfixOf` primary)
+  check "Primary knowledge reflects the input" ("persona('Ana')." `isInfixOf` primary)
   alternate <- runPipeline "test/fixtures/alternate-valid.txt" directory
   changed <- readUtf8 (directory </> "conocimiento.pl")
   changedHtml <- readUtf8 (directory </> "index.html")
@@ -28,9 +28,9 @@ main = do
   assignmentKnowledge <- readUtf8 (directory </> "conocimiento.pl")
   assignmentHtml <- readUtf8 (directory </> "index.html")
   check "Assignment example regenerates canonical knowledge and source-aware UI"
-    (assignment && "person('Ana')." `isInfixOf` assignmentKnowledge
+    (assignment && "persona('Ana')." `isInfixOf` assignmentKnowledge
       && "% Source line 8: lleva: Ana, Paradigmas" `isInfixOf` assignmentKnowledge
-      && "classmate(First, Second)" `isInfixOf` assignmentKnowledge
+      && "companero(First, Second)" `isInfixOf` assignmentKnowledge
       && "Ana" `isInfixOf` assignmentHtml && not ("Casey" `isInfixOf` assignmentHtml))
   forM_ ["duplicate-entity.txt","undeclared-reference.txt","malformed-records.txt","missing-section.txt","unsupported-rule.txt"] $ \file -> do
     _ <- runPipeline "input/problema.txt" directory
@@ -46,6 +46,13 @@ main = do
   missingReport <- readUtf8 (directory </> "reporte_validacion.txt")
   check "Missing input produces current diagnostics without cascading sections" (not missing
     && "InputFailure" `isInfixOf` missingReport && not ("MissingSection" `isInfixOf` missingReport))
+  unicode <- runPipeline "test/fixtures/unicode-valid.txt" directory
+  unicodeKnowledge <- readUtf8 (directory </> "conocimiento.pl")
+  unicodeHtml <- readUtf8 (directory </> "index.html")
+  unicodeReport <- readUtf8 (directory </> "reporte_validacion.txt")
+  check "Unicode and coverage warnings generate all outputs"
+    (unicode && "'José'" `isInfixOf` unicodeKnowledge && "María Pérez" `isInfixOf` unicodeHtml
+      && "CourseWithoutTeacherWarning" `isInfixOf` unicodeReport && "Status: VALID WITH WARNINGS" `isInfixOf` unicodeReport)
   let encodedInput = directory </> "invalid-encoding.txt"
   Bytes.writeFile encodedInput (Bytes.pack [255,254,255])
   encoded <- runPipeline encodedInput directory
@@ -82,7 +89,7 @@ main = do
     (case publication of
       Left _ -> not (any (".pipeline" `isPrefixOf`) remaining)
       Right _ -> False)
-  putStrLn "All 21 pipeline checks passed."
+  putStrLn "All 22 pipeline checks passed."
   where
     blocked = "% Generation blocked. This input has errors; see reporte_validacion.txt.\n"
 

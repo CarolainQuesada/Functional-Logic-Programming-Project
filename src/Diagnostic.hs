@@ -24,6 +24,11 @@ data DiagnosticCode
   | ArgumentTypeMismatch
   | UnsupportedRule
   | DuplicateRelation
+  | CourseWithoutTeacherWarning
+  | CourseWithoutStudents
+  | PersonWithoutCourses
+  | TeacherWithoutCourses
+  | CaseSimilarEntity
   | DuplicateRule
   deriving (Eq, Show)
 

@@ -13,7 +13,7 @@ import ValidationReport (renderValidationReport)
 
 main :: IO ()
 main = do
-  primary <- validateProblem <$> readProblem "input/problema.txt"
+  primary <- validateProblem <$> readProblem "test/fixtures/english-valid.txt"
   alternate <- validateProblem <$> readProblem "test/fixtures/alternate-valid.txt"
   duplicate <- validateProblem <$> readProblem "test/fixtures/duplicate-entity.txt"
   undeclared <- validateProblem <$> readProblem "test/fixtures/undeclared-reference.txt"
@@ -21,7 +21,12 @@ main = do
   missing <- validateProblem <$> readProblem "test/fixtures/missing-section.txt"
   unsupported <- validateProblem <$> readProblem "test/fixtures/unsupported-rule.txt"
   let checks =
-        [ ("Primary input is valid", null (diagnostics primary))
+        [ ("Coverage and case warnings retain declaration locations", let value = academic "persona: Ana\npersona: ana\ncurso: Solo\ndocente: María Pérez" "" ""; findings = problemDiagnostics value in
+            map diagnosticCode findings == [PersonWithoutCourses,PersonWithoutCourses,CourseWithoutTeacherWarning,CourseWithoutStudents,TeacherWithoutCourses,CaseSimilarEntity]
+            && all ((== Warning) . diagnosticSeverity) findings
+            && all (\d -> case diagnosticLocation d of LineLocation _ -> True; _ -> False) findings
+            && validateProblem value == value)
+        , ("Primary input is valid", null (diagnostics primary))
         , ("Alternate input is valid", null (diagnostics alternate))
         , ("Duplicate fixture identifies original and repeated lines", codes duplicate == [DuplicateEntity]
             && locations duplicate == [LineLocation (SourceLine 3 "person: Alice")]
@@ -61,7 +66,7 @@ main = do
         , ("File diagnostic does not invent line zero", "Location: file" `isInfixOf` renderValidationReport missing
             && not ("line 0" `isInfixOf` renderValidationReport missing))
         , ("Warnings report remains valid", all (`isInfixOf` renderValidationReport warnings)
-            ["Status: VALID WITH WARNINGS","Errors: 0","Warnings: 2"])
+            ["Status: VALID WITH WARNINGS","Errors: 0","Warnings: 3"])
         , ("All model records and metadata survive", let parsed = parseProblem sample in
             (validateProblem parsed) { problemDiagnostics = [] } == parsed { problemDiagnostics = [] })
         ]
@@ -70,7 +75,8 @@ main = do
     exitFailure
   putStrLn ("All " ++ show (length checks) ++ " validation checks passed.")
   where
-    diagnostics = problemDiagnostics
+    diagnostics = filter (\diagnostic -> diagnosticCode diagnostic `notElem`
+      [CourseWithoutTeacherWarning,CourseWithoutStudents,PersonWithoutCourses,TeacherWithoutCourses,CaseSimilarEntity]) . problemDiagnostics
     codes = map diagnosticCode . diagnostics
     locations = map diagnosticLocation . diagnostics
     validated = validateProblem . parseProblem

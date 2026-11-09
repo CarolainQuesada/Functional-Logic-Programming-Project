@@ -38,6 +38,12 @@ renderHtml inputName input = concat
   , "</div><div class=\"wide\">"
   , panel "rules" "La lógica detrás de los datos" "Se generan únicamente las reglas solicitadas para el dominio."
       (table "Reglas solicitadas" ["Regla", "Línea"] (map ruleRow (problemRules problem)))
+  , panel "facts" "Hechos Prolog" "Cada hecho conserva su línea de origen."
+      (if invalid then blocked else table "Hechos generados" ["Hecho", "Línea"]
+        (map (\record -> [entityFact (locatedValue record), lineNumber record]) (problemEntities problem)
+        ++ map (\record -> [relationFact (locatedValue record), lineNumber record]) (unique (problemRelations problem))))
+  , panel "generated-rules" "Reglas generadas" "Texto de las reglas solicitadas."
+      (if invalid then blocked else concatMap (codeBlock . unlines . renderRule) (unique (problemRules problem)))
   , panel "knowledge" "Dentro de la base de conocimiento" "Hechos y reglas de conocimiento.pl, con referencias a sus líneas de origen."
       (case generated of
         Left _ -> blocked
@@ -67,13 +73,16 @@ renderHtml inputName input = concat
                 | otherwise = "valid"
     blocked = "<div class=\"notice error\">La generación está bloqueada por errores de validación. Revisa los diagnósticos más abajo.</div>"
 
+-- | Given a count and trusted label, return a statistic card.
 stat :: Int -> String -> String
 stat count label = "<div class=\"stat\"><strong>" ++ show count ++ "</strong><span>" ++ label ++ "</span></div>"
 
+-- | Given a stable id, title, note and rendered body, return a section with escaped note text.
 panel :: String -> String -> String -> String -> String
 panel identifier title note body = "<section class=\"panel\" id=\"" ++ identifier ++ "\"><div class=\"panel-kicker\">" ++ sectionNumber identifier ++ " / " ++ sectionLabel identifier ++ "</div><h2>" ++ title
   ++ "</h2><p class=\"section-note\">" ++ escapeHtml note ++ "</p>" ++ body ++ "</section>"
 
+-- | Given a trusted caption, headers and raw cells, return a table with escaped cells or an empty state.
 table :: String -> [String] -> [[String]] -> String
 table caption headers rows
   | null rows = "<p class=\"muted\">No hay registros en esta sección.</p>"
@@ -83,6 +92,7 @@ table caption headers rows
   where
     row cells = "<tr>" ++ concatMap (\cell -> "<td>" ++ escapeHtml cell ++ "</td>") cells ++ "</tr>"
 
+-- | Given a located entity, return its name, Spanish type and physical line cells.
 entityRow :: Located Entity -> [String]
 entityRow record = [unEntityName (entityName value), kind, lineNumber record]
   where
@@ -92,28 +102,36 @@ entityRow record = [unEntityName (entityName value), kind, lineNumber record]
       CourseKind -> "Curso"
       TeacherKind -> "Docente"
 
+-- | Given a located relation, return its Spanish predicate, arguments and line cells.
 relationRow :: Located Relation -> [String]
 relationRow record = case locatedValue record of
-  Enrolled person course -> ["enrolled", unEntityName person, unEntityName course, lineNumber record]
-  Teaches teacher course -> ["teaches", unEntityName teacher, unEntityName course, lineNumber record]
+  Enrolled person course -> ["lleva", unEntityName person, unEntityName course, lineNumber record]
+  Teaches teacher course -> ["imparte", unEntityName teacher, unEntityName course, lineNumber record]
 
+-- | Given a located rule request, return its canonical name and source line cells.
 ruleRow :: Located RequestedRule -> [String]
 ruleRow record = [name, lineNumber record]
   where
     name = case locatedValue record of
-      Classmates -> "classmates"
-      CourseWithTeacher -> "course_with_teacher"
+      Classmates -> "companeros"
+      CourseWithTeacher -> "curso_con_docente"
+      ClassmatesInCourse -> "companeros_en_curso"
+      StudentOf -> "estudiante_de"
+      CourseWithoutTeacher -> "curso_sin_docente"
       UnknownRule value -> value
 
+-- | Given a located record, return its physical line number as text.
 lineNumber :: Located a -> String
 lineNumber = show . sourceLineNumber . sourceLine
 
+-- | Given raw Prolog text, return an escaped code panel with line highlighting.
 codeBlock :: String -> String
 codeBlock contents = "<div class=\"code-toolbar\"><span><i></i><i></i><i></i></span><span>PROLOG / CÓDIGO GENERADO</span></div><pre class=\"code\"><code>" ++ concatMap highlightLine (lines contents) ++ "</code></pre>"
   where
     highlightLine line = "<span class=\"code-line " ++ (if take 1 line == "%" then "comment" else "statement")
       ++ "\">" ++ escapeHtml line ++ "</span>\n"
 
+-- | Given a diagnostic, return Spanish severity, explanation and escaped source locations.
 diagnosticHtml :: Diagnostic -> String
 diagnosticHtml diagnostic = "<article class=\"diagnostic\"><h3>" ++ (if diagnosticSeverity diagnostic == Error then "Error" else "Advertencia")
   ++ " <span class=\"tag\">" ++ show (diagnosticCode diagnostic) ++ "</span></h3><p>"
@@ -127,6 +145,7 @@ diagnosticHtml diagnostic = "<article class=\"diagnostic\"><h3>" ++ (if diagnost
       LineLocation origin -> "<p class=\"muted\">Línea " ++ show (sourceLineNumber origin)
         ++ ": <code>" ++ escapeHtml (sourceLineText origin) ++ "</code></p>"
 
+-- | Given raw text, return HTML-safe text while preserving Unicode characters.
 escapeHtml :: String -> String
 escapeHtml = concatMap escape
   where
@@ -170,12 +189,14 @@ connectionMap problem = "<div class=\"map-card\"><div class=\"map-heading\"><spa
     point name = case filter ((== name) . entityName) nodes of
       entity : _ -> Just (position entity)
       [] -> Nothing
+    -- | Given a located relation, return an SVG path when both endpoints exist.
     edge record = case relationReferences (locatedValue record) of
       [(first,_),(second,_)] -> case (point first, point second) of
         (Just (x1,y1), Just (x2,y2)) -> "<path class=\"map-edge\" d=\"M " ++ show x1 ++ " " ++ show y1
           ++ " C 240 " ++ show y1 ++ ", 240 " ++ show y2 ++ ", " ++ show x2 ++ " " ++ show y2 ++ "\"/>"
         _ -> ""
       _ -> ""
+    -- | Given an entity, return its positioned SVG node with escaped labels.
     node entity = let (x,y) = position entity
                       kind = if entityKind entity == CourseKind then "course" else "person"
                   in "<g class=\"map-node " ++ kind ++ "\"><title>" ++ escapeHtml (unEntityName (entityName entity))
@@ -209,4 +230,9 @@ diagnosticMessageEs diagnostic = case diagnosticCode diagnostic of
   ArgumentTypeMismatch -> "El tipo de una entidad no corresponde al argumento de la relación. Revisa la declaración relacionada."
   UnsupportedRule -> "La regla solicitada no corresponde al dominio académico admitido."
   DuplicateRelation -> "Esta relación está repetida. Se conserva únicamente su primera aparición."
+  CourseWithoutTeacherWarning -> "Curso sin docente."
+  CourseWithoutStudents -> "Curso sin estudiantes."
+  PersonWithoutCourses -> "Persona que no lleva ningún curso."
+  TeacherWithoutCourses -> "Docente que no imparte ningún curso."
+  CaseSimilarEntity -> "Entidades que solo difieren en mayúsculas/minúsculas."
   DuplicateRule -> "Esta regla está repetida. Se conserva únicamente su primera solicitud."

@@ -36,6 +36,9 @@ data Relation
 data RequestedRule
   = Classmates
   | CourseWithTeacher
+  | ClassmatesInCourse
+  | StudentOf
+  | CourseWithoutTeacher
   | UnknownRule String
   deriving (Eq, Show)
 

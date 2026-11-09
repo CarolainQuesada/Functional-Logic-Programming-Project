@@ -1,14 +1,14 @@
 [ENTIDADES]
-person: Alice
-person: Bob
-course: ProgrammingParadigms
-teacher: Morgan
+persona: Ana
+persona: Luis
+curso: Paradigmas
+docente: Maria
 
 [RELACIONES]
-enrolled: Alice, ProgrammingParadigms
-enrolled: Bob, ProgrammingParadigms
-teaches: Morgan, ProgrammingParadigms
+lleva: Ana, Paradigmas
+lleva: Luis, Paradigmas
+imparte: Maria, Paradigmas
 
 [REGLAS_SOLICITADAS]
-classmates
-course_with_teacher
+companeros
+curso_con_docente

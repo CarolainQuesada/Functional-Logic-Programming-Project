@@ -47,7 +47,8 @@ main = do
   check "Duplicate diagnostics retain both source locations"
     (diagnosticLocation duplicate == LineLocation repeatedLine
       && diagnosticRelatedLines duplicate == [firstLine])
-  putStrLn "All 12 model checks passed."
+  check "New rule constructors remain distinct" (ClassmatesInCourse /= Classmates && StudentOf /= CourseWithoutTeacher)
+  putStrLn "All 13 model checks passed."
 
 check :: String -> Bool -> IO ()
 check label condition = unless condition $ do

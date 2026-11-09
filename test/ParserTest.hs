@@ -10,7 +10,7 @@ import System.Exit (exitFailure)
 
 main :: IO ()
 main = do
-  primary <- readProblem "input/problema.txt"
+  primary <- readProblem "test/fixtures/english-valid.txt"
   alternate <- readProblem "test/fixtures/alternate-valid.txt"
   assignment <- readProblem "test/fixtures/assignment-valid.txt"
   malformed <- readProblem "test/fixtures/malformed-records.txt"
@@ -19,7 +19,12 @@ main = do
   missing <- readProblem "test/fixtures/missing-section.txt"
   unsupported <- readProblem "test/fixtures/unsupported-rule.txt"
   let checks =
-        [ ("Assignment vocabulary preserves values and original source", counts assignment == (3,4,3,2)
+        [ ("Numeric and underscore names are accepted", null (problemDiagnostics (entities "persona: 123\ncurso: _")))
+        , ("Unicode names and comments preserve physical lines", let value = parseProblem "# comentario\n[ENTIDADES]\n% comentario\npersona: José\ncurso: Programación\ndocente: María Pérez" in
+            null (problemDiagnostics value) && map (sourceLineNumber . sourceLine) (problemEntities value) == [4,5,6])
+        , ("New bilingual rule aliases", values (problemRules (rules "companeros_en_curso\nclassmates_in_course\nestudiante_de\nstudent_of\ncurso_sin_docente\ncourse_without_teacher")) ==
+            [ClassmatesInCourse,ClassmatesInCourse,StudentOf,StudentOf,CourseWithoutTeacher,CourseWithoutTeacher])
+        , ("Assignment vocabulary preserves values and original source", counts assignment == (3,4,3,2)
             && null (problemDiagnostics assignment)
             && values (problemEntities assignment) == [Person (name "Ana"), Person (name "Luis"),
                  Course (name "Paradigmas"), Teacher (name "Maria")]
@@ -74,7 +79,7 @@ main = do
         , ("Repeated rules and relations retain their order", values (problemRules repeatedRecords) == [Classmates,Classmates]
             && length (problemRelations repeatedRecords) == 2 && null (problemDiagnostics repeatedRecords))
         , ("All malformed entity shapes are rejected", all ((== [MalformedRecord]) . codes . entities)
-            ["person:","person: Alice: Bob","person: Alice, Bob","person: First Last","person: 1Alice","person: \193na","person: _Alice","person: Alice # comment"])
+            ["person:","person: Alice: Bob","person: Alice, Bob","person: Alice # comment"])
         , ("All malformed relation shapes are rejected", all ((== [MalformedRecord]) . codes . relations)
             ["enrolled: Alice","enrolled: Alice,","enrolled: ,Logic","enrolled: Alice, Logic, Bob","enrolled:: Alice, Logic"])
         , ("Malformed rule shapes are rejected", all ((== [MalformedRecord]) . codes . rules)
