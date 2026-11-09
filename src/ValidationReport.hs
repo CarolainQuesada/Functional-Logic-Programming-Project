@@ -1,9 +1,8 @@
-module ValidationReport (renderValidationReport, writeValidationReport) where
+module ValidationReport (renderValidationReport) where
 
 import Diagnostic
 import Model (Problem (problemDiagnostics))
 import Source
-import System.IO (IOMode (WriteMode), hPutStr, hSetEncoding, utf8, withFile)
 
 -- | Render accumulated diagnostics, status, counts, and physical source locations.
 -- The caller must validate the model first; this function performs no IO.
@@ -33,9 +32,3 @@ renderValidationReport problem = unlines
     primarySource (LineLocation origin) = ["Source: " ++ sourceLineText origin]
     relatedSource origin =
       ["Related line " ++ show (sourceLineNumber origin) ++ ": " ++ sourceLineText origin]
-
--- | Write a rendered report as UTF-8; the caller supplies an existing directory.
-writeValidationReport :: FilePath -> Problem -> IO ()
-writeValidationReport path problem = withFile path WriteMode $ \handle -> do
-  hSetEncoding handle utf8
-  hPutStr handle (renderValidationReport problem)
