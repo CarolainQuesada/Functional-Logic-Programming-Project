@@ -8,9 +8,11 @@ module Diagnostic
 
 import Source (SourceLine)
 
+-- | Severity of a diagnostic. Errors block Prolog generation; warnings are reported but allow it.
 data Severity = Error | Warning
   deriving (Eq, Show)
 
+-- | Stable identifier for each kind of input, syntax, reference or domain problem shown in the report.
 data DiagnosticCode
   = InputFailure
   | MalformedRecord
@@ -36,6 +38,7 @@ data DiagnosticCode
 data DiagnosticLocation = FileLocation | LineLocation SourceLine
   deriving (Eq, Show)
 
+-- | One reported problem with its severity, code, message, primary location and related source lines.
 data Diagnostic = Diagnostic
   { diagnosticSeverity :: Severity
   , diagnosticCode :: DiagnosticCode

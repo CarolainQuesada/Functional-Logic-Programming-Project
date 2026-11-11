@@ -137,7 +137,7 @@ Data model</h1>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
 Functional core</h1>
 <p>Parsing, validation, report rendering, HTML rendering, atom escaping, and Prolog generation are pure functions. They use algebraic types, pattern matching, folds, immutable lists, and <span class="tt">Either</span> for generation failure. Pure tests can compare input/output without reading files or launching processes.</p>
-<p><span class="tt">Input</span>, <span class="tt">PrologFiles</span>, the report writer, and <span class="tt">Pipeline</span> form the IO boundary. The supported command is <span class="tt">app/Main.hs</span>; focused earlier-stage commands remain available for debugging. The pipeline guards path aliases, collects file-reading failures, and publishes complete individual files using temporary files and rename.</p>
+<p><span class="tt">Input</span>, <span class="tt">PrologFiles</span>, the report writer, and <span class="tt">Pipeline</span> form the IO boundary. The only command is <span class="tt">app/Main.hs</span>. The pipeline guards path aliases, collects file-reading failures, and publishes complete individual files using temporary files and rename.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
 Logical core</h1>
 <p>Generated entity and relation facts are the only domain knowledge. Requested Prolog rules infer classmates and courses with teachers. Names are quoted atoms, not variables. Base predicates are declared even with zero facts so empty inputs remain queryable. The browser displays generated knowledge and diagnostics but does not perform logical inference.</p>

@@ -115,28 +115,28 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('api_src__model
 <div class="textblock"><p>Haskell module <span class="tt">Model</span>. Declarations below are extracted from the actual source. </p>
 <h1 class="doxsection"><a class="anchor" id="api_src_Model_EntityName"></a>
 EntityName</h1>
-<p>Declaration in the Model module. Source: <span class="tt">src/Model.hs:18</span>. </p><div class="fragment"><div class="line">newtype EntityName = EntityName { unEntityName :: String }</div>
+<p>Entity identifier exactly as written in the input; case and spaces are preserved. Source: <span class="tt">src/Model.hs:19</span>. </p><div class="fragment"><div class="line">newtype EntityName = EntityName { unEntityName :: String }</div>
 <div class="line">  deriving (Eq, Ord, Show)</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Model_EntityKind"></a>
 EntityKind</h1>
-<p>Declaration in the Model module. Source: <span class="tt">src/Model.hs:21</span>. </p><div class="fragment"><div class="line">data EntityKind = PersonKind | CourseKind | TeacherKind</div>
+<p>Entity type without its name, used to check that relation arguments have the expected type. Source: <span class="tt">src/Model.hs:23</span>. </p><div class="fragment"><div class="line">data EntityKind = PersonKind | CourseKind | TeacherKind</div>
 <div class="line">  deriving (Eq, Show)</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Model_Entity"></a>
 Entity</h1>
-<p>Declaration in the Model module. Source: <span class="tt">src/Model.hs:24</span>. </p><div class="fragment"><div class="line">data Entity</div>
+<p>Entity declared in the [ENTIDADES] section: a person, a course or a teacher. Source: <span class="tt">src/Model.hs:27</span>. </p><div class="fragment"><div class="line">data Entity</div>
 <div class="line">  = Person EntityName</div>
 <div class="line">  | Course EntityName</div>
 <div class="line">  | Teacher EntityName</div>
 <div class="line">  deriving (Eq, Show)</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Model_Relation"></a>
 Relation</h1>
-<p>Declaration in the Model module. Source: <span class="tt">src/Model.hs:30</span>. </p><div class="fragment"><div class="line">data Relation</div>
+<p>Relation declared in the [RELACIONES] section: a person enrolled in a course, or a teacher teaching a course. Source: <span class="tt">src/Model.hs:34</span>. </p><div class="fragment"><div class="line">data Relation</div>
 <div class="line">  = Enrolled EntityName EntityName</div>
 <div class="line">  | Teaches EntityName EntityName</div>
 <div class="line">  deriving (Eq, Show)</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Model_RequestedRule"></a>
 RequestedRule</h1>
-<p>Retain unknown names so domain validation can report them later. Source: <span class="tt">src/Model.hs:36</span>. </p><div class="fragment"><div class="line">data RequestedRule</div>
+<p>Retain unknown names so domain validation can report them later. Source: <span class="tt">src/Model.hs:40</span>. </p><div class="fragment"><div class="line">data RequestedRule</div>
 <div class="line">  = Classmates</div>
 <div class="line">  | CourseWithTeacher</div>
 <div class="line">  | ClassmatesInCourse</div>
@@ -146,11 +146,11 @@ RequestedRule</h1>
 <div class="line">  deriving (Eq, Show)</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Model_Section"></a>
 Section</h1>
-<p>Declaration in the Model module. Source: <span class="tt">src/Model.hs:45</span>. </p><div class="fragment"><div class="line">data Section = EntitiesSection | RelationsSection | RulesSection</div>
+<p>The three required sections of problema.txt. Source: <span class="tt">src/Model.hs:50</span>. </p><div class="fragment"><div class="line">data Section = EntitiesSection | RelationsSection | RulesSection</div>
 <div class="line">  deriving (Eq, Show)</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Model_Problem"></a>
 Problem</h1>
-<p>Preserve input order and duplicates until validation diagnoses them. Source: <span class="tt">src/Model.hs:49</span>. </p><div class="fragment"><div class="line">data Problem = Problem</div>
+<p>Preserve input order and duplicates until validation diagnoses them. Source: <span class="tt">src/Model.hs:54</span>. </p><div class="fragment"><div class="line">data Problem = Problem</div>
 <div class="line">  { problemSections :: [Located Section]</div>
 <div class="line">  , problemEntities :: [Located Entity]</div>
 <div class="line">  , problemRelations :: [Located Relation]</div>
@@ -159,16 +159,16 @@ Problem</h1>
 <div class="line">  } deriving (Eq, Show)</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Model_emptyProblem"></a>
 emptyProblem</h1>
-<p>Construct an empty intermediate model before parsing; required sections are not implied. Source: <span class="tt">src/Model.hs:58</span>. </p><div class="fragment"><div class="line">emptyProblem :: Problem</div>
+<p>Construct an empty intermediate model before parsing; required sections are not implied. Source: <span class="tt">src/Model.hs:63</span>. </p><div class="fragment"><div class="line">emptyProblem :: Problem</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Model_entityName"></a>
 entityName</h1>
-<p>Extract the case-sensitive identifier shared by every entity constructor. Source: <span class="tt">src/Model.hs:62</span>. </p><div class="fragment"><div class="line">entityName :: Entity -&gt; EntityName</div>
+<p>Extract the case-sensitive identifier shared by every entity constructor. Source: <span class="tt">src/Model.hs:67</span>. </p><div class="fragment"><div class="line">entityName :: Entity -&gt; EntityName</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Model_entityKind"></a>
 entityKind</h1>
-<p>Return the domain type used to validate relation arguments. Source: <span class="tt">src/Model.hs:68</span>. </p><div class="fragment"><div class="line">entityKind :: Entity -&gt; EntityKind</div>
+<p>Return the domain type used to validate relation arguments. Source: <span class="tt">src/Model.hs:73</span>. </p><div class="fragment"><div class="line">entityKind :: Entity -&gt; EntityKind</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Model_relationReferences"></a>
 relationReferences</h1>
-<p>Return references in argument order with the types each argument requires. Source: <span class="tt">src/Model.hs:74</span>. </p><div class="fragment"><div class="line">relationReferences :: Relation -&gt; [(EntityName, EntityKind)]</div>
+<p>Return references in argument order with the types each argument requires. Source: <span class="tt">src/Model.hs:79</span>. </p><div class="fragment"><div class="line">relationReferences :: Relation -&gt; [(EntityName, EntityKind)]</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

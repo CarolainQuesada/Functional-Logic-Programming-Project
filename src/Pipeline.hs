@@ -43,10 +43,13 @@ runPipeline inputPath directory = do
   where
     names = ["conocimiento.pl", "consultas.pl", "reporte_validacion.txt", "index.html"]
 
+-- | Given an IO error message, return an empty model holding a single file-level InputFailure error.
 inputFailure :: String -> Problem
 inputFailure message = emptyProblem
   { problemDiagnostics = [Diagnostic Error InputFailure message FileLocation []] }
 
+-- | Given the input path and the model, return the name and full text of the four generated files.
+-- When the model has errors, both Prolog files contain only a blocked-generation comment.
 artifacts :: FilePath -> Problem -> [(FilePath, String)]
 artifacts inputPath problem =
   [ ("conocimiento.pl", knowledge)

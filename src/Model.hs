@@ -15,18 +15,22 @@ module Model
 import Diagnostic (Diagnostic)
 import Source (Located)
 
+-- | Entity identifier exactly as written in the input; case and spaces are preserved.
 newtype EntityName = EntityName { unEntityName :: String }
   deriving (Eq, Ord, Show)
 
+-- | Entity type without its name, used to check that relation arguments have the expected type.
 data EntityKind = PersonKind | CourseKind | TeacherKind
   deriving (Eq, Show)
 
+-- | Entity declared in the [ENTIDADES] section: a person, a course or a teacher.
 data Entity
   = Person EntityName
   | Course EntityName
   | Teacher EntityName
   deriving (Eq, Show)
 
+-- | Relation declared in the [RELACIONES] section: a person enrolled in a course, or a teacher teaching a course.
 data Relation
   = Enrolled EntityName EntityName
   | Teaches EntityName EntityName
@@ -42,6 +46,7 @@ data RequestedRule
   | UnknownRule String
   deriving (Eq, Show)
 
+-- | The three required sections of problema.txt.
 data Section = EntitiesSection | RelationsSection | RulesSection
   deriving (Eq, Show)
 

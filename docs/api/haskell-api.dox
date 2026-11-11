@@ -1,15 +1,15 @@
 /** @page api_src_Diagnostic src/Diagnostic.hs
 Haskell module `Diagnostic`. Declarations below are extracted from the actual source.
 @section api_src_Diagnostic_Severity Severity
-Declaration in the Diagnostic module.
-Source: `src/Diagnostic.hs:11`.
+Severity of a diagnostic. Errors block Prolog generation; warnings are reported but allow it.
+Source: `src/Diagnostic.hs:12`.
 @code
 data Severity = Error | Warning
   deriving (Eq, Show)
 @endcode
 @section api_src_Diagnostic_DiagnosticCode DiagnosticCode
-Declaration in the Diagnostic module.
-Source: `src/Diagnostic.hs:14`.
+Stable identifier for each kind of input, syntax, reference or domain problem shown in the report.
+Source: `src/Diagnostic.hs:16`.
 @code
 data DiagnosticCode
   = InputFailure
@@ -34,14 +34,14 @@ data DiagnosticCode
 @endcode
 @section api_src_Diagnostic_DiagnosticLocation DiagnosticLocation
 File-level errors have no invented physical line number.
-Source: `src/Diagnostic.hs:36`.
+Source: `src/Diagnostic.hs:38`.
 @code
 data DiagnosticLocation = FileLocation | LineLocation SourceLine
   deriving (Eq, Show)
 @endcode
 @section api_src_Diagnostic_Diagnostic Diagnostic
-Declaration in the Diagnostic module.
-Source: `src/Diagnostic.hs:39`.
+One reported problem with its severity, code, message, primary location and related source lines.
+Source: `src/Diagnostic.hs:42`.
 @code
 data Diagnostic = Diagnostic
   { diagnosticSeverity :: Severity
@@ -53,7 +53,7 @@ data Diagnostic = Diagnostic
 @endcode
 @section api_src_Diagnostic_hasErrors hasErrors
 Return whether any diagnostic blocks executable output; warnings alone do not.
-Source: `src/Diagnostic.hs:48`.
+Source: `src/Diagnostic.hs:51`.
 @code
 hasErrors :: [Diagnostic] -> Bool
 @endcode
@@ -176,22 +176,22 @@ readProblem :: FilePath -> IO Problem
 /** @page api_src_Model src/Model.hs
 Haskell module `Model`. Declarations below are extracted from the actual source.
 @section api_src_Model_EntityName EntityName
-Declaration in the Model module.
-Source: `src/Model.hs:18`.
+Entity identifier exactly as written in the input; case and spaces are preserved.
+Source: `src/Model.hs:19`.
 @code
 newtype EntityName = EntityName { unEntityName :: String }
   deriving (Eq, Ord, Show)
 @endcode
 @section api_src_Model_EntityKind EntityKind
-Declaration in the Model module.
-Source: `src/Model.hs:21`.
+Entity type without its name, used to check that relation arguments have the expected type.
+Source: `src/Model.hs:23`.
 @code
 data EntityKind = PersonKind | CourseKind | TeacherKind
   deriving (Eq, Show)
 @endcode
 @section api_src_Model_Entity Entity
-Declaration in the Model module.
-Source: `src/Model.hs:24`.
+Entity declared in the [ENTIDADES] section: a person, a course or a teacher.
+Source: `src/Model.hs:27`.
 @code
 data Entity
   = Person EntityName
@@ -200,8 +200,8 @@ data Entity
   deriving (Eq, Show)
 @endcode
 @section api_src_Model_Relation Relation
-Declaration in the Model module.
-Source: `src/Model.hs:30`.
+Relation declared in the [RELACIONES] section: a person enrolled in a course, or a teacher teaching a course.
+Source: `src/Model.hs:34`.
 @code
 data Relation
   = Enrolled EntityName EntityName
@@ -210,7 +210,7 @@ data Relation
 @endcode
 @section api_src_Model_RequestedRule RequestedRule
 Retain unknown names so domain validation can report them later.
-Source: `src/Model.hs:36`.
+Source: `src/Model.hs:40`.
 @code
 data RequestedRule
   = Classmates
@@ -222,15 +222,15 @@ data RequestedRule
   deriving (Eq, Show)
 @endcode
 @section api_src_Model_Section Section
-Declaration in the Model module.
-Source: `src/Model.hs:45`.
+The three required sections of problema.txt.
+Source: `src/Model.hs:50`.
 @code
 data Section = EntitiesSection | RelationsSection | RulesSection
   deriving (Eq, Show)
 @endcode
 @section api_src_Model_Problem Problem
 Preserve input order and duplicates until validation diagnoses them.
-Source: `src/Model.hs:49`.
+Source: `src/Model.hs:54`.
 @code
 data Problem = Problem
   { problemSections :: [Located Section]
@@ -242,25 +242,25 @@ data Problem = Problem
 @endcode
 @section api_src_Model_emptyProblem emptyProblem
 Construct an empty intermediate model before parsing; required sections are not implied.
-Source: `src/Model.hs:58`.
+Source: `src/Model.hs:63`.
 @code
 emptyProblem :: Problem
 @endcode
 @section api_src_Model_entityName entityName
 Extract the case-sensitive identifier shared by every entity constructor.
-Source: `src/Model.hs:62`.
+Source: `src/Model.hs:67`.
 @code
 entityName :: Entity -> EntityName
 @endcode
 @section api_src_Model_entityKind entityKind
 Return the domain type used to validate relation arguments.
-Source: `src/Model.hs:68`.
+Source: `src/Model.hs:73`.
 @code
 entityKind :: Entity -> EntityKind
 @endcode
 @section api_src_Model_relationReferences relationReferences
 Return references in argument order with the types each argument requires.
-Source: `src/Model.hs:74`.
+Source: `src/Model.hs:79`.
 @code
 relationReferences :: Relation -> [(EntityName, EntityKind)]
 @endcode
@@ -370,26 +370,26 @@ Source: `src/Pipeline.hs:22`.
 runPipeline :: FilePath -> FilePath -> IO Bool
 @endcode
 @section api_src_Pipeline_inputFailure inputFailure
-Declaration in the Pipeline module.
-Source: `src/Pipeline.hs:46`.
+Given an IO error message, return an empty model holding a single file-level InputFailure error.
+Source: `src/Pipeline.hs:47`.
 @code
 inputFailure :: String -> Problem
 @endcode
 @section api_src_Pipeline_artifacts artifacts
-Declaration in the Pipeline module.
-Source: `src/Pipeline.hs:50`.
+Given the input path and the model, return the name and full text of the four generated files. When the model has errors, both Prolog files contain only a blocked-generation comment.
+Source: `src/Pipeline.hs:53`.
 @code
 artifacts :: FilePath -> Problem -> [(FilePath, String)]
 @endcode
 @section api_src_Pipeline_writeAtomic writeAtomic
 Publish UTF-8 text through a sibling temporary file and atomic rename. On failure, attempt to close and remove the temporary without masking the original error.
-Source: `src/Pipeline.hs:65`.
+Source: `src/Pipeline.hs:68`.
 @code
 writeAtomic :: FilePath -> FilePath -> String -> IO ()
 @endcode
 @section api_src_Pipeline_renameWithRetry renameWithRetry
 Windows can temporarily lock a newly written file; never hide persistent errors.
-Source: `src/Pipeline.hs:80`.
+Source: `src/Pipeline.hs:83`.
 @code
 renameWithRetry :: Int -> FilePath -> FilePath -> IO ()
 @endcode
@@ -398,8 +398,8 @@ renameWithRetry :: Int -> FilePath -> FilePath -> IO ()
 /** @page api_src_Prolog src/Prolog.hs
 Haskell module `Prolog`. Declarations below are extracted from the actual source.
 @section api_src_Prolog_PrologOutput PrologOutput
-Declaration in the Prolog module.
-Source: `src/Prolog.hs:9`.
+Generated Prolog text: the knowledge base for conocimiento.pl and the suggested queries for consultas.pl.
+Source: `src/Prolog.hs:10`.
 @code
 data PrologOutput = PrologOutput
   { knowledgeText :: String
@@ -408,73 +408,73 @@ data PrologOutput = PrologOutput
 @endcode
 @section api_src_Prolog_generateProlog generateProlog
 Validate a model and return either diagnostics or executable knowledge and queries. Preserve entity case, retain source comments, and deduplicate repeated requests. Rule definitions use the canonical Spanish predicates for either input vocabulary.
-Source: `src/Prolog.hs:17`.
+Source: `src/Prolog.hs:18`.
 @code
 generateProlog :: Problem -> Either [Diagnostic] PrologOutput
 @endcode
 @section api_src_Prolog_unique unique
 Given located records, return the first occurrence of each value in input order.
-Source: `src/Prolog.hs:50`.
+Source: `src/Prolog.hs:51`.
 @code
 unique :: Eq a => [Located a] -> [Located a]
 @endcode
 @section api_src_Prolog_renderLocated renderLocated
 Given a value renderer and located record, return source comment, rendered value and separator.
-Source: `src/Prolog.hs:54`.
+Source: `src/Prolog.hs:55`.
 @code
 renderLocated :: (a -> String) -> Located a -> [String]
 @endcode
 @section api_src_Prolog_traceComment traceComment
 Given a physical source line, return a single-line Prolog provenance comment.
-Source: `src/Prolog.hs:58`.
+Source: `src/Prolog.hs:59`.
 @code
 traceComment :: SourceLine -> String
 @endcode
 @section api_src_Prolog_entityFact entityFact
 Given an entity, return its canonical Spanish Prolog fact with a quoted name.
-Source: `src/Prolog.hs:67`.
+Source: `src/Prolog.hs:68`.
 @code
 entityFact :: Entity -> String
 @endcode
 @section api_src_Prolog_relationFact relationFact
 Given a typed relation, return its Spanish Prolog fact with quoted arguments.
-Source: `src/Prolog.hs:76`.
+Source: `src/Prolog.hs:77`.
 @code
 relationFact :: Relation -> String
 @endcode
 @section api_src_Prolog_isTeaching isTeaching
 Given a relation, return whether it represents teaching.
-Source: `src/Prolog.hs:81`.
+Source: `src/Prolog.hs:82`.
 @code
 isTeaching :: Relation -> Bool
 @endcode
 @section api_src_Prolog_term term
 Given a predicate and entity names, return a Prolog term with quoted atom arguments.
-Source: `src/Prolog.hs:86`.
+Source: `src/Prolog.hs:87`.
 @code
 term :: String -> [EntityName] -> String
 @endcode
 @section api_src_Prolog_renderRule renderRule
 Given a located request, return its source comment and executable Spanish rule lines.
-Source: `src/Prolog.hs:90`.
+Source: `src/Prolog.hs:91`.
 @code
 renderRule :: Located RequestedRule -> [String]
 @endcode
 @section api_src_Prolog_ruleQueries ruleQueries
 Given a requested rule, return open query terms for its generated predicate.
-Source: `src/Prolog.hs:112`.
+Source: `src/Prolog.hs:113`.
 @code
 ruleQueries :: RequestedRule -> [String]
 @endcode
 @section api_src_Prolog_concreteQueries concreteQueries
 From an entity, return queries using its actual quoted name.
-Source: `src/Prolog.hs:121`.
+Source: `src/Prolog.hs:122`.
 @code
 concreteQueries :: Entity -> [String]
 @endcode
 @section api_src_Prolog_quoteAtom quoteAtom
 Quote names as SWI-Prolog atoms without changing their identity.
-Source: `src/Prolog.hs:127`.
+Source: `src/Prolog.hs:128`.
 @code
 quoteAtom :: String -> String
 @endcode
@@ -489,8 +489,8 @@ Source: `src/PrologFiles.hs:8`.
 writePrologFiles :: FilePath -> PrologOutput -> IO ()
 @endcode
 @section api_src_PrologFiles_writeUtf8 writeUtf8
-Declaration in the PrologFiles module.
-Source: `src/PrologFiles.hs:13`.
+Write text to a file using UTF-8 encoding, replacing any previous content.
+Source: `src/PrologFiles.hs:14`.
 @code
 writeUtf8 :: FilePath -> String -> IO ()
 @endcode
@@ -508,8 +508,8 @@ data SourceLine = SourceLine
   } deriving (Eq, Show)
 @endcode
 @section api_src_Source_Located Located
-Declaration in the Source module.
-Source: `src/Source.hs:13`.
+Value paired with the physical source line it came from, used for traceability comments and diagnostics.
+Source: `src/Source.hs:14`.
 @code
 data Located a = Located
   { sourceLine :: SourceLine
@@ -518,7 +518,7 @@ data Located a = Located
 @endcode
 @section api_src_Source_mapLocated mapLocated
 Transform a value without changing its original source information.
-Source: `src/Source.hs:19`.
+Source: `src/Source.hs:20`.
 @code
 mapLocated :: (a -> b) -> Located a -> Located b
 @endcode
@@ -560,8 +560,8 @@ renderValidationReport :: Problem -> String
 /** @page api_app_Main app/Main.hs
 Haskell module `Main`. Declarations below are extracted from the actual source.
 @section api_app_Main_main main
-Declaration in the Main module.
-Source: `app/Main.hs:9`.
+Command entry point. With no arguments, read input/problema.txt and write to output; with an input file and an output directory, use those instead. Exit with code 1 on invalid input.
+Source: `app/Main.hs:11`.
 @code
 main :: IO ()
 @endcode

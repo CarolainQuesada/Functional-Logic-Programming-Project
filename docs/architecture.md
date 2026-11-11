@@ -30,7 +30,7 @@ The model intentionally accepts partial input. The parser recognizes syntax and 
 
 Parsing, validation, report rendering, HTML rendering, atom escaping, and Prolog generation are pure functions. They use algebraic types, pattern matching, folds, immutable lists, and `Either` for generation failure. Pure tests can compare input/output without reading files or launching processes.
 
-`Input`, `PrologFiles`, the report writer, and `Pipeline` form the IO boundary. The supported command is `app/Main.hs`; focused earlier-stage commands remain available for debugging. The pipeline guards path aliases, collects file-reading failures, and publishes complete individual files using temporary files and rename.
+`Input`, `PrologFiles`, the report writer, and `Pipeline` form the IO boundary. The only command is `app/Main.hs`. The pipeline guards path aliases, collects file-reading failures, and publishes complete individual files using temporary files and rename.
 
 ## Logical core
 

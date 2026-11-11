@@ -115,11 +115,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('api_src__diagn
 <div class="textblock"><p>Haskell module <span class="tt">Diagnostic</span>. Declarations below are extracted from the actual source. </p>
 <h1 class="doxsection"><a class="anchor" id="api_src_Diagnostic_Severity"></a>
 Severity</h1>
-<p>Declaration in the Diagnostic module. Source: <span class="tt">src/Diagnostic.hs:11</span>. </p><div class="fragment"><div class="line">data Severity = Error | Warning</div>
+<p>Severity of a diagnostic. Errors block Prolog generation; warnings are reported but allow it. Source: <span class="tt">src/Diagnostic.hs:12</span>. </p><div class="fragment"><div class="line">data Severity = Error | Warning</div>
 <div class="line">  deriving (Eq, Show)</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Diagnostic_DiagnosticCode"></a>
 DiagnosticCode</h1>
-<p>Declaration in the Diagnostic module. Source: <span class="tt">src/Diagnostic.hs:14</span>. </p><div class="fragment"><div class="line">data DiagnosticCode</div>
+<p>Stable identifier for each kind of input, syntax, reference or domain problem shown in the report. Source: <span class="tt">src/Diagnostic.hs:16</span>. </p><div class="fragment"><div class="line">data DiagnosticCode</div>
 <div class="line">  = InputFailure</div>
 <div class="line">  | MalformedRecord</div>
 <div class="line">  | UnknownVocabulary</div>
@@ -141,11 +141,11 @@ DiagnosticCode</h1>
 <div class="line">  deriving (Eq, Show)</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Diagnostic_DiagnosticLocation"></a>
 DiagnosticLocation</h1>
-<p>File-level errors have no invented physical line number. Source: <span class="tt">src/Diagnostic.hs:36</span>. </p><div class="fragment"><div class="line">data DiagnosticLocation = FileLocation | LineLocation SourceLine</div>
+<p>File-level errors have no invented physical line number. Source: <span class="tt">src/Diagnostic.hs:38</span>. </p><div class="fragment"><div class="line">data DiagnosticLocation = FileLocation | LineLocation SourceLine</div>
 <div class="line">  deriving (Eq, Show)</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Diagnostic_Diagnostic"></a>
 Diagnostic</h1>
-<p>Declaration in the Diagnostic module. Source: <span class="tt">src/Diagnostic.hs:39</span>. </p><div class="fragment"><div class="line">data Diagnostic = Diagnostic</div>
+<p>One reported problem with its severity, code, message, primary location and related source lines. Source: <span class="tt">src/Diagnostic.hs:42</span>. </p><div class="fragment"><div class="line">data Diagnostic = Diagnostic</div>
 <div class="line">  { diagnosticSeverity :: Severity</div>
 <div class="line">  , diagnosticCode :: DiagnosticCode</div>
 <div class="line">  , diagnosticMessage :: String</div>
@@ -154,7 +154,7 @@ Diagnostic</h1>
 <div class="line">  } deriving (Eq, Show)</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Diagnostic_hasErrors"></a>
 hasErrors</h1>
-<p>Return whether any diagnostic blocks executable output; warnings alone do not. Source: <span class="tt">src/Diagnostic.hs:48</span>. </p><div class="fragment"><div class="line">hasErrors :: [Diagnostic] -&gt; Bool</div>
+<p>Return whether any diagnostic blocks executable output; warnings alone do not. Source: <span class="tt">src/Diagnostic.hs:51</span>. </p><div class="fragment"><div class="line">hasErrors :: [Diagnostic] -&gt; Bool</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

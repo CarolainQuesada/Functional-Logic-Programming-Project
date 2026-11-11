@@ -1,7 +1,7 @@
 # Functional-Logic-Programming-Project
 An integrated project using Haskell, Prolog, and a web interface to automatically generate, validate, and visualize logical knowledge bases.
 
-## Current stage
+## Project status
 
 The complete academic pipeline is implemented: UTF-8 input, typed intermediate model, validation, Prolog knowledge, suggested queries, generated HTML, and a validation report. The Haskell suites include executable SWI-Prolog checks. Chrome desktop/mobile verification and Doxygen documentation generation are also complete. See [verification evidence](docs/verification.md) and the [requirements checklist](docs/requirements-checklist.md).
 
@@ -86,7 +86,7 @@ python tools/package_submission.py
 
 The packager compares all four primary outputs with a fresh pipeline run and rejects stale results. It rebuilds documentation and includes tracked and nonignored new files, inputs, generated results, technical documentation, and available browser evidence. Review nonignored files before sharing the archive. See the [defense guide](docs/defense-guide.md) before presenting.
 
-## Planned pipeline
+## Pipeline
 
 `problema.txt -> Haskell -> intermediate model -> Prolog + queries + HTML + validation report`
 
@@ -128,7 +128,7 @@ tools/     Test runner, browser checks, documentation, and packaging
 
 Generated demonstration output, browser evidence, and the submission ZIP are included in version control for teammates. Local build artifacts and temporary test output are excluded.
 
-The build definition is `functional-logic-pipeline.cabal`. Generated Doxygen HTML and extracted API pages are tracked; open `docs/html/index.html` after downloading or pulling develop.
+The build definition is `functional-logic-pipeline.cabal`. Generated Doxygen HTML and extracted API pages are tracked; open `docs/html/index.html` after downloading or pulling `main`.
 
 ## Git workflow
 
@@ -137,9 +137,9 @@ The build definition is `functional-logic-pipeline.cabal`. Generated Doxygen HTM
 - Ejecutamos las pruebas antes de compartir la rama y describimos los resultados en el PR.
 - Revisamos los cambios en equipo antes de fusionarlos.
 
-## Setup status
+## Tested environment
 
-Stage 1 is complete on this Windows workstation. Verified on October 21, 2026: Git 2.44.0, GHC and GHCi 9.10.3, Cabal 3.16.1.0, SWI-Prolog 10.1.17, and Doxygen 1.18.0.
+The project was developed and verified on Windows. Tool versions checked on October 21, 2026: Git 2.44.0, GHC and GHCi 9.10.3, Cabal 3.16.1.0, SWI-Prolog 10.1.17, and Doxygen 1.18.0.
 
 GHCi evaluation, Haskell compilation and executable execution, and a Prolog arithmetic query passed. See [development environment](docs/development-environment.md) for setup and verification details. Restart existing terminals and editors to pick up the updated user PATH.
 

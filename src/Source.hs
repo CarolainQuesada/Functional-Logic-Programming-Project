@@ -10,6 +10,7 @@ data SourceLine = SourceLine
   , sourceLineText :: String
   } deriving (Eq, Show)
 
+-- | Value paired with the physical source line it came from, used for traceability comments and diagnostics.
 data Located a = Located
   { sourceLine :: SourceLine
   , locatedValue :: a
