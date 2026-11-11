@@ -137,7 +137,7 @@ var NAVTREE =
     [ "Oral defense guide", "md_docs_2defense-guide.html", [
       [ "Demonstration sequence", "md_docs_2defense-guide.html#autotoc_md17", null ],
       [ "Design questions to prepare together", "md_docs_2defense-guide.html#autotoc_md18", null ],
-      [ "Pair preparation", "md_docs_2defense-guide.html#autotoc_md19", null ],
+      [ "Team preparation", "md_docs_2defense-guide.html#autotoc_md19", null ],
       [ "Exact assignment example", "md_docs_2defense-guide.html#autotoc_md20", null ]
     ] ],
     [ "Development environment", "md_docs_2development-environment.html", [
@@ -149,43 +149,51 @@ var NAVTREE =
     [ "Generated interface", "md_docs_2generated-interface.html", [
       [ "Fieldnotes visual design", "md_docs_2generated-interface.html#autotoc_md27", null ]
     ] ],
-    [ "input-format-analysis", "md_docs_2input-format-analysis.html", null ],
+    [ "Input format specification", "md_docs_2input-format-analysis.html", [
+      [ "Scope and evidence", "md_docs_2input-format-analysis.html#autotoc_md29", null ],
+      [ "Required sections", "md_docs_2input-format-analysis.html#autotoc_md30", null ],
+      [ "Lexical conventions", "md_docs_2input-format-analysis.html#autotoc_md31", null ],
+      [ "Academic vocabulary", "md_docs_2input-format-analysis.html#autotoc_md32", null ],
+      [ "Section recognition and traceability", "md_docs_2input-format-analysis.html#autotoc_md33", null ],
+      [ "Error and warning policy", "md_docs_2input-format-analysis.html#autotoc_md34", null ],
+      [ "Examples and review status", "md_docs_2input-format-analysis.html#autotoc_md35", null ],
+      [ "Assignment compatibility", "md_docs_2input-format-analysis.html#autotoc_md36", null ]
+    ] ],
     [ "Intermediate model", "md_docs_2intermediate-model.html", [
-      [ "Scope", "md_docs_2intermediate-model.html#autotoc_md37", null ],
-      [ "Modules", "md_docs_2intermediate-model.html#autotoc_md38", null ],
-      [ "Representation decisions", "md_docs_2intermediate-model.html#autotoc_md39", null ],
-      [ "Pure operations", "md_docs_2intermediate-model.html#autotoc_md40", null ],
-      [ "Verification", "md_docs_2intermediate-model.html#autotoc_md41", null ]
+      [ "Scope", "md_docs_2intermediate-model.html#autotoc_md38", null ],
+      [ "Modules", "md_docs_2intermediate-model.html#autotoc_md39", null ],
+      [ "Representation decisions", "md_docs_2intermediate-model.html#autotoc_md40", null ],
+      [ "Pure operations", "md_docs_2intermediate-model.html#autotoc_md41", null ],
+      [ "Verification", "md_docs_2intermediate-model.html#autotoc_md42", null ]
     ] ],
     [ "Functional input parser", "md_docs_2parser.html", [
-      [ "API and scope", "md_docs_2parser.html#autotoc_md43", null ],
-      [ "Parsing process", "md_docs_2parser.html#autotoc_md44", null ],
-      [ "Verification", "md_docs_2parser.html#autotoc_md45", null ]
+      [ "API and scope", "md_docs_2parser.html#autotoc_md44", null ],
+      [ "Parsing process", "md_docs_2parser.html#autotoc_md45", null ],
+      [ "Verification", "md_docs_2parser.html#autotoc_md46", null ]
     ] ],
     [ "Complete pipeline", "md_docs_2pipeline.html", null ],
     [ "Prolog knowledge and queries", "md_docs_2prolog-generation.html", [
-      [ "API and output", "md_docs_2prolog-generation.html#autotoc_md48", null ],
-      [ "Requested rules", "md_docs_2prolog-generation.html#autotoc_md49", null ],
-      [ "Suggested queries", "md_docs_2prolog-generation.html#autotoc_md50", null ],
-      [ "Generation command", "md_docs_2prolog-generation.html#autotoc_md51", null ],
-      [ "Additional requested rules", "md_docs_2prolog-generation.html#autotoc_md52", null ],
-      [ "Verification", "md_docs_2prolog-generation.html#autotoc_md53", null ]
+      [ "API and output", "md_docs_2prolog-generation.html#autotoc_md49", null ],
+      [ "Requested rules", "md_docs_2prolog-generation.html#autotoc_md50", null ],
+      [ "Suggested queries", "md_docs_2prolog-generation.html#autotoc_md51", null ],
+      [ "Generation command", "md_docs_2prolog-generation.html#autotoc_md52", null ],
+      [ "Additional requested rules", "md_docs_2prolog-generation.html#autotoc_md53", null ],
+      [ "Verification", "md_docs_2prolog-generation.html#autotoc_md54", null ]
     ] ],
     [ "Assignment requirement checklist", "md_docs_2requirements-checklist.html", null ],
-    [ "team-handoff", "md_docs_2team-handoff.html", null ],
     [ "Semantic validation and reports", "md_docs_2validation.html", [
-      [ "API", "md_docs_2validation.html#autotoc_md61", null ],
-      [ "Reports and command", "md_docs_2validation.html#autotoc_md62", null ],
-      [ "Verification", "md_docs_2validation.html#autotoc_md63", null ],
-      [ "Nonblocking coverage warnings", "md_docs_2validation.html#autotoc_md64", null ]
+      [ "API", "md_docs_2validation.html#autotoc_md58", null ],
+      [ "Reports and command", "md_docs_2validation.html#autotoc_md59", null ],
+      [ "Verification", "md_docs_2validation.html#autotoc_md60", null ],
+      [ "Nonblocking coverage warnings", "md_docs_2validation.html#autotoc_md61", null ]
     ] ],
     [ "Verification evidence", "md_docs_2verification.html", [
-      [ "Automated results", "md_docs_2verification.html#autotoc_md66", null ],
-      [ "Browser execution", "md_docs_2verification.html#autotoc_md67", null ],
-      [ "Issues found and resolved", "md_docs_2verification.html#autotoc_md68", null ],
-      [ "Reproduction", "md_docs_2verification.html#autotoc_md69", null ],
-      [ "Assignment compatibility and delivery improvements", "md_docs_2verification.html#autotoc_md70", null ],
-      [ "Defense readiness verification (2026-11-09)", "md_docs_2verification.html#autotoc_md71", null ]
+      [ "Automated results", "md_docs_2verification.html#autotoc_md63", null ],
+      [ "Browser execution", "md_docs_2verification.html#autotoc_md64", null ],
+      [ "Issues found and resolved", "md_docs_2verification.html#autotoc_md65", null ],
+      [ "Reproduction", "md_docs_2verification.html#autotoc_md66", null ],
+      [ "Assignment compatibility and delivery improvements", "md_docs_2verification.html#autotoc_md67", null ],
+      [ "Defense readiness verification (2026-11-09)", "md_docs_2verification.html#autotoc_md68", null ]
     ] ]
   ] ]
 ];

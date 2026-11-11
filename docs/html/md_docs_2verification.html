@@ -112,9 +112,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_docs_2verif
   <div class="headertitle"><div class="title">Verification evidence </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md65"></a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md62"></a></p>
 <p>Updated verification on Windows on November 2, 2026. This is execution evidence, not a list of unrun test plans.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md66"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md63"></a>
 Automated results</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -138,7 +138,7 @@ Automated results</h1>
 </table>
 <p>All six Cabal test suites passed with <span class="tt">-Wall -Werror</span>. <span class="tt">cabal build all --offline</span> also completed. The pipeline test suite uses actual files for BOM/CRLF, invalid UTF-8, missing input, and output replacement, not just in-memory examples. It proves that each existing invalid fixture replaces prior valid executable knowledge with blocked markers, and that valid input recovers afterward.</p>
 <p>SWI-Prolog tests require an exit code of 0 and empty standard error. Scenarios include both valid inputs, empty data, absent rules, repeated relations/rules, multiple shared courses and teachers, case-sensitive names, executable query suggestions, and quoted-atom round trips.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md67"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md64"></a>
 Browser execution</h1>
 <p>Chrome 156.0.8078.47 loaded the actual generated HTML for the primary input, alternate input, and duplicate-entity error. Each was checked with exact emulated viewports of 1440x1200 and 390x1100. Checks cover all six required data sections, links to real files, internal anchors, keyboard skip-link focus, absence of browser runtime exceptions, and no page-level horizontal overflow.</p>
 <p>Screenshots, full-page screenshots, rendered DOM, and machine-readable browser results are generated under:</p>
@@ -148,25 +148,25 @@ Browser execution</h1>
 <li><span class="tt">output/browser-invalid/</span>: invalid input and diagnostics.</li>
 </ul>
 <p>Desktop and mobile captures were visually reviewed. The initial command-line screenshot method clipped a 390px image from a wider Chrome layout; it was replaced with explicit DevTools device metrics and a scroll-width assertion. Current evidence verifies actual viewport width rather than relying on the screenshot filename.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md68"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md65"></a>
 Issues found and resolved</h1>
 <ul>
 <li>Cabal requires the test <span class="tt">type</span> field in each suite rather than in a common stanza; the configuration was corrected before the successful build.</li>
 <li>Strict compilation found an unused test import; it was removed before the suite passed.</li>
 <li>A Windows file replacement briefly failed despite modify permission and succeeded on retry. Publication now retries permission-related rename failures for at most 800ms; persistent errors still fail the command. The integration suite passed after the change.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md69"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md66"></a>
 Reproduction</h1>
 <div class="fragment"><div class="line">cabal test all --test-show-details=direct</div>
 <div class="line">runghc -Wall -Werror -isrc app/Main.hs</div>
 <div class="line">python tools/browser_check.py</div>
 <div class="line">python tools/build_docs.py</div>
 </div><!-- fragment --><p>Browser verification uses Node 22+ and a local Chrome/Chromium executable, with no npm packages. Python is used only for tooling. <span class="tt">CHROME_BIN</span> can select the browser explicitly. Runtime pipeline execution does not require Python, Node, Doxygen, or a browser automation library.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md70"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md67"></a>
 Assignment compatibility and delivery improvements</h1>
 <p>English and Spanish aliases normalize to the same model. The exact assignment fixture is exercised through parsing, the full pipeline, real SWI-Prolog queries, and desktop/mobile Chrome. Integration checks also force publication failure and verify temporary-file cleanup. Main functions document their inputs, output contracts, and error handling.</p>
 <p>Use <span class="tt">python tools/prepare_submission.py</span> for the complete workflow. Packaging rejects stale primary artifacts, rebuilds Doxygen, includes nonignored new source files, and verifies archive contents with SHA-256 hashes in <span class="tt">submission-manifest.json</span>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md71"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md68"></a>
 Defense readiness verification (2026-11-09)</h1>
 <p>All commands ran from the repository root with <span class="tt">-Wall -Werror</span> unchanged:</p>
 <table class="markdownTable">
@@ -197,7 +197,7 @@ Defense readiness verification (2026-11-09)</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">node tools/browser_check.mjs output/unicode-example/index.html output/browser-unicode</span>  </td><td class="markdownTableBodyNone">Unicode desktop and mobile passed  </td></tr>
 </table>
-<p>Direct SWI-Prolog queries return <span class="tt">[Paradigmas]</span> for Ana's courses and <span class="tt">[Ana-Luis,Luis-Ana]</span> for ordered classmate pairs. The Unicode example includes a course without a teacher; its warning appears in the report and HTML and does not block Prolog generation. Browser startup required execution outside the sandbox because the initial attempt returned EPERM. </p>
+<p>Direct SWI-Prolog queries return <span class="tt">[Paradigmas]</span> for Ana's courses and <span class="tt">[Ana-Luis,Luis-Ana]</span> for ordered classmate pairs. The Unicode example includes a course without a teacher; its warning appears in the report and HTML and does not block Prolog generation. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

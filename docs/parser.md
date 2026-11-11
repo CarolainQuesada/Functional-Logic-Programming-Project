@@ -12,7 +12,7 @@ Physical lines receive one-based numbers before blank lines and trimmed lines be
 
 The parser folds over lines with a current section and accumulated problem. Records are prepended and reversed once at the end to preserve input order without repeated list appends. An unknown or malformed header resets the current section. Later valid headers allow parsing to resume.
 
-Known entity and relation types produce typed constructors. Unknown types produce `UnknownVocabulary` diagnostics, and malformed fields produce `MalformedRecord`. A well-formed unknown rule becomes `UnknownRule` for stage 5 domain validation. Repeated headers, declarations, relations, and rules remain in the model so later validation has the evidence it needs.
+Known entity and relation types produce typed constructors. Unknown types produce `UnknownVocabulary` diagnostics, and malformed fields produce `MalformedRecord`. A well-formed unknown rule becomes `UnknownRule` for domain validation. Repeated headers, declarations, relations, and rules remain in the model so later validation has the evidence it needs.
 
 ## Verification
 

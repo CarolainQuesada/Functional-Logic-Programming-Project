@@ -1,15 +1,13 @@
 # Application entry point
 
-This directory contains executable entry points. Parsing, validation, and generation logic belong in `src/`.
+This directory contains the command-line entry point. Parsing, validation, and generation logic belong in `src/`.
 
-`Main.hs` is the supported complete pipeline command: `runghc -Wall -Werror -isrc app/Main.hs [INPUT OUTPUT_DIRECTORY]`. Omit both arguments for `input/problema.txt` and `output`. It creates the directory, regenerates all four required artifacts, invalidates stale knowledge on errors, and returns 0 for valid/warning-only input or 1 for errors. Cabal builds it as `knowledge-pipeline`.
+`Main.hs` runs the complete pipeline:
 
-The earlier-stage commands below are retained for focused inspection and do not synchronize the complete set of outputs.
+```powershell
+runghc -Wall -Werror -isrc app/Main.hs [INPUT OUTPUT_DIRECTORY]
+```
 
-Use `runghc -Wall -Werror -isrc app/Main.hs [INPUT OUTPUT_DIRECTORY]` to regenerate all four synchronized artifacts.
+Without arguments it reads `input/problema.txt` and writes to `output`. It creates the output directory if needed and regenerates `conocimiento.pl`, `consultas.pl`, `index.html`, and `reporte_validacion.txt`.
 
-The default paths are `input/problema.txt` and `output/reporte_validacion.txt`. Input and report must be different files, and the report directory must exist. Exit code 1 indicates validation errors or an IO failure; warnings alone return 0.
-
-Use `runghc -Wall -Werror -isrc app/Main.hs [INPUT OUTPUT_DIRECTORY]` to regenerate all four synchronized artifacts.
-
-Invalid input returns code 1 after writing its report, without updating Prolog files. Existing Prolog output may be stale. IO failures return code 1 and print a message. The command does not invoke SWI-Prolog or generate HTML.
+The command returns 0 for valid or warning-only input. It returns 1 when the input has errors, after writing the report and the HTML and replacing both Prolog files with blocked-generation comments, and also for usage or IO errors. Cabal builds it as `knowledge-pipeline`.

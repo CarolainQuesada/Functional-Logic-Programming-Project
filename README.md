@@ -5,7 +5,7 @@ An integrated project using Haskell, Prolog, and a web interface to automaticall
 
 The complete academic pipeline is implemented: UTF-8 input, typed intermediate model, validation, Prolog knowledge, suggested queries, generated HTML, and a validation report. The Haskell suites include executable SWI-Prolog checks. Chrome desktop/mobile verification and Doxygen documentation generation are also complete. See [verification evidence](docs/verification.md) and the [requirements checklist](docs/requirements-checklist.md).
 
-See the [model design](docs/intermediate-model.md) and [team handoff](docs/team-handoff.md) for the current API, verification commands, and suggested collaboration boundaries.
+See the [model design](docs/intermediate-model.md) and the [architecture](docs/architecture.md) for the data types and module boundaries.
 
 ## Inicio rápido
 

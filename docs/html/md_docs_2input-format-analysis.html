@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.18.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Functional Logic Programming Project: input-format-analysis</title>
+<title>Functional Logic Programming Project: Input format specification</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="codefolding.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
@@ -109,17 +109,17 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_docs_2input
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">input-format-analysis </div></div>
+  <div class="headertitle"><div class="title">Input format specification </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Ã¯Â»Â¿# Input format specification</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
-Scope and evidence</h2>
-<p>Stage 2 defines the academic input contract. The official assignment supplied in chat permits adapting the domain and demonstrates <span class="tt">type: name</span>, <span class="tt">relation: source, target</span>, and bare requested-rule names. It requires the three section markers below, validation, source-line traceability, and automatic regeneration of all outputs.</p>
-<p>The academic domain is explicitly listed in the assignment. English record vocabulary is a project choice; the assignment does not require that language. The Spanish vocabulary in the assignment is also accepted: <span class="tt">persona</span>, <span class="tt">curso</span>, <span class="tt">docente</span>, <span class="tt">lleva</span>, <span class="tt">imparte</span>, <span class="tt">companeros</span>, and <span class="tt">curso_con_docente</span>. Both vocabularies may be mixed and normalize to the same typed model and canonical English Prolog predicates. Original source text is preserved.</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md28"></a></p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md29"></a>
+Scope and evidence</h1>
+<p>This document defines the academic input contract. The assignment permits adapting the domain and demonstrates <span class="tt">type: name</span>, <span class="tt">relation: source, target</span>, and bare requested-rule names. It requires the three section markers below, validation, source-line traceability, and automatic regeneration of all outputs.</p>
+<p>The academic domain is explicitly listed in the assignment. English record vocabulary is a project choice; the assignment does not require that language. The Spanish vocabulary in the assignment is also accepted: <span class="tt">persona</span>, <span class="tt">curso</span>, <span class="tt">docente</span>, <span class="tt">lleva</span>, <span class="tt">imparte</span>, <span class="tt">companeros</span>, and <span class="tt">curso_con_docente</span>. Both vocabularies may be mixed and normalize to the same typed model and canonical Spanish Prolog predicates. Original source text is preserved.</p>
 <p>The conventions below fill gaps in the assignment; they are project decisions, not additional requirements attributed to the professor. They are implemented by the parser, validator, generators, and complete pipeline.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md29"></a>
-Required sections</h2>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
+Required sections</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Exact marker  </th><th class="markdownTableHeadNone">Record form  </th></tr>
@@ -130,10 +130,10 @@ Required sections</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">[REGLAS_SOLICITADAS]</span>  </td><td class="markdownTableBodyNone"><span class="tt">rule_name</span>  </td></tr>
 </table>
-<p>Preserve these markers and the required filenames <span class="tt">problema.txt</span>, <span class="tt">conocimiento.pl</span>, <span class="tt">consultas.pl</span>, <span class="tt">index.html</span>, and <span class="tt">reporte_validacion.txt</span>. Source code and generated predicates use English; input also accepts the documented Spanish aliases.</p>
+<p>Preserve these markers and the required filenames <span class="tt">problema.txt</span>, <span class="tt">conocimiento.pl</span>, <span class="tt">consultas.pl</span>, <span class="tt">index.html</span>, and <span class="tt">reporte_validacion.txt</span>. Source code uses English and generated Prolog predicates use Spanish; input accepts both the English vocabulary and the documented Spanish aliases.</p>
 <p>Each section must occur exactly once. Sections may appear in any order and may be empty. Blank lines are ignored for parsing but count toward source line numbers. Nonblank content before a section, unknown headers, and repeated headers are errors. An unknown header ends the previous section context so following records cannot silently enter the wrong section.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
-Lexical conventions</h2>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
+Lexical conventions</h1>
 <ul>
 <li>Read UTF-8, accepting an optional BOM at the start of the file and both LF and CRLF line endings.</li>
 <li>Trim surrounding whitespace on headers, records, field names, and values. Preserve the original text separately.</li>
@@ -142,8 +142,8 @@ Lexical conventions</h2>
 <li>Entity records contain exactly one colon and one nonempty name. Relation records contain exactly one colon and exactly two nonempty comma-separated arguments. Rule records contain one supported rule identifier without a colon or arguments.</li>
 <li>Preserve entity name case in the model. Prolog generation encodes names as quoted atoms and escapes them where needed, rather than lowercasing distinct names into the same atom.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
-Academic vocabulary</h2>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
+Academic vocabulary</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Record  </th><th class="markdownTableHeadNone">Meaning  </th></tr>
@@ -164,8 +164,8 @@ Academic vocabulary</h2>
 </table>
 <p>Entity names are globally unique across all types. References are resolved after collecting all entity declarations, so forward references and section reordering are supported. Relation arguments must reference the appropriate declared types. Never embed sample names in implementation logic.</p>
 <p>An exact repeated relation or rule request is a warning; keep the first occurrence for generation. Repeated entity names are errors, including declarations using different types. Unused entities and empty sections are allowed without warnings.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
-Section recognition and traceability</h2>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md33"></a>
+Section recognition and traceability</h1>
 <ol type="1">
 <li>Enumerate physical lines from 1 before filtering blanks or classifying records.</li>
 <li>Keep the source line number and original text with each parsed record and diagnostic.</li>
@@ -176,17 +176,17 @@ Section recognition and traceability</h2>
 </ol>
 <p>A record after a blank line retains its physical source line. Missing-section diagnostics are file-level and must not invent a line number. Duplicate-entity diagnostics identify both the first and repeated declaration. Preserve source information for later Prolog comments and validation reports.</p>
 <p>The professor's illustrative Prolog comment line numbers differ from the physical positions in the pasted input. The original input's physical lines are the source of truth.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md33"></a>
-Error and warning policy</h2>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md34"></a>
+Error and warning policy</h1>
 <p>Errors include malformed records, unknown vocabulary or headers, missing/repeated sections, records outside a section, duplicate entity names, undeclared references, and relation argument type mismatches. Unsupported rules are errors even when syntactically well formed.</p>
 <p>Collect independent errors where possible. A malformed record must not produce cascading semantic errors based on invented values. The validation report and generated UI show diagnostics. With errors, the complete pipeline replaces executable knowledge and suggested queries with blocked markers so stale successful results are not presented as current. Warnings alone permit generation.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md34"></a>
-Examples and review status</h2>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md35"></a>
+Examples and review status</h1>
 <p><span class="tt">input/problema.txt</span> is the primary valid academic example. <span class="tt">test/fixtures/alternate-valid.txt</span> uses different names to support the defense requirement. Other fixtures isolate required invalid cases; <span class="tt">test/fixtures/README.md</span> records expected source locations and outcomes.</p>
 <p>The fixtures are exercised by parser, validation, generation, and integration tests. Coverage includes BOM/CRLF, whitespace, section order, repeated and unknown headers, empty sections, case sensitivity, argument types, duplicate warnings, and stale-output invalidation. Primary, alternate, and invalid generated pages were also loaded in Chrome at desktop and mobile sizes.</p>
 <p>See <a class="el" href="md_docs_2verification.html" title="Verification evidence">verification evidence</a> for executed results and <a class="el" href="md_docs_2pipeline.html" title="Complete pipeline">pipeline behavior</a> for the complete command.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md35"></a>
-Assignment compatibility</h2>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md36"></a>
+Assignment compatibility</h1>
 <p><span class="tt">test/fixtures/assignment-valid.txt</span> reproduces the assignment example. The generated predicates remain <span class="tt">persona/1</span>, <span class="tt">curso/1</span>, <span class="tt">docente/1</span>, <span class="tt">lleva/2</span>, <span class="tt">imparte/2</span>, <span class="tt">companero/2</span>, and <span class="tt">curso_con_docente/1</span>; input aliases do not create additional predicates. Names retain their case and accept Unicode letters, digits, underscores and internal spaces. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

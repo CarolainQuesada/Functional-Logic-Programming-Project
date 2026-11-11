@@ -6,7 +6,7 @@ Run from the repository root with Python 3.10+ and Doxygen in PATH:
 python tools/build_docs.py
 ```
 
-Open `docs/html/index.html`. The documentation includes the README, architecture, input contract, stage explanations, executed verification, requirement checklist, defense guide, and an API page for each Haskell module and command.
+Open `docs/html/index.html`. The documentation includes the README, architecture, input contract, module explanations, executed verification, requirement checklist, defense guide, and an API page for each Haskell module and command.
 
 Doxygen's [supported parser configuration](https://www.doxygen.nl/manual/config.html) does not include Haskell. `tools/build_docs.py` therefore extracts actual top-level Haskell function signatures and data declarations, original line numbers, and adjacent technical comments into `docs/api/haskell-api.dox`. These are native Doxygen documentation pages with literal Haskell code blocks. Doxygen does not compile Haskell or receive fabricated C++ function implementations.
 

@@ -23,6 +23,4 @@ This checklist maps the supplied assignment to implemented artifacts and execute
 | Prepare final delivery | Reproducible ZIP with source, input, all required outputs, docs, and evidence |
 | Explain design during defense | Architecture and defense guide |
 
-All software tasks in the eleven-stage plan are complete. Team review, confirmation that defense inputs follow the documented grammar, presentation practice, and uploading to the course platform remain human delivery activities. This checklist does not claim the oral defense or submission has happened.
-
-Generated results are present locally and included in the submission archive, rather than tracked in Git. No push, merge, or course-platform submission is performed by the final implementation task.
+All software requirements are implemented. Generated results, browser evidence, and Doxygen HTML are tracked in Git and included in the submission archive.

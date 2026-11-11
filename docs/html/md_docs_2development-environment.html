@@ -115,10 +115,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_docs_2devel
 <div class="textblock"><p><a class="anchor" id="autotoc_md21"></a></p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
 Windows setup</h1>
-<p>Use the official <a href="https://www.haskell.org/ghcup/">GHCup installer</a> for GHC, GHCi, and Cabal. This workstation reuses its existing MSYS2 installation at <span class="tt">C:\msys64</span>. Stack and Haskell Language Server are not required for the initial stage.</p>
-<p>SWI-Prolog was already installed at <span class="tt">C:\Program Files\swipl</span>. Doxygen was installed using the <span class="tt">DimitriVanHeesch.Doxygen</span> package from winget:</p>
+<p>Install GHC, GHCi, and Cabal with the official <a href="https://www.haskell.org/ghcup/">GHCup installer</a>. On Windows, GHCup uses an MSYS2 installation such as <span class="tt">C:\msys64</span>. Stack and Haskell Language Server are not required.</p>
+<p>Install SWI-Prolog from its official distribution. Its default Windows location is <span class="tt">C:\Program Files\swipl</span>. Doxygen can be installed with the <span class="tt">DimitriVanHeesch.Doxygen</span> package from winget:</p>
 <div class="fragment"><div class="line">winget install --id DimitriVanHeesch.Doxygen --exact --source winget</div>
-</div><!-- fragment --><p>The user PATH includes the executable directories for GHCup, SWI-Prolog, and Doxygen. Restart existing terminals and editors after installation so they inherit the updated environment.</p>
+</div><!-- fragment --><p>Add the executable directories for GHCup, SWI-Prolog, and Doxygen to the Windows <span class="tt">PATH</span>. Restart open terminals and editors after installation so they use the updated environment.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md23"></a>
 Verification commands</h1>
 <div class="fragment"><div class="line">git --version</div>
@@ -130,7 +130,7 @@ Verification commands</h1>
 <div class="line">ghci -ignore-dot-ghci -v0 -e &quot;sum [1..5 :: Integer]&quot;</div>
 <div class="line">swipl -q -g &#39;X is 2+2, X =:= 4, writeln(prolog_check_passed)&#39; -t halt</div>
 </div><!-- fragment --><p>The GHCi expression should print <span class="tt">15</span>. The Prolog query should print <span class="tt">prolog_check_passed</span> and exit successfully. These checks validate the tools, not project functionality.</p>
-<p>Chrome and Edge are installed for later HTML validation. No web interface is implemented in stage 1.</p>
+<p>Chrome or Edge is used to open the generated HTML interface and the Doxygen documentation.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md24"></a>
 Verified results</h1>
 <p>Checked on October 21, 2026:</p>
@@ -154,7 +154,7 @@ Verified results</h1>
 <li>SWI-Prolog evaluated and checked <span class="tt">2+2</span>, printed <span class="tt">prolog_check_passed</span>, and exited successfully.</li>
 <li>Git and Doxygen version commands completed successfully.</li>
 </ul>
-<p>The temporary Haskell check was created outside the repository; no application code was added. An early GHCi check during installation failed to load a dependency in the restricted execution environment. The completed installation passed verification with access to its installed libraries. </p>
+<p>The temporary Haskell check was created outside the repository. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

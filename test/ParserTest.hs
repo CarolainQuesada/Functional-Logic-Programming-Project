@@ -50,11 +50,11 @@ main = do
         , ("Malformed records accumulate diagnostics in source order", diagnosticLines malformed == [2,7,10]
             && map diagnosticCode (problemDiagnostics malformed) == replicate 3 MalformedRecord)
         , ("Valid records survive malformed lines", values (problemEntities malformed) == [Person (name "Bob"),Course (name "Logic")])
-        , ("Duplicate declarations remain for stage 5", length (problemEntities duplicate) == 3 && null (problemDiagnostics duplicate))
-        , ("Undeclared references remain for stage 5", values (problemRelations undeclared) == [Enrolled (name "Taylor") (name "Logic")]
+        , ("Duplicate declarations remain for validation", length (problemEntities duplicate) == 3 && null (problemDiagnostics duplicate))
+        , ("Undeclared references remain for validation", values (problemRelations undeclared) == [Enrolled (name "Taylor") (name "Logic")]
             && null (problemDiagnostics undeclared))
-        , ("Absent sections remain for stage 5", counts missing == (2,2,1,0) && null (problemDiagnostics missing))
-        , ("Unknown rule retains source for stage 5", problemRules unsupported ==
+        , ("Absent sections remain for validation", counts missing == (2,2,1,0) && null (problemDiagnostics missing))
+        , ("Unknown rule retains source for validation", problemRules unsupported ==
             [Located (SourceLine 9 "grandparents") (UnknownRule "grandparents")] && null (problemDiagnostics unsupported))
         , ("Empty input produces an empty model", parseProblem "" == emptyProblem)
         , ("Blank lines do not create records", parseProblem "\n \t\n" == emptyProblem)
@@ -68,7 +68,7 @@ main = do
         , ("Unknown relation type is a vocabulary error", codes (relations "knows: Alice, Bob") == [UnknownVocabulary])
         , ("Case-sensitive vocabulary", codes (entities "Person: Alice") == [UnknownVocabulary])
         , ("Section order and forward references are preserved", counts reordered == (3,2,1,1) && null (problemDiagnostics reordered))
-        , ("Repeated headers are retained for stage 5", values (problemSections repeated) == [EntitiesSection,EntitiesSection]
+        , ("Repeated headers are retained for validation", values (problemSections repeated) == [EntitiesSection,EntitiesSection]
             && length (problemEntities repeated) == 2)
         , ("Unknown header resets section context", codes unknown == [UnknownSection,RecordOutsideSection]
             && values (problemEntities unknown) == [Person (name "Alice"),Person (name "Casey")])
@@ -84,7 +84,7 @@ main = do
             ["enrolled: Alice","enrolled: Alice,","enrolled: ,Logic","enrolled: Alice, Logic, Bob","enrolled:: Alice, Logic"])
         , ("Malformed rule shapes are rejected", all ((== [MalformedRecord]) . codes . rules)
             ["classmates: Alice","classmates()","two rules","_rule"])
-        , ("Wrong argument kinds remain for stage 5", null (problemDiagnostics (relations "enrolled: Logic, Morgan")))
+        , ("Wrong argument kinds remain for validation", null (problemDiagnostics (relations "enrolled: Logic, Morgan")))
         , ("Identifier digits and underscores are accepted", values (problemEntities (entities "person: Alice_2")) == [Person (name "Alice_2")])
         , ("Diagnostics include original source and severity", problemDiagnostics (entities " person Alice ") ==
             [Diagnostic Error MalformedRecord "Expected an entity record: type: Name."

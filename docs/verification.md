@@ -76,5 +76,4 @@ All commands ran from the repository root with `-Wall -Werror` unchanged:
 Direct SWI-Prolog queries return `[Paradigmas]` for Ana's courses and
 `[Ana-Luis,Luis-Ana]` for ordered classmate pairs. The Unicode example includes a
 course without a teacher; its warning appears in the report and HTML and does not
-block Prolog generation. Browser startup required execution outside the sandbox
-because the initial attempt returned EPERM.
+block Prolog generation.

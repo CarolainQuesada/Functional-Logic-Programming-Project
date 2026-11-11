@@ -1,11 +1,11 @@
 var searchData=
 [
   ['data_20model_0',['Data model',['../md_docs_2architecture.html#autotoc_md12',1,'']]],
-  ['decisions_1',['Representation decisions',['../md_docs_2intermediate-model.html#autotoc_md39',1,'']]],
+  ['decisions_1',['Representation decisions',['../md_docs_2intermediate-model.html#autotoc_md40',1,'']]],
   ['defense_20guide_2',['Oral defense guide',['../md_docs_2defense-guide.html',1,'']]],
-  ['defense_20readiness_20verification_202026_2011_2009_3',['Defense readiness verification (2026-11-09)',['../md_docs_2verification.html#autotoc_md71',1,'']]],
+  ['defense_20readiness_20verification_202026_2011_2009_3',['Defense readiness verification (2026-11-09)',['../md_docs_2verification.html#autotoc_md68',1,'']]],
   ['defense_2dguide_2emd_4',['defense-guide.md',['../defense-guide_8md.html',1,'']]],
-  ['delivery_20improvements_5',['Assignment compatibility and delivery improvements',['../md_docs_2verification.html#autotoc_md70',1,'']]],
+  ['delivery_20improvements_5',['Assignment compatibility and delivery improvements',['../md_docs_2verification.html#autotoc_md67',1,'']]],
   ['demonstration_20sequence_6',['Demonstration sequence',['../md_docs_2defense-guide.html#autotoc_md17',1,'']]],
   ['design_7',['Fieldnotes visual design',['../md_docs_2generated-interface.html#autotoc_md27',1,'']]],
   ['design_20questions_20to_20prepare_20together_8',['Design questions to prepare together',['../md_docs_2defense-guide.html#autotoc_md18',1,'']]],
@@ -20,7 +20,7 @@ var searchData=
   ['diagnosticmessagees_17',['diagnosticMessageEs',['../api_src__html.html#api_src_Html_diagnosticMessageEs',1,'']]],
   ['directory_20structure_18',['Directory structure',['../index.html#autotoc_md8',1,'']]],
   ['docs_2freadme_2emd_19',['README.md',['../docs_2_r_e_a_d_m_e_8md.html',1,'']]],
-  ['documentation_20',['documentation',['../md_docs_2documentation.html',1,'Doxygen documentation'],['../dir_49e56c817e5e54854c35e136979f97ca.html#autotoc_md54',1,'Project documentation']]],
+  ['documentation_20',['documentation',['../md_docs_2documentation.html',1,'Doxygen documentation'],['../dir_49e56c817e5e54854c35e136979f97ca.html#autotoc_md55',1,'Project documentation']]],
   ['documentation_20browser_20checks_20and_20submission_21',['Documentation, browser checks, and submission',['../index.html#autotoc_md5',1,'']]],
   ['documentation_2emd_22',['documentation.md',['../documentation_8md.html',1,'']]],
   ['doxygen_20documentation_23',['Doxygen documentation',['../md_docs_2documentation.html',1,'']]],
