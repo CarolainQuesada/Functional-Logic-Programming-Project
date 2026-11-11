@@ -128,7 +128,7 @@ Reports and command</h1>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md63"></a>
 Verification</h1>
 <p>On October 22, 2026, the compiled validation suite passed all 29 checks with <span class="tt">-Wall -Werror</span>. All 33 parser and 12 model checks passed again. Command checks verified a valid report, an invalid duplicate-entity report with exit code 1, and refusal of an input/report path alias.</p>
-<p>The primary report was generated at <span class="tt">output/reporte_validacion.txt</span> with status <span class="tt">VALID</span>, zero errors, and zero warnings. Generated reports are ignored by Git and can be recreated with the command above.</p>
+<p>The primary report was generated at <span class="tt">output/reporte_validacion.txt</span> with status <span class="tt">VALID</span>, zero errors, and zero warnings. This report is committed to the repository as evidence and can be recreated with the command above.</p>
 <p>The validator itself does not generate output. The Prolog generator honors error severity and deduplicates warning-only relation/rule requests. The complete pipeline manages stale output and generates HTML diagnostics. An <span class="tt">InputFailure</span> bypasses domain checks because no input model was read, avoiding invented missing-section findings.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md64"></a>
 Nonblocking coverage warnings</h1>
