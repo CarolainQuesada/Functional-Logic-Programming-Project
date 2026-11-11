@@ -24,7 +24,7 @@ The domain modules use `base`; the command also uses GHC's bundled `directory` a
 
 On October 22, 2026, the compiled validation suite passed all 29 checks with `-Wall -Werror`. All 33 parser and 12 model checks passed again. Command checks verified a valid report, an invalid duplicate-entity report with exit code 1, and refusal of an input/report path alias.
 
-The primary report was generated at `output/reporte_validacion.txt` with status `VALID`, zero errors, and zero warnings. Generated reports are ignored by Git and can be recreated with the command above.
+The primary report was generated at `output/reporte_validacion.txt` with status `VALID`, zero errors, and zero warnings. This report is committed to the repository as evidence and can be recreated with the command above.
 
 The validator itself does not generate output. The Prolog generator honors error severity and deduplicates warning-only relation/rule requests. The complete pipeline manages stale output and generates HTML diagnostics. An `InputFailure` bypasses domain checks because no input model was read, avoiding invented missing-section findings.
 

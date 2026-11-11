@@ -2,6 +2,7 @@
 
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import sys
 
@@ -52,6 +53,9 @@ def generate_reference():
 def main():
     generate_reference()
     if "--extract-only" not in sys.argv:
+        # Doxygen does not delete old output, so start from an empty HTML
+        # directory to avoid keeping pages of modules that were removed.
+        shutil.rmtree(ROOT / "docs" / "html", ignore_errors=True)
         subprocess.run(["doxygen", "docs/Doxyfile"], cwd=ROOT, check=True)
         assert (ROOT / "docs" / "html" / "index.html").is_file()
         print("Doxygen documentation generated at docs/html/index.html.")

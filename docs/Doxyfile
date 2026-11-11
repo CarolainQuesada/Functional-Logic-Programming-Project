@@ -22,3 +22,4 @@ WARN_AS_ERROR          = YES
 WARN_LOGFILE           = docs/api/doxygen-warnings.log
 MARKDOWN_SUPPORT       = YES
 FULL_PATH_NAMES        = NO
+CASE_SENSE_NAMES       = NO
