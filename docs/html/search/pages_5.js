@@ -13,6 +13,5 @@ var searchData=
   ['connectionmap_10',['connectionMap',['../api_src__html.html#api_src_Html_connectionMap',1,'']]],
   ['conventions_11',['Lexical conventions',['../md_docs_2input-format-analysis.html#autotoc_md30',1,'']]],
   ['core_12',['core',['../md_docs_2architecture.html#autotoc_md13',1,'Functional core'],['../md_docs_2architecture.html#autotoc_md14',1,'Logical core']]],
-  ['coverage_20warnings_13',['Nonblocking coverage warnings',['../md_docs_2validation.html#autotoc_md64',1,'']]],
-  ['current_20stage_14',['Current stage',['../index.html#autotoc_md1',1,'']]]
+  ['coverage_20warnings_13',['Nonblocking coverage warnings',['../md_docs_2validation.html#autotoc_md64',1,'']]]
 ];

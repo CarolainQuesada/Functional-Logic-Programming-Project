@@ -10,6 +10,7 @@ writePrologFiles directory output = do
   writeUtf8 (directory </> "conocimiento.pl") (knowledgeText output)
   writeUtf8 (directory </> "consultas.pl") (queriesText output)
 
+-- | Write text to a file using UTF-8 encoding, replacing any previous content.
 writeUtf8 :: FilePath -> String -> IO ()
 writeUtf8 path contents = withFile path WriteMode $ \handle -> do
   hSetEncoding handle utf8

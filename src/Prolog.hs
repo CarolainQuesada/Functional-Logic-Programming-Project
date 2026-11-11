@@ -6,6 +6,7 @@ import Model
 import Source
 import Validation (validateProblem)
 
+-- | Generated Prolog text: the knowledge base for conocimiento.pl and the suggested queries for consultas.pl.
 data PrologOutput = PrologOutput
   { knowledgeText :: String
   , queriesText :: String

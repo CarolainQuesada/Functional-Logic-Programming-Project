@@ -121,13 +121,13 @@ SourceLine</h1>
 <div class="line">  } deriving (Eq, Show)</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Source_Located"></a>
 Located</h1>
-<p>Declaration in the Source module. Source: <span class="tt">src/Source.hs:13</span>. </p><div class="fragment"><div class="line">data Located a = Located</div>
+<p>Value paired with the physical source line it came from, used for traceability comments and diagnostics. Source: <span class="tt">src/Source.hs:14</span>. </p><div class="fragment"><div class="line">data Located a = Located</div>
 <div class="line">  { sourceLine :: SourceLine</div>
 <div class="line">  , locatedValue :: a</div>
 <div class="line">  } deriving (Eq, Show)</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Source_mapLocated"></a>
 mapLocated</h1>
-<p>Transform a value without changing its original source information. Source: <span class="tt">src/Source.hs:19</span>. </p><div class="fragment"><div class="line">mapLocated :: (a -&gt; b) -&gt; Located a -&gt; Located b</div>
+<p>Transform a value without changing its original source information. Source: <span class="tt">src/Source.hs:20</span>. </p><div class="fragment"><div class="line">mapLocated :: (a -&gt; b) -&gt; Located a -&gt; Located b</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

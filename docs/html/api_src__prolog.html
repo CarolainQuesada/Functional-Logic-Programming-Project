@@ -115,46 +115,46 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('api_src__prolo
 <div class="textblock"><p>Haskell module <span class="tt">Prolog</span>. Declarations below are extracted from the actual source. </p>
 <h1 class="doxsection"><a class="anchor" id="api_src_Prolog_PrologOutput"></a>
 PrologOutput</h1>
-<p>Declaration in the Prolog module. Source: <span class="tt">src/Prolog.hs:9</span>. </p><div class="fragment"><div class="line">data PrologOutput = PrologOutput</div>
+<p>Generated Prolog text: the knowledge base for conocimiento.pl and the suggested queries for consultas.pl. Source: <span class="tt">src/Prolog.hs:10</span>. </p><div class="fragment"><div class="line">data PrologOutput = PrologOutput</div>
 <div class="line">  { knowledgeText :: String</div>
 <div class="line">  , queriesText :: String</div>
 <div class="line">  } deriving (Eq, Show)</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Prolog_generateProlog"></a>
 generateProlog</h1>
-<p>Validate a model and return either diagnostics or executable knowledge and queries. Preserve entity case, retain source comments, and deduplicate repeated requests. Rule definitions use the canonical Spanish predicates for either input vocabulary. Source: <span class="tt">src/Prolog.hs:17</span>. </p><div class="fragment"><div class="line">generateProlog :: Problem -&gt; Either [Diagnostic] PrologOutput</div>
+<p>Validate a model and return either diagnostics or executable knowledge and queries. Preserve entity case, retain source comments, and deduplicate repeated requests. Rule definitions use the canonical Spanish predicates for either input vocabulary. Source: <span class="tt">src/Prolog.hs:18</span>. </p><div class="fragment"><div class="line">generateProlog :: Problem -&gt; Either [Diagnostic] PrologOutput</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Prolog_unique"></a>
 unique</h1>
-<p>Given located records, return the first occurrence of each value in input order. Source: <span class="tt">src/Prolog.hs:50</span>. </p><div class="fragment"><div class="line">unique :: Eq a =&gt; [Located a] -&gt; [Located a]</div>
+<p>Given located records, return the first occurrence of each value in input order. Source: <span class="tt">src/Prolog.hs:51</span>. </p><div class="fragment"><div class="line">unique :: Eq a =&gt; [Located a] -&gt; [Located a]</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Prolog_renderLocated"></a>
 renderLocated</h1>
-<p>Given a value renderer and located record, return source comment, rendered value and separator. Source: <span class="tt">src/Prolog.hs:54</span>. </p><div class="fragment"><div class="line">renderLocated :: (a -&gt; String) -&gt; Located a -&gt; [String]</div>
+<p>Given a value renderer and located record, return source comment, rendered value and separator. Source: <span class="tt">src/Prolog.hs:55</span>. </p><div class="fragment"><div class="line">renderLocated :: (a -&gt; String) -&gt; Located a -&gt; [String]</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Prolog_traceComment"></a>
 traceComment</h1>
-<p>Given a physical source line, return a single-line Prolog provenance comment. Source: <span class="tt">src/Prolog.hs:58</span>. </p><div class="fragment"><div class="line">traceComment :: SourceLine -&gt; String</div>
+<p>Given a physical source line, return a single-line Prolog provenance comment. Source: <span class="tt">src/Prolog.hs:59</span>. </p><div class="fragment"><div class="line">traceComment :: SourceLine -&gt; String</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Prolog_entityFact"></a>
 entityFact</h1>
-<p>Given an entity, return its canonical Spanish Prolog fact with a quoted name. Source: <span class="tt">src/Prolog.hs:67</span>. </p><div class="fragment"><div class="line">entityFact :: Entity -&gt; String</div>
+<p>Given an entity, return its canonical Spanish Prolog fact with a quoted name. Source: <span class="tt">src/Prolog.hs:68</span>. </p><div class="fragment"><div class="line">entityFact :: Entity -&gt; String</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Prolog_relationFact"></a>
 relationFact</h1>
-<p>Given a typed relation, return its Spanish Prolog fact with quoted arguments. Source: <span class="tt">src/Prolog.hs:76</span>. </p><div class="fragment"><div class="line">relationFact :: Relation -&gt; String</div>
+<p>Given a typed relation, return its Spanish Prolog fact with quoted arguments. Source: <span class="tt">src/Prolog.hs:77</span>. </p><div class="fragment"><div class="line">relationFact :: Relation -&gt; String</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Prolog_isTeaching"></a>
 isTeaching</h1>
-<p>Given a relation, return whether it represents teaching. Source: <span class="tt">src/Prolog.hs:81</span>. </p><div class="fragment"><div class="line">isTeaching :: Relation -&gt; Bool</div>
+<p>Given a relation, return whether it represents teaching. Source: <span class="tt">src/Prolog.hs:82</span>. </p><div class="fragment"><div class="line">isTeaching :: Relation -&gt; Bool</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Prolog_term"></a>
 term</h1>
-<p>Given a predicate and entity names, return a Prolog term with quoted atom arguments. Source: <span class="tt">src/Prolog.hs:86</span>. </p><div class="fragment"><div class="line">term :: String -&gt; [EntityName] -&gt; String</div>
+<p>Given a predicate and entity names, return a Prolog term with quoted atom arguments. Source: <span class="tt">src/Prolog.hs:87</span>. </p><div class="fragment"><div class="line">term :: String -&gt; [EntityName] -&gt; String</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Prolog_renderRule"></a>
 renderRule</h1>
-<p>Given a located request, return its source comment and executable Spanish rule lines. Source: <span class="tt">src/Prolog.hs:90</span>. </p><div class="fragment"><div class="line">renderRule :: Located RequestedRule -&gt; [String]</div>
+<p>Given a located request, return its source comment and executable Spanish rule lines. Source: <span class="tt">src/Prolog.hs:91</span>. </p><div class="fragment"><div class="line">renderRule :: Located RequestedRule -&gt; [String]</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Prolog_ruleQueries"></a>
 ruleQueries</h1>
-<p>Given a requested rule, return open query terms for its generated predicate. Source: <span class="tt">src/Prolog.hs:112</span>. </p><div class="fragment"><div class="line">ruleQueries :: RequestedRule -&gt; [String]</div>
+<p>Given a requested rule, return open query terms for its generated predicate. Source: <span class="tt">src/Prolog.hs:113</span>. </p><div class="fragment"><div class="line">ruleQueries :: RequestedRule -&gt; [String]</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Prolog_concreteQueries"></a>
 concreteQueries</h1>
-<p>From an entity, return queries using its actual quoted name. Source: <span class="tt">src/Prolog.hs:121</span>. </p><div class="fragment"><div class="line">concreteQueries :: Entity -&gt; [String]</div>
+<p>From an entity, return queries using its actual quoted name. Source: <span class="tt">src/Prolog.hs:122</span>. </p><div class="fragment"><div class="line">concreteQueries :: Entity -&gt; [String]</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Prolog_quoteAtom"></a>
 quoteAtom</h1>
-<p>Quote names as SWI-Prolog atoms without changing their identity. Source: <span class="tt">src/Prolog.hs:127</span>. </p><div class="fragment"><div class="line">quoteAtom :: String -&gt; String</div>
+<p>Quote names as SWI-Prolog atoms without changing their identity. Source: <span class="tt">src/Prolog.hs:128</span>. </p><div class="fragment"><div class="line">quoteAtom :: String -&gt; String</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

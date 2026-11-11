@@ -118,16 +118,16 @@ runPipeline</h1>
 <p>Read an input path and regenerate the four artifacts in an output directory. Return False for input errors, replacing stale executable knowledge with blocked markers. Reject input/output aliases; propagate publication IO failures to the command. Publish each file atomically and the final interface last; use one writer per directory. Source: <span class="tt">src/Pipeline.hs:22</span>. </p><div class="fragment"><div class="line">runPipeline :: FilePath -&gt; FilePath -&gt; IO Bool</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Pipeline_inputFailure"></a>
 inputFailure</h1>
-<p>Declaration in the Pipeline module. Source: <span class="tt">src/Pipeline.hs:46</span>. </p><div class="fragment"><div class="line">inputFailure :: String -&gt; Problem</div>
+<p>Given an IO error message, return an empty model holding a single file-level InputFailure error. Source: <span class="tt">src/Pipeline.hs:47</span>. </p><div class="fragment"><div class="line">inputFailure :: String -&gt; Problem</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Pipeline_artifacts"></a>
 artifacts</h1>
-<p>Declaration in the Pipeline module. Source: <span class="tt">src/Pipeline.hs:50</span>. </p><div class="fragment"><div class="line">artifacts :: FilePath -&gt; Problem -&gt; [(FilePath, String)]</div>
+<p>Given the input path and the model, return the name and full text of the four generated files. When the model has errors, both Prolog files contain only a blocked-generation comment. Source: <span class="tt">src/Pipeline.hs:53</span>. </p><div class="fragment"><div class="line">artifacts :: FilePath -&gt; Problem -&gt; [(FilePath, String)]</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Pipeline_writeAtomic"></a>
 writeAtomic</h1>
-<p>Publish UTF-8 text through a sibling temporary file and atomic rename. On failure, attempt to close and remove the temporary without masking the original error. Source: <span class="tt">src/Pipeline.hs:65</span>. </p><div class="fragment"><div class="line">writeAtomic :: FilePath -&gt; FilePath -&gt; String -&gt; IO ()</div>
+<p>Publish UTF-8 text through a sibling temporary file and atomic rename. On failure, attempt to close and remove the temporary without masking the original error. Source: <span class="tt">src/Pipeline.hs:68</span>. </p><div class="fragment"><div class="line">writeAtomic :: FilePath -&gt; FilePath -&gt; String -&gt; IO ()</div>
 </div><!-- fragment --> <h1 class="doxsection"><a class="anchor" id="api_src_Pipeline_renameWithRetry"></a>
 renameWithRetry</h1>
-<p>Windows can temporarily lock a newly written file; never hide persistent errors. Source: <span class="tt">src/Pipeline.hs:80</span>. </p><div class="fragment"><div class="line">renameWithRetry :: Int -&gt; FilePath -&gt; FilePath -&gt; IO ()</div>
+<p>Windows can temporarily lock a newly written file; never hide persistent errors. Source: <span class="tt">src/Pipeline.hs:83</span>. </p><div class="fragment"><div class="line">renameWithRetry :: Int -&gt; FilePath -&gt; FilePath -&gt; IO ()</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

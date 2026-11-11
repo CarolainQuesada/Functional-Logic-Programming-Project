@@ -6,6 +6,8 @@ import System.Environment (getArgs)
 import System.Exit (exitFailure)
 import System.IO (hPutStrLn, stderr)
 
+-- | Command entry point. With no arguments, read input/problema.txt and write to output;
+-- with an input file and an output directory, use those instead. Exit with code 1 on invalid input.
 main :: IO ()
 main = do
   arguments <- getArgs

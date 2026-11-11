@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('index.html',''
 <div class="textblock"><p><a class="anchor" id="md__r_e_a_d_m_e"></a></p>
 <p>An integrated project using Haskell, Prolog, and a web interface to automatically generate, validate, and visualize logical knowledge bases.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
-Current stage</h1>
+Project status</h1>
 <p>The complete academic pipeline is implemented: UTF-8 input, typed intermediate model, validation, Prolog knowledge, suggested queries, generated HTML, and a validation report. The Haskell suites include executable SWI-Prolog checks. Chrome desktop/mobile verification and Doxygen documentation generation are also complete. See <a class="el" href="md_docs_2verification.html" title="Verification evidence">verification evidence</a> and the <a class="el" href="md_docs_2requirements-checklist.html" title="Assignment requirement checklist">requirements checklist</a>.</p>
 <p>See the <a class="el" href="md_docs_2intermediate-model.html" title="Intermediate model">model design</a> and <a class="el" href="md_docs_2team-handoff.html" title="team-handoff">team handoff</a> for the current API, verification commands, and suggested collaboration boundaries.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
@@ -157,7 +157,7 @@ Documentation, browser checks, and submission</h1>
 <div class="fragment"><div class="line">python tools/package_submission.py</div>
 </div><!-- fragment --><p>The packager compares all four primary outputs with a fresh pipeline run and rejects stale results. It rebuilds documentation and includes tracked and nonignored new files, inputs, generated results, technical documentation, and available browser evidence. Review nonignored files before sharing the archive. See the <a class="el" href="md_docs_2defense-guide.html" title="Oral defense guide">defense guide</a> before presenting.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
-Planned pipeline</h1>
+Pipeline</h1>
 <p><span class="tt">problema.txt -&gt; Haskell -&gt; intermediate model -&gt; Prolog + queries + HTML + validation report</span></p>
 <p>The official assignment permits the academic domain. See the <a class="el" href="md_docs_2input-format-analysis.html" title="input-format-analysis">input specification</a> for the English and Spanish input vocabulary, parsing conventions, validation policy, and source-line handling. Assignment-required filenames and section names are preserved; source code, technical documentation, and commit messages are written in English; the generated user interface is in Spanish.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
@@ -187,7 +187,7 @@ Directory structure</h1>
 <div class="line">output/    Generated Prolog, queries, HTML, and validation reports</div>
 <div class="line">tools/     Test runner, browser checks, documentation, and packaging</div>
 </div><!-- fragment --><p>Generated demonstration output, browser evidence, and the submission ZIP are included in version control for teammates. Local build artifacts and temporary test output are excluded.</p>
-<p>The build definition is <span class="tt">functional-logic-pipeline.cabal</span>. Generated Doxygen HTML and extracted API pages are tracked; open <span class="tt">docs/html/index.html</span> after downloading or pulling develop.</p>
+<p>The build definition is <span class="tt">functional-logic-pipeline.cabal</span>. Generated Doxygen HTML and extracted API pages are tracked; open <span class="tt">docs/html/index.html</span> after downloading or pulling <span class="tt">main</span>.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
 Git workflow</h1>
 <ul>
@@ -197,8 +197,8 @@ Git workflow</h1>
 <li>Revisamos los cambios en equipo antes de fusionarlos.</li>
 </ul>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
-Setup status</h1>
-<p>Stage 1 is complete on this Windows workstation. Verified on October 21, 2026: Git 2.44.0, GHC and GHCi 9.10.3, Cabal 3.16.1.0, SWI-Prolog 10.1.17, and Doxygen 1.18.0.</p>
+Tested environment</h1>
+<p>The project was developed and verified on Windows. Tool versions checked on October 21, 2026: Git 2.44.0, GHC and GHCi 9.10.3, Cabal 3.16.1.0, SWI-Prolog 10.1.17, and Doxygen 1.18.0.</p>
 <p>GHCi evaluation, Haskell compilation and executable execution, and a Prolog arithmetic query passed. See <a class="el" href="md_docs_2development-environment.html" title="Development environment">development environment</a> for setup and verification details. Restart existing terminals and editors to pick up the updated user PATH.</p>
 <div class="fragment"><div class="line">problema.txt (UTF-8)</div>
 <div class="line">    -&gt; Parser -&gt; Problem + SourceLine</div>
