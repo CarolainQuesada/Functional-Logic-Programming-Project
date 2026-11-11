@@ -2,4 +2,4 @@
 
 `problema.txt` contains the primary academic input example. Alternative valid inputs and invalid cases live in `test/fixtures/`.
 
-Preserve filenames and section markers required by the official assignment. Follow the [input specification](../docs/input-format-analysis.md) when adding examples. Input records use English vocabulary.
+Preserve filenames and section markers required by the official assignment. Follow the [input specification](../docs/input-format-analysis.md) when adding examples. Input records may use the English vocabulary or the Spanish aliases; `problema.txt` uses the Spanish aliases from the assignment.

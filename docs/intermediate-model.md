@@ -38,6 +38,6 @@ Constructors are intentionally available for the parser to build partially valid
 
 `test/ModelTest.hs` covers case-sensitive identity, argument roles, source preservation, duplicate retention, unknown rules, file-level diagnostics, and the difference between errors and warnings.
 
-The suite compiled with `ghc -Wall -Werror -isrc` and all 12 checks passed when the compiled executable ran. Build products were written to a temporary directory outside the repository. The same suite can be interpreted with `runghc -Wall -Werror -isrc test/ModelTest.hs`.
+The suite compiles with `ghc -Wall -Werror -isrc` and all 13 checks pass. The same suite can be interpreted with `runghc -Wall -Werror -isrc test/ModelTest.hs`.
 
 The implemented parser, validator, and generators consume this model. Generators do not reparse original input strings. See [complete architecture](architecture.md).
