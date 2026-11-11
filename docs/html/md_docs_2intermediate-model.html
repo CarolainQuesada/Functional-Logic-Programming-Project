@@ -112,11 +112,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_docs_2inter
   <div class="headertitle"><div class="title">Intermediate model </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md36"></a></p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md37"></a>
-Scope</h1>
-<p>Stage 3 provides a pure Haskell representation of the academic input contract using only <span class="tt">base</span>. It does not read files, parse text, validate the domain, or generate output.</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md37"></a></p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md38"></a>
+Scope</h1>
+<p>The intermediate model is a pure Haskell representation of the academic input contract using only <span class="tt">base</span>. These modules do not read files, parse text, validate the domain, or generate output.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md39"></a>
 Modules</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -129,19 +129,19 @@ Modules</h1>
 <td class="markdownTableBodyNone"><span class="tt">Model</span>  </td><td class="markdownTableBodyNone">Academic entities, relations, requested rules, sections, and the complete <span class="tt">Problem</span>  </td></tr>
 </table>
 <p>Dependencies flow from <span class="tt">Model</span> to <span class="tt">Diagnostic</span> and <span class="tt">Source</span>, and from <span class="tt">Diagnostic</span> to <span class="tt">Source</span>. There is no file IO in these modules.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md39"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md40"></a>
 Representation decisions</h1>
 <ul>
 <li><span class="tt">EntityName</span> distinguishes references from arbitrary strings and preserves case.</li>
 <li><span class="tt">Entity</span> has <span class="tt">Person</span>, <span class="tt">Course</span>, and <span class="tt">Teacher</span> constructors.</li>
 <li><span class="tt">Relation</span> has <span class="tt">Enrolled</span> and <span class="tt">Teaches</span> constructors, each containing two entity names.</li>
-<li><span class="tt">RequestedRule</span> distinguishes <span class="tt">Classmates</span>, <span class="tt">CourseWithTeacher</span>, and <span class="tt">UnknownRule String</span>. Unknown names remain available for stage 5 domain validation.</li>
+<li><span class="tt">RequestedRule</span> distinguishes <span class="tt">Classmates</span>, <span class="tt">CourseWithTeacher</span>, <span class="tt">ClassmatesInCourse</span>, <span class="tt">StudentOf</span>, <span class="tt">CourseWithoutTeacher</span>, and <span class="tt">UnknownRule String</span>. Unknown names remain available for domain validation.</li>
 <li><span class="tt">Problem</span> retains located section occurrences, entities, relations, requested rules, and accumulated diagnostics.</li>
 <li>Lists preserve source order and duplicates. Later validation can diagnose duplicates before generation removes repeated relations and rules.</li>
 <li><span class="tt">FileLocation</span> represents missing sections without assigning them a fictional source line. <span class="tt">LineLocation</span> and related lines support duplicate diagnostics and traceability.</li>
 </ul>
-<p>Constructors are intentionally available for the parser to build partially valid input models. <span class="tt">EntityName</span> does not itself enforce identifier syntax, and <span class="tt">SourceLine</span> does not itself enforce positive numbering. Stage 4 must assign real one-based physical line numbers and check record syntax; stage 5 must resolve names, argument kinds, duplicates, missing sections, and unsupported rules. The current model must not be mistaken for a validated problem.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md40"></a>
+<p>Constructors are intentionally available for the parser to build partially valid input models. <span class="tt">EntityName</span> does not itself enforce identifier syntax, and <span class="tt">SourceLine</span> does not itself enforce positive numbering. The parser assigns real one-based physical line numbers and checks record syntax; validation resolves names, argument kinds, duplicates, missing sections, and unsupported rules. A parsed model is not a validated problem until validation has run.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md41"></a>
 Pure operations</h1>
 <ul>
 <li><span class="tt">emptyProblem</span> creates an empty intermediate model.</li>
@@ -150,7 +150,7 @@ Pure operations</h1>
 <li><span class="tt">mapLocated</span> transforms a record while preserving its source metadata.</li>
 <li><span class="tt">hasErrors</span> checks diagnostic severity; it does not discover errors on its own.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md41"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md42"></a>
 Verification</h1>
 <p><span class="tt">test/ModelTest.hs</span> covers case-sensitive identity, argument roles, source preservation, duplicate retention, unknown rules, file-level diagnostics, and the difference between errors and warnings.</p>
 <p>The suite compiled with <span class="tt">ghc -Wall -Werror -isrc</span> and all 12 checks passed when the compiled executable ran. Build products were written to a temporary directory outside the repository. The same suite can be interpreted with <span class="tt">runghc -Wall -Werror -isrc test/ModelTest.hs</span>.</p>

@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_docs_2pipel
   <div class="headertitle"><div class="title">Complete pipeline </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md46"></a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md47"></a></p>
 <p>Run <span class="tt">runghc -Wall -Werror -isrc app/Main.hs</span> from the repository root, or build the <span class="tt">knowledge-pipeline</span> executable with Cabal. Optional arguments are the input file and output directory. The directory is created when needed.</p>
 <p><span class="tt">Pipeline.runPipeline</span> checks input/output path aliases, invalidates previous outputs, reads UTF-8 input, parses and validates the model, renders all results in memory, and publishes knowledge, queries, the validation report, and finally the HTML interface. File writes use a temporary file in the destination directory followed by a rename, so each individual published file is complete.</p>
 <p>On malformed or semantically invalid input, both Prolog files become comment-only blocked markers. The HTML shows current errors and hides knowledge downloads. Missing/unreadable input and invalid UTF-8 become file-level <span class="tt">InputFailure</span> diagnostics without inventing missing-section errors. Warning-only input still generates executable knowledge. A later valid input replaces the invalid results normally.</p>

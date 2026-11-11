@@ -2,7 +2,7 @@
 
 ## Scope
 
-Stage 3 provides a pure Haskell representation of the academic input contract using only `base`. It does not read files, parse text, validate the domain, or generate output.
+The intermediate model is a pure Haskell representation of the academic input contract using only `base`. These modules do not read files, parse text, validate the domain, or generate output.
 
 ## Modules
 
@@ -19,12 +19,12 @@ Dependencies flow from `Model` to `Diagnostic` and `Source`, and from `Diagnosti
 - `EntityName` distinguishes references from arbitrary strings and preserves case.
 - `Entity` has `Person`, `Course`, and `Teacher` constructors.
 - `Relation` has `Enrolled` and `Teaches` constructors, each containing two entity names.
-- `RequestedRule` distinguishes `Classmates`, `CourseWithTeacher`, and `UnknownRule String`. Unknown names remain available for stage 5 domain validation.
+- `RequestedRule` distinguishes `Classmates`, `CourseWithTeacher`, `ClassmatesInCourse`, `StudentOf`, `CourseWithoutTeacher`, and `UnknownRule String`. Unknown names remain available for domain validation.
 - `Problem` retains located section occurrences, entities, relations, requested rules, and accumulated diagnostics.
 - Lists preserve source order and duplicates. Later validation can diagnose duplicates before generation removes repeated relations and rules.
 - `FileLocation` represents missing sections without assigning them a fictional source line. `LineLocation` and related lines support duplicate diagnostics and traceability.
 
-Constructors are intentionally available for the parser to build partially valid input models. `EntityName` does not itself enforce identifier syntax, and `SourceLine` does not itself enforce positive numbering. Stage 4 must assign real one-based physical line numbers and check record syntax; stage 5 must resolve names, argument kinds, duplicates, missing sections, and unsupported rules. The current model must not be mistaken for a validated problem.
+Constructors are intentionally available for the parser to build partially valid input models. `EntityName` does not itself enforce identifier syntax, and `SourceLine` does not itself enforce positive numbering. The parser assigns real one-based physical line numbers and checks record syntax; validation resolves names, argument kinds, duplicates, missing sections, and unsupported rules. A parsed model is not a validated problem until validation has run.
 
 ## Pure operations
 

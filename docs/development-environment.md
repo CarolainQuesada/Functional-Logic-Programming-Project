@@ -2,15 +2,15 @@
 
 ## Windows setup
 
-Use the official [GHCup installer](https://www.haskell.org/ghcup/) for GHC, GHCi, and Cabal. This workstation reuses its existing MSYS2 installation at `C:\msys64`. Stack and Haskell Language Server are not required for the initial stage.
+Install GHC, GHCi, and Cabal with the official [GHCup installer](https://www.haskell.org/ghcup/). On Windows, GHCup uses an MSYS2 installation such as `C:\msys64`. Stack and Haskell Language Server are not required.
 
-SWI-Prolog was already installed at `C:\Program Files\swipl`. Doxygen was installed using the `DimitriVanHeesch.Doxygen` package from winget:
+Install SWI-Prolog from its official distribution. Its default Windows location is `C:\Program Files\swipl`. Doxygen can be installed with the `DimitriVanHeesch.Doxygen` package from winget:
 
 ```powershell
 winget install --id DimitriVanHeesch.Doxygen --exact --source winget
 ```
 
-The user PATH includes the executable directories for GHCup, SWI-Prolog, and Doxygen. Restart existing terminals and editors after installation so they inherit the updated environment.
+Add the executable directories for GHCup, SWI-Prolog, and Doxygen to the Windows `PATH`. Restart open terminals and editors after installation so they use the updated environment.
 
 ## Verification commands
 
@@ -27,7 +27,7 @@ swipl -q -g 'X is 2+2, X =:= 4, writeln(prolog_check_passed)' -t halt
 
 The GHCi expression should print `15`. The Prolog query should print `prolog_check_passed` and exit successfully. These checks validate the tools, not project functionality.
 
-Chrome and Edge are installed for later HTML validation. No web interface is implemented in stage 1.
+Chrome or Edge is used to open the generated HTML interface and the Doxygen documentation.
 
 ## Verified results
 
@@ -46,4 +46,4 @@ Checked on October 21, 2026:
 - SWI-Prolog evaluated and checked `2+2`, printed `prolog_check_passed`, and exited successfully.
 - Git and Doxygen version commands completed successfully.
 
-The temporary Haskell check was created outside the repository; no application code was added. An early GHCi check during installation failed to load a dependency in the restricted execution environment. The completed installation passed verification with access to its installed libraries.
+The temporary Haskell check was created outside the repository.

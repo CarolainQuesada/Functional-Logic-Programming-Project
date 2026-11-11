@@ -112,31 +112,31 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_docs_2prolo
   <div class="headertitle"><div class="title">Prolog knowledge and queries </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md47"></a></p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md48"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md48"></a></p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md49"></a>
 API and output</h1>
 <p><span class="tt">Prolog.generateProlog :: Problem -&gt; Either [Diagnostic] PrologOutput</span> validates the supplied model again before generating output. Errors return diagnostics; warnings permit generation. The output contains pure <span class="tt">knowledgeText</span> and <span class="tt">queriesText</span> values. <span class="tt">PrologFiles.writePrologFiles</span> writes those strings as UTF-8 in an existing directory.</p>
 <p>Entities become <span class="tt">persona/1</span>, <span class="tt">curso/1</span>, and <span class="tt">docente/1</span> facts. Relations become <span class="tt">lleva/2</span> and <span class="tt">imparte/2</span>. Names are quoted atoms with escaped quotes, backslashes, and common control characters; their case is preserved. Facts are grouped by predicate, retaining input order within each group. Every fact has a source-line comment containing its physical input line and original record. Requested rules also retain their request source line.</p>
 <p>The five base predicates are declared dynamic so empty entity/relation categories remain defined and queries fail normally when no facts exist. Fact grouping avoids discontiguous-clause warnings. This follows SWI-Prolog's <a href="https://www.swi-prolog.org/pldoc/man?section=declare">predicate declaration syntax</a>; atom escaping follows its <a href="https://ww1.swi-prolog.org/pldoc/man?section=syntax">source syntax</a>.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md49"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md50"></a>
 Requested rules</h1>
 <ul>
 <li><span class="tt">classmates</span> generates <span class="tt">companero/2</span>. It enumerates distinct declared people who share a course, with each ordered pair returned once even when multiple courses are shared. Both directions are valid; self-pairs are excluded.</li>
 <li><span class="tt">course_with_teacher</span> generates <span class="tt">curso_con_docente/1</span>. It returns each declared course with a teacher once even when multiple teachers teach it.</li>
 </ul>
 <p>Unrequested rules are absent. Exact repeated relations and rule requests keep the first occurrence and its provenance; the validation report retains duplicate warnings.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md50"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md51"></a>
 Suggested queries</h1>
 <p><span class="tt">consultas.pl</span> loads its sibling <span class="tt">conocimiento.pl</span> with <span class="tt">ensure_loaded/1</span> and contains <span class="tt">suggested_query/1</span> facts for the five base predicates plus requested rules. Merely loading the file does not run every query. Example interactive use:</p>
 <div class="fragment"><div class="line">?- suggested_query(Query), call(Query).</div>
 <div class="line">?- companero(First, Second).</div>
 <div class="line">?- curso_con_docente(Course).</div>
 </div><!-- fragment --><p>The latter two queries require the corresponding requested rule. Input names are atoms such as <span class="tt">'Alice'</span>, not unquoted uppercase variables.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md51"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md52"></a>
 Generation command</h1>
 <p>Use <span class="tt">runghc -Wall -Werror -isrc app/Main.hs [INPUT OUTPUT_DIRECTORY]</span> to regenerate all four synchronized artifacts.</p>
 <p>Default input is <span class="tt">input/problema.txt</span>; default output directory is <span class="tt">output</span>. The pipeline creates the directory, writes all four synchronized artifacts, and replaces executable Prolog with blocked markers when validation finds errors. Warnings preserve generation. SWI-Prolog is invoked by tests, not by the pipeline.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md52"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md53"></a>
 Additional requested rules</h1>
 <ul>
 <li><span class="tt">companeros_en_curso</span> / <span class="tt">classmates_in_course</span>: <span class="tt">companero/3</span> returns distinct students and their shared course.</li>
@@ -144,7 +144,7 @@ Additional requested rules</h1>
 <li><span class="tt">curso_sin_docente</span> / <span class="tt">course_without_teacher</span>: <span class="tt">curso_sin_docente/1</span> enumerates declared courses without teaching facts using negation as failure.</li>
 </ul>
 <p><span class="tt">consultas.pl</span> also contains concrete queries using actual entity names. Named variables begin with an underscore to avoid singleton warnings when loading query facts. The two original rule aliases remain supported in both languages.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md53"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md54"></a>
 Verification</h1>
 <p>The Prolog suite passes 16 Haskell generation checks and 17 executable SWI-Prolog checks, including the original 15 plus Unicode knowledge and suggested queries. </p>
 </div></div><!-- contents -->

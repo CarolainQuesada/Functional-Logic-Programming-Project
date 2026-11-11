@@ -140,8 +140,8 @@ Design questions to prepare together</h1>
 <li><b>What are the limits?</b> The academic grammar uses case-sensitive Unicode entity names with internal spaces; # and % line comments are supported. One writer should use each output directory. Per-file rename is atomic, but a whole multi-file run is not a disk transaction.</li>
 </ul>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
-Pair preparation</h1>
-<p>Both partners should be able to trace one record through <span class="tt">Parser</span>, <span class="tt">Model</span>, <span class="tt">Validation</span>, <span class="tt">Prolog</span>, and <span class="tt">Html</span>, then run the complete command independently. Review the agreed vocabulary before the professor provides a second file. Decide who introduces each part, but avoid preparing only the code one partner wrote.</p>
+Team preparation</h1>
+<p>Every team member should be able to trace one record through <span class="tt">Parser</span>, <span class="tt">Model</span>, <span class="tt">Validation</span>, <span class="tt">Prolog</span>, and <span class="tt">Html</span>, then run the complete command independently. Review the supported academic vocabulary before the professor provides a second file. Each member presents one part of the demonstration, and everyone should be able to answer questions about the whole pipeline.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
 Exact assignment example</h1>
 <p>Run <span class="tt">runghc -Wall -Werror -isrc app/Main.hs test/fixtures/assignment-valid.txt output/assignment-example</span>. The original Spanish records remain in provenance comments while generated Prolog uses canonical Spanish predicates: <span class="tt">companero('Ana', 'Luis').</span> and <span class="tt">curso_con_docente('Paradigmas').</span> succeed. <span class="tt">python tools/prepare_submission.py</span> checks and packages all demonstration scenarios. </p>

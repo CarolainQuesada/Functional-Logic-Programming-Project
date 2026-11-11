@@ -25,9 +25,9 @@ For the primary example, classmates are Ana/Luis and Luis/Ana; the course with a
 - **Why Doxygen extraction?** Doxygen has no native Haskell parser. A tracked tool extracts real source declarations into Doxygen pages, which are regenerated with the technical Markdown documentation.
 - **What are the limits?** The academic grammar uses case-sensitive Unicode entity names with internal spaces; # and % line comments are supported. One writer should use each output directory. Per-file rename is atomic, but a whole multi-file run is not a disk transaction.
 
-## Pair preparation
+## Team preparation
 
-Both partners should be able to trace one record through `Parser`, `Model`, `Validation`, `Prolog`, and `Html`, then run the complete command independently. Review the agreed vocabulary before the professor provides a second file. Decide who introduces each part, but avoid preparing only the code one partner wrote.
+Every team member should be able to trace one record through `Parser`, `Model`, `Validation`, `Prolog`, and `Html`, then run the complete command independently. Review the supported academic vocabulary before the professor provides a second file. Each member presents one part of the demonstration, and everyone should be able to answer questions about the whole pipeline.
 
 ## Exact assignment example
 
