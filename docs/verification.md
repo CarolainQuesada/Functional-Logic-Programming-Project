@@ -1,19 +1,19 @@
 # Verification evidence
 
-Updated verification on Windows on November 2, 2026. This is execution evidence, not a list of unrun test plans.
+This document records executed verification. The counts below are the current suite totals.
 
 ## Automated results
 
 | Suite | Passing checks |
 | --- | ---: |
-| Intermediate model | 12 |
-| Functional parser | 35 |
-| Semantic validation and reports | 29 |
+| Intermediate model | 13 |
+| Functional parser | 38 |
+| Semantic validation and reports | 30 |
 | Pure Prolog generation | 16 |
-| Generated HTML | 18 |
-| Complete pipeline | 21 |
-| SWI-Prolog loading and query results | 15 |
-| Total | 146 |
+| Generated HTML | 19 |
+| Complete pipeline | 22 |
+| SWI-Prolog loading and query results | 17 |
+| Total | 155 |
 
 All six Cabal test suites passed with `-Wall -Werror`. `cabal build all --offline` also completed. The pipeline test suite uses actual files for BOM/CRLF, invalid UTF-8, missing input, and output replacement, not just in-memory examples. It proves that each existing invalid fixture replaces prior valid executable knowledge with blocked markers, and that valid input recovers afterward.
 
@@ -21,12 +21,14 @@ SWI-Prolog tests require an exit code of 0 and empty standard error. Scenarios i
 
 ## Browser execution
 
-Chrome 156.0.8078.47 loaded the actual generated HTML for the primary input, alternate input, and duplicate-entity error. Each was checked with exact emulated viewports of 1440x1200 and 390x1100. Checks cover all six required data sections, links to real files, internal anchors, keyboard skip-link focus, absence of browser runtime exceptions, and no page-level horizontal overflow.
+Chrome/Chromium loaded the actual generated HTML for the primary input, the alternate input, the exact assignment example, the Unicode example, and the duplicate-entity error. The browser version used for each scenario is recorded in its `results.json`. Each was checked with exact emulated viewports of 1440x1200 and 390x1100. Checks cover all six required data sections, links to real files, internal anchors, keyboard skip-link focus, absence of browser runtime exceptions, and no page-level horizontal overflow.
 
 Screenshots, full-page screenshots, rendered DOM, and machine-readable browser results are generated under:
 
 - `output/browser-checks/`: primary valid input.
 - `output/browser-alternate/`: second valid input.
+- `output/browser-assignment/`: exact assignment example.
+- `output/browser-unicode/`: Unicode names and a nonblocking warning.
 - `output/browser-invalid/`: invalid input and diagnostics.
 
 Desktop and mobile captures were visually reviewed. The initial command-line screenshot method clipped a 390px image from a wider Chrome layout; it was replaced with explicit DevTools device metrics and a scroll-width assertion. Current evidence verifies actual viewport width rather than relying on the screenshot filename.

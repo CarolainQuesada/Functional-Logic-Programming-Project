@@ -88,7 +88,15 @@ The packager compares all four primary outputs with a fresh pipeline run and rej
 
 ## Pipeline
 
-`problema.txt -> Haskell -> intermediate model -> Prolog + queries + HTML + validation report`
+```text
+problema.txt (UTF-8)
+    -> Parser -> Problem + SourceLine
+    -> Validation -> diagnostics (errors block; warnings continue)
+    -> Prolog / Html / ValidationReport
+    -> Pipeline -> conocimiento.pl + consultas.pl + index.html + reporte_validacion.txt
+```
+
+Names accept Unicode letters, digits, underscores and internal spaces. Types and rule identifiers remain ASCII. Blank lines and lines beginning with # or % are ignored; physical source line numbers are preserved. Both English and Spanish input aliases produce Spanish Prolog predicates. Only requested rules are generated, including `companeros_en_curso`, `estudiante_de` and `curso_sin_docente`.
 
 The official assignment permits the academic domain. See the [input specification](docs/input-format-analysis.md) for the English and Spanish input vocabulary, parsing conventions, validation policy, and source-line handling. Assignment-required filenames and section names are preserved; source code, technical documentation, and commit messages are written in English; the generated user interface is in Spanish.
 
@@ -110,7 +118,7 @@ swipl --version
 doxygen --version
 ```
 
-If a command is unavailable, install the corresponding tool and ensure its executable directory is in `PATH`. Open a new terminal after changing `PATH` and repeat the checks. The tested workstation versions are recorded in [development environment](docs/development-environment.md). GHCup, SWI-Prolog, and Doxygen should be obtained from their official distributions.
+If a command is unavailable, install the corresponding tool and ensure its executable directory is in `PATH`. Open a new terminal after changing `PATH` and repeat the checks. The tested tool versions are recorded in [development environment](docs/development-environment.md). GHCup, SWI-Prolog, and Doxygen should be obtained from their official distributions.
 
 ## Directory structure
 
@@ -141,19 +149,5 @@ The build definition is `functional-logic-pipeline.cabal`. Generated Doxygen HTM
 
 The project was developed and verified on Windows. Tool versions checked on October 21, 2026: Git 2.44.0, GHC and GHCi 9.10.3, Cabal 3.16.1.0, SWI-Prolog 10.1.17, and Doxygen 1.18.0.
 
-GHCi evaluation, Haskell compilation and executable execution, and a Prolog arithmetic query passed. See [development environment](docs/development-environment.md) for setup and verification details. Restart existing terminals and editors to pick up the updated user PATH.
+GHCi evaluation, Haskell compilation and executable execution, and a Prolog arithmetic query passed. See [development environment](docs/development-environment.md) for setup and verification details.
 
-
-```text
-problema.txt (UTF-8)
-    -> Parser -> Problem + SourceLine
-    -> Validation -> diagnostics (errors block; warnings continue)
-    -> Prolog / Html / ValidationReport
-    -> Pipeline -> conocimiento.pl + consultas.pl + index.html + reporte_validacion.txt
-```
-
-Names accept Unicode letters, digits, underscores and internal spaces. Types and rule
-identifiers remain ASCII. Blank lines and lines beginning with # or % are ignored;
-physical source line numbers are preserved. Both English and Spanish input aliases
-produce Spanish Prolog predicates. Only requested rules are generated, including
-companeros_en_curso, estudiante_de and curso_sin_docente.

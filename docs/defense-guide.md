@@ -2,7 +2,7 @@
 
 ## Demonstration sequence
 
-1. Show `input/problema.txt` and explain its three section markers and English academic vocabulary and the supported Spanish assignment aliases.
+1. Show `input/problema.txt` and explain its three section markers and its Spanish academic vocabulary, which the parser also accepts in English.
 2. Run `runghc -Wall -Werror -isrc app/Main.hs` and open `output/index.html`.
 3. Show entity and relation tables, source-line comments, generated rules, suggested queries, and the validation report.
 4. Load `swipl -q -s output/consultas.pl` and query `companero(First, Second).` and `curso_con_docente(Course).` Use `;` to request further solutions and `halt.` to exit.

@@ -4,7 +4,7 @@
 
 `Parser.parseProblem :: String -> Problem` is pure. It recognizes sections, parses academic records, and accumulates syntax diagnostics without stopping at the first bad record. It does not resolve references, reject duplicate declarations, require all sections, or validate requested rules against the domain.
 
-`Input.readProblem :: FilePath -> IO Problem` reads UTF-8 and delegates to the pure parser. It forces decoding before the file handle closes. Missing files, permission problems, and decoding errors remain IO exceptions for the application layer to handle later; they are not disguised as malformed input records.
+`Input.readProblem :: FilePath -> IO Problem` reads UTF-8 and delegates to the pure parser. It forces decoding before the file handle closes. Missing files, permission problems, and decoding errors remain IO exceptions that the pipeline converts into diagnostics; they are not disguised as malformed input records.
 
 ## Parsing process
 
@@ -16,7 +16,7 @@ Known entity and relation types produce typed constructors. Unknown types produc
 
 ## Verification
 
-On October 22, 2026, `test/ParserTest.hs` compiled with `ghc -Wall -Werror -isrc` and all 33 checks passed. The 12 model checks also passed again.
+`test/ParserTest.hs` compiles with `ghc -Wall -Werror -isrc` and all 38 checks pass.
 
 Coverage includes both valid files, all existing invalid fixtures, retained partial models, source locations, unknown vocabulary, empty input and sections, changed section order, forward references, unknown-header recovery, case sensitivity, BOM/CRLF, whitespace, invalid identifiers, malformed fields, and duplicate retention.
 
