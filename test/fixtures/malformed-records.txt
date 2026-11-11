@@ -1,0 +1,10 @@
+[ENTIDADES]
+person Alice
+person: Bob
+course: Logic
+
+[RELACIONES]
+enrolled: Bob Logic
+
+[REGLAS_SOLICITADAS]
+classmates: Bob

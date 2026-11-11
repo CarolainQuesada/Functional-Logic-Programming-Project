@@ -1,0 +1,14 @@
+[ENTIDADES]
+person: Alice
+person: Bob
+course: ProgrammingParadigms
+teacher: Morgan
+
+[RELACIONES]
+enrolled: Alice, ProgrammingParadigms
+enrolled: Bob, ProgrammingParadigms
+teaches: Morgan, ProgrammingParadigms
+
+[REGLAS_SOLICITADAS]
+classmates
+course_with_teacher

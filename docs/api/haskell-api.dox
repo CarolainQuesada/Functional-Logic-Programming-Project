@@ -1,0 +1,568 @@
+/** @page api_src_Diagnostic src/Diagnostic.hs
+Haskell module `Diagnostic`. Declarations below are extracted from the actual source.
+@section api_src_Diagnostic_Severity Severity
+Declaration in the Diagnostic module.
+Source: `src/Diagnostic.hs:11`.
+@code
+data Severity = Error | Warning
+  deriving (Eq, Show)
+@endcode
+@section api_src_Diagnostic_DiagnosticCode DiagnosticCode
+Declaration in the Diagnostic module.
+Source: `src/Diagnostic.hs:14`.
+@code
+data DiagnosticCode
+  = InputFailure
+  | MalformedRecord
+  | UnknownVocabulary
+  | UnknownSection
+  | MissingSection
+  | RepeatedSection
+  | RecordOutsideSection
+  | DuplicateEntity
+  | UndeclaredReference
+  | ArgumentTypeMismatch
+  | UnsupportedRule
+  | DuplicateRelation
+  | CourseWithoutTeacherWarning
+  | CourseWithoutStudents
+  | PersonWithoutCourses
+  | TeacherWithoutCourses
+  | CaseSimilarEntity
+  | DuplicateRule
+  deriving (Eq, Show)
+@endcode
+@section api_src_Diagnostic_DiagnosticLocation DiagnosticLocation
+File-level errors have no invented physical line number.
+Source: `src/Diagnostic.hs:36`.
+@code
+data DiagnosticLocation = FileLocation | LineLocation SourceLine
+  deriving (Eq, Show)
+@endcode
+@section api_src_Diagnostic_Diagnostic Diagnostic
+Declaration in the Diagnostic module.
+Source: `src/Diagnostic.hs:39`.
+@code
+data Diagnostic = Diagnostic
+  { diagnosticSeverity :: Severity
+  , diagnosticCode :: DiagnosticCode
+  , diagnosticMessage :: String
+  , diagnosticLocation :: DiagnosticLocation
+  , diagnosticRelatedLines :: [SourceLine]
+  } deriving (Eq, Show)
+@endcode
+@section api_src_Diagnostic_hasErrors hasErrors
+Return whether any diagnostic blocks executable output; warnings alone do not.
+Source: `src/Diagnostic.hs:48`.
+@code
+hasErrors :: [Diagnostic] -> Bool
+@endcode
+*/
+
+/** @page api_src_Html src/Html.hs
+Haskell module `Html`. Declarations below are extracted from the actual source.
+@section api_src_Html_renderHtml renderHtml
+Render a complete standalone page from the validated intermediate model. Escape input-derived text and hide executable downloads when errors block generation.
+Source: `src/Html.hs:13`.
+@code
+renderHtml :: FilePath -> Problem -> String
+@endcode
+@section api_src_Html_stat stat
+Given a count and trusted label, return a statistic card.
+Source: `src/Html.hs:77`.
+@code
+stat :: Int -> String -> String
+@endcode
+@section api_src_Html_panel panel
+Given a stable id, title, note and rendered body, return a section with escaped note text.
+Source: `src/Html.hs:81`.
+@code
+panel :: String -> String -> String -> String -> String
+@endcode
+@section api_src_Html_table table
+Given a trusted caption, headers and raw cells, return a table with escaped cells or an empty state.
+Source: `src/Html.hs:86`.
+@code
+table :: String -> [String] -> [[String]] -> String
+@endcode
+@section api_src_Html_entityRow entityRow
+Given a located entity, return its name, Spanish type and physical line cells.
+Source: `src/Html.hs:96`.
+@code
+entityRow :: Located Entity -> [String]
+@endcode
+@section api_src_Html_relationRow relationRow
+Given a located relation, return its Spanish predicate, arguments and line cells.
+Source: `src/Html.hs:106`.
+@code
+relationRow :: Located Relation -> [String]
+@endcode
+@section api_src_Html_ruleRow ruleRow
+Given a located rule request, return its canonical name and source line cells.
+Source: `src/Html.hs:112`.
+@code
+ruleRow :: Located RequestedRule -> [String]
+@endcode
+@section api_src_Html_lineNumber lineNumber
+Given a located record, return its physical line number as text.
+Source: `src/Html.hs:124`.
+@code
+lineNumber :: Located a -> String
+@endcode
+@section api_src_Html_codeBlock codeBlock
+Given raw Prolog text, return an escaped code panel with line highlighting.
+Source: `src/Html.hs:128`.
+@code
+codeBlock :: String -> String
+@endcode
+@section api_src_Html_diagnosticHtml diagnosticHtml
+Given a diagnostic, return Spanish severity, explanation and escaped source locations.
+Source: `src/Html.hs:135`.
+@code
+diagnosticHtml :: Diagnostic -> String
+@endcode
+@section api_src_Html_escapeHtml escapeHtml
+Given raw text, return HTML-safe text while preserving Unicode characters.
+Source: `src/Html.hs:149`.
+@code
+escapeHtml :: String -> String
+@endcode
+@section api_src_Html_sectionNumber sectionNumber
+Give workspace sections stable editorial numbers independent of input size.
+Source: `src/Html.hs:160`.
+@code
+sectionNumber :: String -> String
+@endcode
+@section api_src_Html_connectionMap connectionMap
+Draw the actual typed declarations and relationships without browser scripts. Every label is escaped; node placement scales with the number of declarations.
+Source: `src/Html.hs:171`.
+@code
+connectionMap :: Problem -> String
+@endcode
+@section api_src_Html_sectionLabel sectionLabel
+Translate visible labels while keeping stable English section identifiers.
+Source: `src/Html.hs:208`.
+@code
+sectionLabel :: String -> String
+@endcode
+@section api_src_Html_diagnosticMessageEs diagnosticMessageEs
+Explain validation errors in Spanish; source excerpts retain the input vocabulary. Diagnostic codes remain available as technical identifiers.
+Source: `src/Html.hs:219`.
+@code
+diagnosticMessageEs :: Diagnostic -> String
+@endcode
+*/
+
+/** @page api_src_HtmlStyle src/HtmlStyle.hs
+Haskell module `HtmlStyle`. Declarations below are extracted from the actual source.
+@section api_src_HtmlStyle_stylesheet stylesheet
+Self-contained notebook design; system fonts and inline styles work offline.
+Source: `src/HtmlStyle.hs:4`.
+@code
+stylesheet :: String
+@endcode
+*/
+
+/** @page api_src_Input src/Input.hs
+Haskell module `Input`. Declarations below are extracted from the actual source.
+@section api_src_Input_readProblem readProblem
+Read a path as UTF-8 and return its parsed intermediate model. Force decoding inside the open handle; propagate file and encoding IO errors.
+Source: `src/Input.hs:10`.
+@code
+readProblem :: FilePath -> IO Problem
+@endcode
+*/
+
+/** @page api_src_Model src/Model.hs
+Haskell module `Model`. Declarations below are extracted from the actual source.
+@section api_src_Model_EntityName EntityName
+Declaration in the Model module.
+Source: `src/Model.hs:18`.
+@code
+newtype EntityName = EntityName { unEntityName :: String }
+  deriving (Eq, Ord, Show)
+@endcode
+@section api_src_Model_EntityKind EntityKind
+Declaration in the Model module.
+Source: `src/Model.hs:21`.
+@code
+data EntityKind = PersonKind | CourseKind | TeacherKind
+  deriving (Eq, Show)
+@endcode
+@section api_src_Model_Entity Entity
+Declaration in the Model module.
+Source: `src/Model.hs:24`.
+@code
+data Entity
+  = Person EntityName
+  | Course EntityName
+  | Teacher EntityName
+  deriving (Eq, Show)
+@endcode
+@section api_src_Model_Relation Relation
+Declaration in the Model module.
+Source: `src/Model.hs:30`.
+@code
+data Relation
+  = Enrolled EntityName EntityName
+  | Teaches EntityName EntityName
+  deriving (Eq, Show)
+@endcode
+@section api_src_Model_RequestedRule RequestedRule
+Retain unknown names so domain validation can report them later.
+Source: `src/Model.hs:36`.
+@code
+data RequestedRule
+  = Classmates
+  | CourseWithTeacher
+  | ClassmatesInCourse
+  | StudentOf
+  | CourseWithoutTeacher
+  | UnknownRule String
+  deriving (Eq, Show)
+@endcode
+@section api_src_Model_Section Section
+Declaration in the Model module.
+Source: `src/Model.hs:45`.
+@code
+data Section = EntitiesSection | RelationsSection | RulesSection
+  deriving (Eq, Show)
+@endcode
+@section api_src_Model_Problem Problem
+Preserve input order and duplicates until validation diagnoses them.
+Source: `src/Model.hs:49`.
+@code
+data Problem = Problem
+  { problemSections :: [Located Section]
+  , problemEntities :: [Located Entity]
+  , problemRelations :: [Located Relation]
+  , problemRules :: [Located RequestedRule]
+  , problemDiagnostics :: [Diagnostic]
+  } deriving (Eq, Show)
+@endcode
+@section api_src_Model_emptyProblem emptyProblem
+Construct an empty intermediate model before parsing; required sections are not implied.
+Source: `src/Model.hs:58`.
+@code
+emptyProblem :: Problem
+@endcode
+@section api_src_Model_entityName entityName
+Extract the case-sensitive identifier shared by every entity constructor.
+Source: `src/Model.hs:62`.
+@code
+entityName :: Entity -> EntityName
+@endcode
+@section api_src_Model_entityKind entityKind
+Return the domain type used to validate relation arguments.
+Source: `src/Model.hs:68`.
+@code
+entityKind :: Entity -> EntityKind
+@endcode
+@section api_src_Model_relationReferences relationReferences
+Return references in argument order with the types each argument requires.
+Source: `src/Model.hs:74`.
+@code
+relationReferences :: Relation -> [(EntityName, EntityKind)]
+@endcode
+*/
+
+/** @page api_src_Parser src/Parser.hs
+Haskell module `Parser`. Declarations below are extracted from the actual source.
+@section api_src_Parser_parseProblem parseProblem
+Parse sectioned text into typed records and syntax diagnostics without IO. Physical source lines survive parsing; semantic checks belong to Validation.
+Source: `src/Parser.hs:12`.
+@code
+parseProblem :: String -> Problem
+@endcode
+@section api_src_Parser_restoreOrder restoreOrder
+Given an accumulated problem, return records and diagnostics in physical input order.
+Source: `src/Parser.hs:19`.
+@code
+restoreOrder :: Problem -> Problem
+@endcode
+@section api_src_Parser_parseLine parseLine
+Given the current section and problem plus a physical source line, return updated parser state.
+Source: `src/Parser.hs:29`.
+@code
+parseLine :: (Maybe Section, Problem) -> SourceLine -> (Maybe Section, Problem)
+@endcode
+@section api_src_Parser_sectionMarkers sectionMarkers
+Return the supported exact section headers and their model tags.
+Source: `src/Parser.hs:49`.
+@code
+sectionMarkers :: [(String, Section)]
+@endcode
+@section api_src_Parser_storeRecord storeRecord
+Given origin, parser, insertion function, text and model, return a stored record or syntax diagnostic.
+Source: `src/Parser.hs:57`.
+@code
+storeRecord :: SourceLine -> (String -> Either (DiagnosticCode, String) a)
+  -> (Located a -> Problem -> Problem) -> String -> Problem -> Problem
+@endcode
+@section api_src_Parser_addDiagnostic addDiagnostic
+Given origin, code, message and model, return the model with a syntax error attached.
+Source: `src/Parser.hs:64`.
+@code
+addDiagnostic :: SourceLine -> DiagnosticCode -> String -> Problem -> Problem
+@endcode
+@section api_src_Parser_parseEntity parseEntity
+Parse one English or Spanish entity declaration into the shared model.
+Source: `src/Parser.hs:71`.
+@code
+parseEntity :: String -> Either (DiagnosticCode, String) Entity
+@endcode
+@section api_src_Parser_parseRelation parseRelation
+Parse two named references; normalize vocabulary without changing names.
+Source: `src/Parser.hs:85`.
+@code
+parseRelation :: String -> Either (DiagnosticCode, String) Relation
+@endcode
+@section api_src_Parser_parseRule parseRule
+Normalize supported rule aliases and retain unknown names for validation.
+Source: `src/Parser.hs:101`.
+@code
+parseRule :: String -> Either (DiagnosticCode, String) RequestedRule
+@endcode
+@section api_src_Parser_identifier identifier
+Given a type or rule token, return whether it follows the ASCII identifier grammar.
+Source: `src/Parser.hs:114`.
+@code
+identifier :: String -> Bool
+@endcode
+@section api_src_Parser_fields fields
+Given a delimiter and text, return trimmed fields, preserving empty arguments.
+Source: `src/Parser.hs:122`.
+@code
+fields :: Char -> String -> [String]
+@endcode
+@section api_src_Parser_trim trim
+Given text, return it without leading or trailing whitespace.
+Source: `src/Parser.hs:128`.
+@code
+trim :: String -> String
+@endcode
+@section api_src_Parser_stripBom stripBom
+Given first-line text, return it without a leading Unicode BOM.
+Source: `src/Parser.hs:132`.
+@code
+stripBom :: String -> String
+@endcode
+@section api_src_Parser_stripCarriageReturn stripCarriageReturn
+Given a physical line, return it without trailing carriage returns.
+Source: `src/Parser.hs:137`.
+@code
+stripCarriageReturn :: String -> String
+@endcode
+@section api_src_Parser_entityIdentifier entityIdentifier
+Check a trimmed entity name; accept Unicode letters, digits, underscores and internal spaces.
+Source: `src/Parser.hs:141`.
+@code
+entityIdentifier :: String -> Bool
+@endcode
+*/
+
+/** @page api_src_Pipeline src/Pipeline.hs
+Haskell module `Pipeline`. Declarations below are extracted from the actual source.
+@section api_src_Pipeline_runPipeline runPipeline
+Read an input path and regenerate the four artifacts in an output directory. Return False for input errors, replacing stale executable knowledge with blocked markers. Reject input/output aliases; propagate publication IO failures to the command. Publish each file atomically and the final interface last; use one writer per directory.
+Source: `src/Pipeline.hs:22`.
+@code
+runPipeline :: FilePath -> FilePath -> IO Bool
+@endcode
+@section api_src_Pipeline_inputFailure inputFailure
+Declaration in the Pipeline module.
+Source: `src/Pipeline.hs:46`.
+@code
+inputFailure :: String -> Problem
+@endcode
+@section api_src_Pipeline_artifacts artifacts
+Declaration in the Pipeline module.
+Source: `src/Pipeline.hs:50`.
+@code
+artifacts :: FilePath -> Problem -> [(FilePath, String)]
+@endcode
+@section api_src_Pipeline_writeAtomic writeAtomic
+Publish UTF-8 text through a sibling temporary file and atomic rename. On failure, attempt to close and remove the temporary without masking the original error.
+Source: `src/Pipeline.hs:65`.
+@code
+writeAtomic :: FilePath -> FilePath -> String -> IO ()
+@endcode
+@section api_src_Pipeline_renameWithRetry renameWithRetry
+Windows can temporarily lock a newly written file; never hide persistent errors.
+Source: `src/Pipeline.hs:80`.
+@code
+renameWithRetry :: Int -> FilePath -> FilePath -> IO ()
+@endcode
+*/
+
+/** @page api_src_Prolog src/Prolog.hs
+Haskell module `Prolog`. Declarations below are extracted from the actual source.
+@section api_src_Prolog_PrologOutput PrologOutput
+Declaration in the Prolog module.
+Source: `src/Prolog.hs:9`.
+@code
+data PrologOutput = PrologOutput
+  { knowledgeText :: String
+  , queriesText :: String
+  } deriving (Eq, Show)
+@endcode
+@section api_src_Prolog_generateProlog generateProlog
+Validate a model and return either diagnostics or executable knowledge and queries. Preserve entity case, retain source comments, and deduplicate repeated requests. Rule definitions use the canonical Spanish predicates for either input vocabulary.
+Source: `src/Prolog.hs:17`.
+@code
+generateProlog :: Problem -> Either [Diagnostic] PrologOutput
+@endcode
+@section api_src_Prolog_unique unique
+Given located records, return the first occurrence of each value in input order.
+Source: `src/Prolog.hs:50`.
+@code
+unique :: Eq a => [Located a] -> [Located a]
+@endcode
+@section api_src_Prolog_renderLocated renderLocated
+Given a value renderer and located record, return source comment, rendered value and separator.
+Source: `src/Prolog.hs:54`.
+@code
+renderLocated :: (a -> String) -> Located a -> [String]
+@endcode
+@section api_src_Prolog_traceComment traceComment
+Given a physical source line, return a single-line Prolog provenance comment.
+Source: `src/Prolog.hs:58`.
+@code
+traceComment :: SourceLine -> String
+@endcode
+@section api_src_Prolog_entityFact entityFact
+Given an entity, return its canonical Spanish Prolog fact with a quoted name.
+Source: `src/Prolog.hs:67`.
+@code
+entityFact :: Entity -> String
+@endcode
+@section api_src_Prolog_relationFact relationFact
+Given a typed relation, return its Spanish Prolog fact with quoted arguments.
+Source: `src/Prolog.hs:76`.
+@code
+relationFact :: Relation -> String
+@endcode
+@section api_src_Prolog_isTeaching isTeaching
+Given a relation, return whether it represents teaching.
+Source: `src/Prolog.hs:81`.
+@code
+isTeaching :: Relation -> Bool
+@endcode
+@section api_src_Prolog_term term
+Given a predicate and entity names, return a Prolog term with quoted atom arguments.
+Source: `src/Prolog.hs:86`.
+@code
+term :: String -> [EntityName] -> String
+@endcode
+@section api_src_Prolog_renderRule renderRule
+Given a located request, return its source comment and executable Spanish rule lines.
+Source: `src/Prolog.hs:90`.
+@code
+renderRule :: Located RequestedRule -> [String]
+@endcode
+@section api_src_Prolog_ruleQueries ruleQueries
+Given a requested rule, return open query terms for its generated predicate.
+Source: `src/Prolog.hs:112`.
+@code
+ruleQueries :: RequestedRule -> [String]
+@endcode
+@section api_src_Prolog_concreteQueries concreteQueries
+From an entity, return queries using its actual quoted name.
+Source: `src/Prolog.hs:121`.
+@code
+concreteQueries :: Entity -> [String]
+@endcode
+@section api_src_Prolog_quoteAtom quoteAtom
+Quote names as SWI-Prolog atoms without changing their identity.
+Source: `src/Prolog.hs:127`.
+@code
+quoteAtom :: String -> String
+@endcode
+*/
+
+/** @page api_src_PrologFiles src/PrologFiles.hs
+Haskell module `PrologFiles`. Declarations below are extracted from the actual source.
+@section api_src_PrologFiles_writePrologFiles writePrologFiles
+Write generated files to an existing directory without invoking Prolog.
+Source: `src/PrologFiles.hs:8`.
+@code
+writePrologFiles :: FilePath -> PrologOutput -> IO ()
+@endcode
+@section api_src_PrologFiles_writeUtf8 writeUtf8
+Declaration in the PrologFiles module.
+Source: `src/PrologFiles.hs:13`.
+@code
+writeUtf8 :: FilePath -> String -> IO ()
+@endcode
+*/
+
+/** @page api_src_Source src/Source.hs
+Haskell module `Source`. Declarations below are extracted from the actual source.
+@section api_src_Source_SourceLine SourceLine
+Physical input line, numbered from one before filtering blank lines.
+Source: `src/Source.hs:8`.
+@code
+data SourceLine = SourceLine
+  { sourceLineNumber :: Int
+  , sourceLineText :: String
+  } deriving (Eq, Show)
+@endcode
+@section api_src_Source_Located Located
+Declaration in the Source module.
+Source: `src/Source.hs:13`.
+@code
+data Located a = Located
+  { sourceLine :: SourceLine
+  , locatedValue :: a
+  } deriving (Eq, Show)
+@endcode
+@section api_src_Source_mapLocated mapLocated
+Transform a value without changing its original source information.
+Source: `src/Source.hs:19`.
+@code
+mapLocated :: (a -> b) -> Located a -> Located b
+@endcode
+*/
+
+/** @page api_src_Validation src/Validation.hs
+Haskell module `Validation`. Declarations below are extracted from the actual source.
+@section api_src_Validation_validateProblem validateProblem
+Check required sections, uniqueness, typed references, and requested rules. Return the model with accumulated diagnostics; repeated validation is idempotent. Input failures bypass semantic checks to avoid cascading missing-section errors.
+Source: `src/Validation.hs:12`.
+@code
+validateProblem :: Problem -> Problem
+@endcode
+@section api_src_Validation_duplicates duplicates
+Given a key, severity, code, message and located records, return diagnostics linking repetitions to their first origin.
+Source: `src/Validation.hs:82`.
+@code
+duplicates :: Eq key => (Located a -> key) -> Severity -> DiagnosticCode
+  -> String -> [Located a] -> [Diagnostic]
+@endcode
+@section api_src_Validation_sectionMarker sectionMarker
+Given a section, return its required input header.
+Source: `src/Validation.hs:93`.
+@code
+sectionMarker :: Section -> String
+@endcode
+*/
+
+/** @page api_src_ValidationReport src/ValidationReport.hs
+Haskell module `ValidationReport`. Declarations below are extracted from the actual source.
+@section api_src_ValidationReport_renderValidationReport renderValidationReport
+Render accumulated diagnostics, status, counts, and physical source locations. The caller must validate the model first; this function performs no IO.
+Source: `src/ValidationReport.hs:9`.
+@code
+renderValidationReport :: Problem -> String
+@endcode
+*/
+
+/** @page api_app_Main app/Main.hs
+Haskell module `Main`. Declarations below are extracted from the actual source.
+@section api_app_Main_main main
+Declaration in the Main module.
+Source: `app/Main.hs:9`.
+@code
+main :: IO ()
+@endcode
+*/

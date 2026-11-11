@@ -1,0 +1,15 @@
+Validation report
+Status: VALID WITH WARNINGS
+Errors: 0
+Warnings: 2
+
+Warning [CourseWithoutTeacherWarning]
+Location: line 6
+Curso sin docente.
+Source: curso: Sin docente
+
+Warning [CourseWithoutStudents]
+Location: line 6
+Curso sin estudiantes.
+Source: curso: Sin docente
+

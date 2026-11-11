@@ -1,0 +1,16 @@
+[ENTIDADES]
+person: Casey
+person: Jordan
+course: Logic
+course: Algebra
+teacher: Riley
+
+[RELACIONES]
+enrolled: Casey, Logic
+enrolled: Jordan, Logic
+enrolled: Jordan, Algebra
+teaches: Riley, Logic
+
+[REGLAS_SOLICITADAS]
+classmates
+course_with_teacher

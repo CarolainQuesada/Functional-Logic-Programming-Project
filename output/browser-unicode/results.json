@@ -1,0 +1,46 @@
+{
+  "source": "C:\\programacion\\Proyecto-III-Paradigmas\\Functional-Logic-Programming-Project\\output\\unicode-example\\index.html",
+  "browser": "Chrome/156.0.8078.81",
+  "checks": [
+    {
+      "viewport": "desktop",
+      "width": 1440,
+      "height": 1200,
+      "scrollWidth": 1425,
+      "sections": [
+        "entities",
+        "relations",
+        "rules",
+        "facts",
+        "generated-rules",
+        "knowledge",
+        "queries",
+        "validation"
+      ],
+      "links_checked": 9,
+      "keyboard_focus": true,
+      "anchor_navigation": true,
+      "screenshot": "desktop.png"
+    },
+    {
+      "viewport": "mobile",
+      "width": 390,
+      "height": 1100,
+      "scrollWidth": 390,
+      "sections": [
+        "entities",
+        "relations",
+        "rules",
+        "facts",
+        "generated-rules",
+        "knowledge",
+        "queries",
+        "validation"
+      ],
+      "links_checked": 9,
+      "keyboard_focus": true,
+      "anchor_navigation": true,
+      "screenshot": "mobile.png"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+# Unicode and new rules
+[ENTIDADES]
+persona: José
+persona: Ana
+curso: Programación
+curso: Sin docente
+docente: María Pérez
+% Source lines remain physical
+[RELACIONES]
+lleva: José, Programación
+lleva: Ana, Programación
+imparte: María Pérez, Programación
+[REGLAS_SOLICITADAS]
+companeros
+curso_con_docente
+companeros_en_curso
+estudiante_de
+curso_sin_docente

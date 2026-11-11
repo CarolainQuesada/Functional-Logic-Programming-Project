@@ -1,0 +1,38 @@
+# Haskell build artifacts
+dist/
+dist-newstyle/
+.stack-work/
+*.hi
+*.o
+*.dyn_hi
+*.dyn_o
+*.hie
+*.exe
+
+# Temporary test output (published documentation and examples are tracked)
+/output/*
+!/output/README.md
+!/output/conocimiento.pl
+!/output/consultas.pl
+!/output/index.html
+!/output/reporte_validacion.txt
+!/output/submission.zip
+!/output/assignment-example/
+!/output/defense-alternate/
+!/output/invalid-example/
+!/output/unicode-example/
+!/output/browser-*/
+/docs/latex/
+__pycache__/
+*.pyc
+
+# Local editor and operating system files
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+*.tmp

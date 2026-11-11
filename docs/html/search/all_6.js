@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['data_20model_0',['Data model',['../md_docs_2architecture.html#autotoc_md12',1,'']]],
+  ['decisions_1',['Representation decisions',['../md_docs_2intermediate-model.html#autotoc_md39',1,'']]],
+  ['defense_20guide_2',['Oral defense guide',['../md_docs_2defense-guide.html',1,'']]],
+  ['defense_20readiness_20verification_202026_2011_2009_3',['Defense readiness verification (2026-11-09)',['../md_docs_2verification.html#autotoc_md71',1,'']]],
+  ['defense_2dguide_2emd_4',['defense-guide.md',['../defense-guide_8md.html',1,'']]],
+  ['delivery_20improvements_5',['Assignment compatibility and delivery improvements',['../md_docs_2verification.html#autotoc_md70',1,'']]],
+  ['demonstration_20sequence_6',['Demonstration sequence',['../md_docs_2defense-guide.html#autotoc_md17',1,'']]],
+  ['design_7',['Fieldnotes visual design',['../md_docs_2generated-interface.html#autotoc_md27',1,'']]],
+  ['design_20questions_20to_20prepare_20together_8',['Design questions to prepare together',['../md_docs_2defense-guide.html#autotoc_md18',1,'']]],
+  ['development_20environment_9',['Development environment',['../md_docs_2development-environment.html',1,'']]],
+  ['development_20requirements_10',['Development requirements',['../index.html#autotoc_md7',1,'']]],
+  ['development_2denvironment_2emd_11',['development-environment.md',['../development-environment_8md.html',1,'']]],
+  ['diagnostic_12',['Diagnostic',['../api_src__diagnostic.html#api_src_Diagnostic_Diagnostic',1,'']]],
+  ['diagnostic_20hs_13',['src/Diagnostic.hs',['../api_src__diagnostic.html',1,'']]],
+  ['diagnosticcode_14',['DiagnosticCode',['../api_src__diagnostic.html#api_src_Diagnostic_DiagnosticCode',1,'']]],
+  ['diagnostichtml_15',['diagnosticHtml',['../api_src__html.html#api_src_Html_diagnosticHtml',1,'']]],
+  ['diagnosticlocation_16',['DiagnosticLocation',['../api_src__diagnostic.html#api_src_Diagnostic_DiagnosticLocation',1,'']]],
+  ['diagnosticmessagees_17',['diagnosticMessageEs',['../api_src__html.html#api_src_Html_diagnosticMessageEs',1,'']]],
+  ['directory_20structure_18',['Directory structure',['../index.html#autotoc_md8',1,'']]],
+  ['docs_2freadme_2emd_19',['README.md',['../docs_2_r_e_a_d_m_e_8md.html',1,'']]],
+  ['documentation_20',['documentation',['../md_docs_2documentation.html',1,'Doxygen documentation'],['../dir_49e56c817e5e54854c35e136979f97ca.html#autotoc_md54',1,'Project documentation']]],
+  ['documentation_20browser_20checks_20and_20submission_21',['Documentation, browser checks, and submission',['../index.html#autotoc_md5',1,'']]],
+  ['documentation_2emd_22',['documentation.md',['../documentation_8md.html',1,'']]],
+  ['doxygen_20documentation_23',['Doxygen documentation',['../md_docs_2documentation.html',1,'']]],
+  ['duplicates_24',['duplicates',['../api_src__validation.html#api_src_Validation_duplicates',1,'']]]
+];
