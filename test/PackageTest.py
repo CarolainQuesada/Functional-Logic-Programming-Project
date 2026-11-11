@@ -11,7 +11,7 @@ spec.loader.exec_module(package)
 
 with tempfile.TemporaryDirectory() as temporary:
     root = Path(temporary)
-    names = ["src/Keep.hs", "dist-newstyle/cache.txt", ".git/config", "tools/__pycache__/cache.pyc"]
+    names = ["src/Keep.hs", "dist-newstyle/cache.txt", ".git/config", "tools/__pycache__/cache.pyc", "output/submission.zip"]
     for name in names:
         path = root / name
         path.parent.mkdir(parents=True, exist_ok=True)

@@ -38,6 +38,7 @@ def collect_files():
         files.update(path for path in (ROOT / "output" / directory).rglob("*")
                      if path.is_file() and path.suffix in {".png", ".json", ".html", ".pl", ".txt"})
     return sorted(path for path in files
+                  if path != ROOT / "output" / "submission.zip"
                   if not {"dist-newstyle", ".git", "__pycache__"}.intersection(path.relative_to(ROOT).parts))
 
 

@@ -126,9 +126,9 @@ output/    Generated Prolog, queries, HTML, and validation reports
 tools/     Test runner, browser checks, documentation, and packaging
 ```
 
-Generated output and local build artifacts are excluded from version control. Only the README in `output/` is tracked.
+Generated demonstration output, browser evidence, and the submission ZIP are included in version control for teammates. Local build artifacts and temporary test output are excluded.
 
-The build definition is `functional-logic-pipeline.cabal`. Generated Doxygen HTML and extracted API pages are also ignored; the submission archive includes them.
+The build definition is `functional-logic-pipeline.cabal`. Generated Doxygen HTML and extracted API pages are tracked; open `docs/html/index.html` after downloading or pulling develop.
 
 ## Git workflow
 

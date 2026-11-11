@@ -9,12 +9,20 @@ dist-newstyle/
 *.hie
 *.exe
 
-# Generated project output and documentation
+# Temporary test output (published documentation and examples are tracked)
 /output/*
 !/output/README.md
-/docs/html/
+!/output/conocimiento.pl
+!/output/consultas.pl
+!/output/index.html
+!/output/reporte_validacion.txt
+!/output/submission.zip
+!/output/assignment-example/
+!/output/defense-alternate/
+!/output/invalid-example/
+!/output/unicode-example/
+!/output/browser-*/
 /docs/latex/
-/docs/api/
 __pycache__/
 *.pyc
 
@@ -28,5 +36,3 @@ Thumbs.db
 Desktop.ini
 
 *.tmp
-output/*/
-output/submission.zip

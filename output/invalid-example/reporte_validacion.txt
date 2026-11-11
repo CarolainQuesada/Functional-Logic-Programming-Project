@@ -1,0 +1,11 @@
+Validation report
+Status: INVALID
+Errors: 1
+Warnings: 0
+
+Error [DuplicateEntity]
+Location: line 3
+Entity names must be globally unique.
+Source: person: Alice
+Related line 2: person: Alice
+
